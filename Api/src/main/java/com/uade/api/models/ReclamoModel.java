@@ -10,16 +10,19 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEdificio")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idReclamo")
 public class ReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int idReclamo;
+    //foreign key from vecinos
     String documento;
+    //foreign key from sitios
     int idSitio;
+    //foreign key from sitios
     int idDesperfecto;
     String descripcion;
     Estado estado;
+    ////foreign key from reclamos
     int idReclamoUnificado;
 }
