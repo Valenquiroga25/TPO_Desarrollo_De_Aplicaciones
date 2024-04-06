@@ -1,9 +1,8 @@
 package com.uade.api.models;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
-import org.gradle.internal.impldep.com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import org.gradle.internal.impldep.com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="reclamos")
@@ -12,6 +11,7 @@ import org.gradle.internal.impldep.com.fasterxml.jackson.annotation.ObjectIdGene
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEdificio")
+
 public class ReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
