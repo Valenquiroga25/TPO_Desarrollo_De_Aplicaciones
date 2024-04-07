@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name="reclamos")
+@Table(name="barrios")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idReclamo")
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idBarrio")
 public class BarrioModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idBarrio;
+    private String nombre;
+
 }
