@@ -11,10 +11,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDesperfecto")
+
 public class DesperfectoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idDesperfecto;
-    String descripcion;
-    int idRubro;
+    private int idDesperfecto;
+    private String descripcion;
+    @ManyToOne
+    private RubroModel rubro;
 }

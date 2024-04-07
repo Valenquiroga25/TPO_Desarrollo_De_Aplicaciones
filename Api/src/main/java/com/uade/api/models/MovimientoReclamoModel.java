@@ -11,12 +11,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "legajo")
+
 public class MovimientoReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMovimiento;
-    //foreign key from reclamos
-    private int idReclamo;
+    @ManyToOne
+    private ReclamoModel reclamo;
     private String responsable;
     private String causa;
 

@@ -11,19 +11,20 @@ import java.sql.Time;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idSitio")
+
 public class SitioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int idSitio;
-    Double latitud;
-    Double longitud;
-    String calle;
-    int numero;
-    String entreCalleA;
-    String entreCalleB;
-    String descripcion;
-    String aCargoDe;
-    Time apertura;
-    Time cierre;
-    String comentarios;
+    private int idSitio;
+    private Double latitud;
+    private Double longitud;
+    private String calle;
+    private int numero;
+    private String entreCalleA;
+    private String entreCalleB;
+    private String descripcion;
+    private String aCargoDe;
+    private Time apertura;
+    private Time cierre;
+    private String comentarios;
 }

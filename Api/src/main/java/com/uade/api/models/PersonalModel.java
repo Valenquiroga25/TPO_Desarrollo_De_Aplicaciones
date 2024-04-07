@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "legajo")
+
 public class PersonalModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +23,7 @@ public class PersonalModel {
     private String apellido;
     private String documento;
     private String password;
-    private String sector;
+    private Sector sector;
     private int categoria;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaIngreso;

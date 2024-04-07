@@ -19,6 +19,5 @@ public class VecinoModel {
     private String nombre;
     private String apellido;
     private String direccion;
-    //foreign key from barrios
     private int codigoBarrio;
 }
