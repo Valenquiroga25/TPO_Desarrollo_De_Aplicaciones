@@ -43,10 +43,10 @@
     </RadioGroup>
 
     <Button
+            android:id="@+id/btnComenzar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Comenzar"
-            android:id="@+id/btnComenzar"/>
+            android:text="Comenzar"/>
 
     <ImageView
             android:layout_width="match_parent"

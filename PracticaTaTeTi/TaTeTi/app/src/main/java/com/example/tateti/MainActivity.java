@@ -26,11 +26,10 @@ public class MainActivity extends AppCompatActivity {
     Button boton;
     RadioButton circulos,cruces;
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main); //A que layout corresponde esta clase. O en base a que layout trabaja.
 
         nombre = findViewById(R.id.txtNombre); // findViewById es para decir que la variable creada arriba hace referencia a un objeto del layout.
         boton = findViewById(R.id.btnComenzar); // 'boton' hace referencia a 'btnComenzar' del layout.
@@ -39,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent aux = new Intent(MainActivity.this, GameActivity.class); // El intent permite llamar a una instancia de GameActivity y sederle el control del programa.
-                                                                                             // Se le puede pasar parametros como hacemos abajo.
+            public void onClick(View v) {
+                Intent aux = new Intent(MainActivity.this, GameActivity.class); // El intent es basicamente el  control del programa.
+                                                                                             // Con esta linea definimos a que objeto de clase pasaremos el control. (en nuestro caso al gameActivity)
                 String elNombre = nombre.getText().toString();
                 if(elNombre.isEmpty())
                     elNombre = "Extraño";
