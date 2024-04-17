@@ -16,15 +16,12 @@ public class GameActivity extends AppCompatActivity {
 
     String nombre,usa;
 
-    boolean tengoTurno;
-
     ControlJuego cj;
 
     @Override
     protected void onCreate(Bundle SavedInstanceState){
         super.onCreate(SavedInstanceState);
         setContentView(R.layout.activity_game);
-        tengoTurno = true;
         nombre = getIntent().getStringExtra("nombre"); // Geteo el intent y luego su valor en el atributo nombre.
         usa = getIntent().getStringExtra("usa");
         cj = new ControlJuego();
@@ -104,43 +101,44 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cj.reiniciar();
-                Intent reiniciar = getIntent();
-                startActivity(reiniciar);
+                for(int i=0;i < 3;i++){
+                    for(int j=0;j < 3;j++){
+                        botones[i][j].setText("-");
+                        botones[i][j].setEnabled(true);
+                    }
+                }
+                lblGanador.setText("El ganador es...");
             }
         });
     }
 
     @SuppressLint("SetTextI18n")
     private void controloBoton(View v, int i, int j, Button[][] botones, String usa){
-        if(tengoTurno) {
-            Button seleccionado = (Button) v;
-            if (usa.equalsIgnoreCase("circulos"))
-                seleccionado.setText("O");
-            else
-                seleccionado.setText("X");
-            tengoTurno = false;
-            seleccionado.setEnabled(false);// Deshabilito el boton para que no se elija mas de una vez.
-            cj.asignarValor(i,j,usa);
-            if(cj.gano()) {
-                lblGanador.setText("El ganador es " + nombre);
-            }else if(cj.terminoEmpate())
-                lblGanador.setText("El juego terminó en empate!");
-            else {
-                int[] numeros = cj.proximoMovimiento(usa);
-                if(usa.equals("circulos")) {
-                    botones[numeros[0]][numeros[1]].setText("X");
-                    botones[numeros[0]][numeros[1]].setEnabled(false);
-                }
-                else {
-                    botones[numeros[0]][numeros[1]].setText("O");
-                    botones[numeros[0]][numeros[1]].setEnabled(false);
-                }
-                if(cj.gano())
-                    lblGanador.setText("El ganador es la máquina");
-                else if(cj.terminoEmpate())
-                    lblGanador.setText("El juego terminó en empate!");
-                tengoTurno = true;
+        Button seleccionado = (Button) v;
+        if (usa.equalsIgnoreCase("circulos"))
+            seleccionado.setText("O");
+        else
+            seleccionado.setText("X");
+        seleccionado.setEnabled(false);// Deshabilito el boton para que no se elija mas de una vez.
+        cj.asignarValor(i,j,usa);
+        if(cj.gano()) {
+            lblGanador.setText("El ganador es " + nombre);
+        }else if(cj.terminoEmpate())
+            lblGanador.setText("El juego terminó en empate!");
+        else {
+            int[] numeros = cj.proximoMovimiento(usa);
+            if(usa.equals("circulos")) {
+                botones[numeros[0]][numeros[1]].setText("X");
+                botones[numeros[0]][numeros[1]].setEnabled(false);
             }
+            else {
+                botones[numeros[0]][numeros[1]].setText("O");
+                botones[numeros[0]][numeros[1]].setEnabled(false);
+            }
+            if(cj.gano())
+                lblGanador.setText("El ganador es la máquina");
+            else if(cj.terminoEmpate())
+                lblGanador.setText("El juego terminó en empate!");
         }
     }
 }

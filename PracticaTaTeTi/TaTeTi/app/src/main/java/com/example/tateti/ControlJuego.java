@@ -76,8 +76,8 @@ public class ControlJuego {
     }
 
     public void reiniciar(){
-        for(int i=0; i < tablero.length; i++){
-            for(int j=0; j < tablero[0].length; j++){
+        for(int i=0; i < 3; i++){
+            for(int j=0; j < 3; j++){
                 tablero[i][j] = "-";
             }
         }
