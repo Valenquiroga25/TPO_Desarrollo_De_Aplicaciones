@@ -15,7 +15,7 @@ public class VecinosService {
     @Autowired
     private VecinosRepository vecinosRepository;
 
-    public VecinoModel getVecinoByDocumento(String documento) throws Exception{
+    public VecinoModel findVecinoByDocumento(String documento) throws Exception{
         Long id = Long.parseLong(documento);
         log.info("Id ingresado " + id);
         if(id < 0){
