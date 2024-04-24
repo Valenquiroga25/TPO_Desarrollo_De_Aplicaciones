@@ -1,6 +1,6 @@
 package com.uade.api.models;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity

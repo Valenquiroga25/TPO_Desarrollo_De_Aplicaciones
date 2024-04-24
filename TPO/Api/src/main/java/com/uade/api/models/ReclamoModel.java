@@ -1,7 +1,7 @@
 package com.uade.api.models;
 
 import com.fasterxml.jackson.annotation.*;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.List;
