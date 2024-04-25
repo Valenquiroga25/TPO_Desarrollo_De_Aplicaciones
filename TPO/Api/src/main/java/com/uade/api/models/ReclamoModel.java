@@ -21,6 +21,8 @@ public class ReclamoModel {
     @ManyToOne
     private VecinoModel vecino;
     @ManyToOne
+    private PersonalModel personal;
+    @ManyToOne
     private SitioModel sitio;
     @ManyToOne
     private DesperfectoModel desperfecto; // Consultar si un reclamo puede tener más de un desperfecto.

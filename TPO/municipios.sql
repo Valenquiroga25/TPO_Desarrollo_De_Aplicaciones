@@ -59,7 +59,8 @@ create table desperfectos(
 
 create table reclamos(
 	idReclamo int not null AUTO_INCREMENT,
-	documento varchar(20) not null,
+	documento varchar(20),
+	legajo int,
 	idSitio int not null,
 	idDesperfecto int null,
 	descripcion varchar(1000) null,
@@ -67,7 +68,8 @@ create table reclamos(
 	IdReclamoUnificado int null,
 	constraint pk_reclamos primary key (idReclamo),
 	constraint fk_reclamos_vecinos foreign key (documento) references vecinos(documento),
-	constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
+    constraint fk_reclamos_personal foreign key (legajo) references vecinos(legajo),
+    constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
 	constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
 );
 
