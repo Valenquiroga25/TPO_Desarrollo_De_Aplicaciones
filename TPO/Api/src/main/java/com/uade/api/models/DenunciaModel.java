@@ -19,8 +19,10 @@ public class DenunciaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDenuncia;
     @ManyToOne
+    @JoinColumn(name="vecino") // Nombre de la columna en la base de datos.
     private VecinoModel vecino;
     @ManyToOne
+    @JoinColumn(name="sitio")
     private SitioModel sitio;
     private String descripcion;
     private Estado estado;

@@ -17,6 +17,7 @@ public class MovimientoReclamoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMovimiento;
     @ManyToOne
+    @JoinColumn(name="Reclamo")
     private ReclamoModel reclamo;
     private String responsable;
     private String causa;

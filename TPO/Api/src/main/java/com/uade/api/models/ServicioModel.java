@@ -22,12 +22,15 @@ public class ServicioModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idServicio;
     @ManyToOne
+    @JoinColumn(name="Vecino")
     private VecinoModel vecino;
     private String direccion;
     private String telefono;
     @ManyToOne
+    @JoinColumn(name="Rubro")
     private RubroModel rubro;
     private String descripcion;
     @OneToMany
+    @JoinColumn(name="Imagenes")
     private List<ImagenModel> imagenes;
 }

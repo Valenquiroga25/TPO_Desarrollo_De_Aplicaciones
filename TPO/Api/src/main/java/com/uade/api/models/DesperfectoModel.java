@@ -18,5 +18,6 @@ public class DesperfectoModel {
     private int idDesperfecto;
     private String descripcion;
     @ManyToOne
+    @JoinColumn(name="Rubro")
     private RubroModel rubro;
 }
