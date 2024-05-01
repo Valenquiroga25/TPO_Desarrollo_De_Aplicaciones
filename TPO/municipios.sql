@@ -59,7 +59,7 @@ create table desperfectos(
 
 create table reclamos(
 	idReclamo int not null AUTO_INCREMENT,
-	documento varchar(20),
+    documentoVecino varchar(20),
 	legajo int,
 	idSitio int not null,
 	idDesperfecto int null,
@@ -67,7 +67,7 @@ create table reclamos(
 	estado varchar(30),
 	IdReclamoUnificado int null,
 	constraint pk_reclamos primary key (idReclamo),
-	constraint fk_reclamos_vecinos foreign key (documento) references vecinos(documento),
+	constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
     constraint fk_reclamos_personal foreign key (legajo) references vecinos(legajo),
     constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
 	constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
@@ -85,13 +85,13 @@ create table movimientosReclamo(
 
 create table denuncias(
 	idDenuncias int not null AUTO_INCREMENT,
-	documento varchar(20) not null,
+	documentoVecino varchar(20) not null,
 	idSitio int null,
-	descripcion varchar(2000) null,
+	descripcion varchar(1000) null,
 	estado varchar(150),
-	aceptaResponsabilidad int not null,
+	aceptaResponsabilidad int,
 	constraint pk_denuncias primary key (idDenuncias),
-	constraint fk_denuncias_vecinos foreign key (documento) references vecinos(documento),
+	constraint fk_denuncias_vecinos foreign key (documentoVecino) references vecinos(documento),
 	constraint fk_denuncias_sitios foreign key (idSitio) references sitios(idSitio)
 );
 
@@ -99,11 +99,23 @@ create table movimientosDenuncia(
 	idMovimiento int not null AUTO_INCREMENT,
 	idDenuncia int not null,
 	responsable varchar(150) not null,
-	causa varchar(4000) not null,
+	causa varchar(1000) not null,
 	fecha datetime default current_timestamp(),
 	constraint pk_movimientosDenuncia primary key (idMovimiento),
 	constraint fk_movimientosDenuncia_denuncias foreign key (idDenuncia) references denuncias(idDenuncias)
 );
+
+create table servicios{
+    idServicio int not null AUTO_INCREMENT,
+    documentoVecino int not null,
+    titulo varchar(100) not null,
+    direccion varchar(100) not null,
+    telefono varchar(100) not null,
+    rubro varchar(100),
+    descripcion varchar(1000) not null,
+    constraint pk_servicio primary key(idServicio),
+    constraint fk_servicio_vecino foreign key (documentoVecino) references vecinos(documento)
+    }
 
 INSERT personal (nombre, apellido, documento, password, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'password', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 

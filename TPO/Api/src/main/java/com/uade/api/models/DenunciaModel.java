@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="denuncias")
 @Getter
@@ -15,12 +17,16 @@ import lombok.*;
 public class DenunciaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDenuncias;
+    private int idDenuncia;
     @ManyToOne
     private VecinoModel vecino;
     @ManyToOne
     private SitioModel sitio;
     private String descripcion;
-    private String estado;
+    private Estado estado;
     private int aceptaResponsabilidad;
+
+    public void DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion){
+        this.estado = Estado.EN_PROCESO;
+    }
 }

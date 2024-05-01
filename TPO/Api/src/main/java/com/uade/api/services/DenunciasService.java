@@ -1,6 +1,7 @@
 package com.uade.api.services;
 
 import com.uade.api.models.DenunciaModel;
+import com.uade.api.models.ServicioModel;
 import com.uade.api.models.SitioModel;
 import com.uade.api.models.VecinoModel;
 import com.uade.api.repositories.DenunciasRepository;
@@ -38,6 +39,40 @@ public class DenunciasService {
         }
 
         return this.denunciasRepository.save(newDenuncia);
+    }
+
+    public DenunciaModel updateDenuncia(int id, String descripcion) throws Exception{
+        if(id < 0){
+            log.error("El Id no es válido. El Id debe ser positivo!");
+            throw new Exception("El Id no es válido. El Id debe ser positivo!");
+        }
+
+        Optional<DenunciaModel> denunciaOp = denunciasRepository.findDenunciaById(id);
+
+        if(denunciaOp.isEmpty()){
+            log.error("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
+            throw new Exception("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
+        }
+
+        DenunciaModel denunciaDb = denunciaOp.get();
+        denunciaDb.setDescripcion(descripcion);
+
+        log.info("Descripción actualizada de la denuncia " + denunciaDb.getIdDenuncia());
+        return this.denunciasRepository.save(denunciaDb);
+    }
+
+    public String deleteServicio(int id) throws Exception{
+        Optional<DenunciaModel> denunciaOp = this.denunciasRepository.findDenunciaById(id);
+
+        if(denunciaOp.isEmpty()){
+            log.error("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
+            throw new Exception("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
+        }
+
+        DenunciaModel denunciaDb = denunciaOp.get();
+        this.denunciasRepository.delete(denunciaDb);
+
+        return "Denuncia eliminada con éxito!";
     }
 
     public DenunciaModel findDenunciaById(int idDenuncia) throws Exception {

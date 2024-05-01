@@ -46,6 +46,11 @@ public class ReclamosService {
                 log.error("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
                 throw new Exception("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
             }
+
+            if(newReclamo.getImagenes().size() > 7){
+                log.error("El reclamo no puede tener más de 7 imágenes.");
+                throw new Exception("El reclamo no puede tener más de 7 imágenes.");
+            }
         }
 
         if(newReclamo.getPersonal() != null){
@@ -71,13 +76,13 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public ReclamoModel updateReclamo(Long id, String descripcion) throws Exception{
+    public ReclamoModel updateReclamo(int id, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
         }
 
-        Optional<ReclamoModel> reclamoOp = reclamosRepository.findById(id);
+        Optional<ReclamoModel> reclamoOp = reclamosRepository.findReclamoById(id);
 
         if(reclamoOp.isEmpty()){
             log.error("El reclamo con el Id " + id + " no se encuentra registrado en la base de datos.");
@@ -135,5 +140,9 @@ public class ReclamosService {
                 allReclamosFromPersonal.add(r);
         }
         return allReclamosFromPersonal;
+    }
+
+    private void CambiarEstadoReclamo(ReclamoModel reclamo, Estado estado){
+        reclamo.setEstado(estado);
     }
 }
