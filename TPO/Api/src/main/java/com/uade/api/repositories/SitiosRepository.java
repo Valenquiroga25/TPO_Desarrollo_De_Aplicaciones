@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface SitiosRepository extends JpaRepository<SitioModel, Long>{
-
-    Optional<SitioModel> findSitioById(int idSitio);
 }

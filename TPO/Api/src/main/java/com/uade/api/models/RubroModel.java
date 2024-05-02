@@ -15,6 +15,6 @@ import lombok.*;
 public class RubroModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRubro;
+    private Long idRubro;
     private String descripcion;
 }

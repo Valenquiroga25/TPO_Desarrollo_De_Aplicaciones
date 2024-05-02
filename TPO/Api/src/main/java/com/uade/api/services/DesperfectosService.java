@@ -15,13 +15,13 @@ public class DesperfectosService {
     @Autowired
     private DesperfectosRepository desperfectosRepository;
 
-    public DesperfectoModel findDesperfectoById(int idDesperfecto) throws Exception{
+    public DesperfectoModel findDesperfectoById(Long idDesperfecto) throws Exception{
         log.info("Id ingresado " + idDesperfecto);
         if(idDesperfecto < 0){
             log.error("El Id ingresado no es válido. Ingrese un Id positivo!");
             throw new Exception("El Id no es válido. Ingrese un Id positivo!");
         }
-        Optional<DesperfectoModel> desperfectoOp = desperfectosRepository.findDesperfectoById(idDesperfecto);
+        Optional<DesperfectoModel> desperfectoOp = desperfectosRepository.findById(idDesperfecto);
         if (desperfectoOp.isEmpty()){
             log.error("El desperfecto con el Id " + idDesperfecto + " no se encuentra registrado en la base de datos!");
             throw new Exception("El desperfecto con el Id " + idDesperfecto + " no se encuentra registrado en la base de datos!");

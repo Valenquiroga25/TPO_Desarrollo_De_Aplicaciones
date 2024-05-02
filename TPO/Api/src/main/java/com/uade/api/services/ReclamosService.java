@@ -76,13 +76,13 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public ReclamoModel updateReclamo(int id, String descripcion) throws Exception{
+    public ReclamoModel updateReclamo(Long id, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
         }
 
-        Optional<ReclamoModel> reclamoOp = reclamosRepository.findReclamoById(id);
+        Optional<ReclamoModel> reclamoOp = reclamosRepository.findById(id);
 
         if(reclamoOp.isEmpty()){
             log.error("El reclamo con el Id " + id + " no se encuentra registrado en la base de datos.");
@@ -96,8 +96,8 @@ public class ReclamosService {
         return this.reclamosRepository.save(reclamoDb);
     }
 
-    public String deleteReclamo(int id) throws Exception{
-        Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findReclamoById(id);
+    public String deleteReclamo(Long id) throws Exception{
+        Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findById(id);
 
         if (reclamoOp.isEmpty()){
             log.error("El reclamo con el id " + id + " no está registrado en la base de datos.");
@@ -110,8 +110,8 @@ public class ReclamosService {
         return "Reclamo eliminado con éxito!";
     }
 
-    public ReclamoModel findReclamoById (int id) throws Exception{
-        Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findReclamoById(id);
+    public ReclamoModel findReclamoById (Long id) throws Exception{
+        Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findById(id);
         if(reclamoOp.isEmpty()){
             log.error("El reclamo con el id " + id + " no está registrado en la base de datos.");
             throw new Exception("El reclamo con el id " + id + " no está registrado en la base de datos.");
@@ -131,7 +131,7 @@ public class ReclamosService {
         return allReclamosFromVecinos;
     }
 
-    public List<ReclamoModel> findAllReclamosFromPersonal(int legajo){
+    public List<ReclamoModel> findAllReclamosFromPersonal(Long legajo){
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromPersonal = new ArrayList<>();
 

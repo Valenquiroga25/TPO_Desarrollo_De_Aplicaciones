@@ -14,13 +14,13 @@ public class RubrosService {
     @Autowired
     RubrosRepository rubrosRepository;
 
-    public RubroModel findRubroById(int id) throws Exception{
+    public RubroModel findRubroById(Long id) throws Exception{
         log.info("Id ingresado " + id);
         if(id < 0){
             log.error("El Id ingresado no es válido. Ingrese un Id positivo!");
             throw new Exception("El Id no es válido. Ingrese un Id positivo!");
         }
-        Optional<RubroModel> rubroOp = Optional.ofNullable(rubrosRepository.findRubroById(id));
+        Optional<RubroModel> rubroOp = rubrosRepository.findById(id);
         if(rubroOp.isEmpty()){
             log.error("El rubro indicado no se encuentra en la base de datos!");
             throw new Exception("El rubro indicado no se encuentra en la base de datos!");

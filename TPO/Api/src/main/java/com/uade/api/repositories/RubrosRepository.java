@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RubrosRepository extends JpaRepository<RubroModel, Long>{
-    RubroModel findRubroById(int id);
 }

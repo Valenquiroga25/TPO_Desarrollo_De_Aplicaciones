@@ -15,6 +15,6 @@ import lombok.*;
 public class BarrioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idBarrio;
+    private Long idBarrio;
     private String nombre;
 }

@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface ReclamosRepository extends JpaRepository<ReclamoModel, Long>{
-
-    Optional<ReclamoModel> findReclamoById(int id);
 }

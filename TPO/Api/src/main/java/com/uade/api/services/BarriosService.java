@@ -14,8 +14,8 @@ public class BarriosService {
     @Autowired
     BarriosRepository barriosRepository;
 
-    public BarrioModel findBarrioById(int id) throws Exception{
-        Optional<BarrioModel> barrioOp = barriosRepository.findBarrioById(id);
+    public BarrioModel findBarrioById(Long id) throws Exception{
+        Optional<BarrioModel> barrioOp = barriosRepository.findById(id);
         if(barrioOp.isEmpty()){
             log.error("El barrio no se encuentra registrado en la base de datos!");
             throw new Exception("El barrio no se encuentra registrado en la base de datos!");

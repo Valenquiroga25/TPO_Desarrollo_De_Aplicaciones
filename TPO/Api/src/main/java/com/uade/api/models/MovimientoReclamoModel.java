@@ -15,7 +15,7 @@ import lombok.*;
 public class MovimientoReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMovimiento;
+    private Long idMovimiento;
     @ManyToOne
     @JoinColumn(name="Reclamo")
     private ReclamoModel reclamo;

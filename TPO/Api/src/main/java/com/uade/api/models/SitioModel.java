@@ -15,7 +15,7 @@ import java.sql.Time;
 public class SitioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSitio;
+    private Long idSitio;
     private Double latitud;
     private Double longitud;
     private String calle;

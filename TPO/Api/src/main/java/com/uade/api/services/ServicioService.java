@@ -32,13 +32,13 @@ public class ServicioService {
         return this.servicioRepository.save(newServicio);
     }
 
-    public ServicioModel updateServicio(int id, String descripcion) throws Exception{
+    public ServicioModel updateServicio(Long id, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
         }
 
-        Optional<ServicioModel> servicioOp = servicioRepository.findServicioById(id);
+        Optional<ServicioModel> servicioOp = servicioRepository.findById(id);
 
         if(servicioOp.isEmpty()){
             log.error("El servicio con el Id " + id + " no se encuentra registrado en la base de datos.");
@@ -52,8 +52,8 @@ public class ServicioService {
         return this.servicioRepository.save(servicioDb);
     }
 
-    public String deleteServicio(int id) throws Exception{
-        Optional<ServicioModel> servicioOp = this.servicioRepository.findServicioById(id);
+    public String deleteServicio(Long id) throws Exception{
+        Optional<ServicioModel> servicioOp = this.servicioRepository.findById(id);
 
         if (servicioOp.isEmpty()){
             log.error("El servicio con el id " + id + " no está registrado en la base de datos.");
@@ -66,8 +66,8 @@ public class ServicioService {
         return "Servicio eliminado con éxito!";
     }
 
-    public ServicioModel findServicioById (int id) throws Exception{
-        Optional<ServicioModel> servicioOp = this.servicioRepository.findServicioById(id);
+    public ServicioModel findServicioById (Long id) throws Exception{
+        Optional<ServicioModel> servicioOp = this.servicioRepository.findById(id);
         if(servicioOp.isEmpty()){
             log.error("El servicio con el id " + id + " no está registrado en la base de datos.");
             throw new Exception("El servicio con el id " + id + " no está registrado en la base de datos.");

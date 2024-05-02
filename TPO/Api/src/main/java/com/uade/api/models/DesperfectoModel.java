@@ -15,7 +15,7 @@ import lombok.*;
 public class DesperfectoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDesperfecto;
+    private Long idDesperfecto;
     private String descripcion;
     @ManyToOne
     @JoinColumn(name="Rubro")

@@ -13,7 +13,7 @@ import lombok.*;
 public class ImagenModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idImagen;
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] datosImagen;

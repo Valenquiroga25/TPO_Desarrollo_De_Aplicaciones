@@ -8,6 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface BarriosRepository extends JpaRepository<BarrioModel, Long>{
-
-    Optional<BarrioModel> findBarrioById(int id);
 }

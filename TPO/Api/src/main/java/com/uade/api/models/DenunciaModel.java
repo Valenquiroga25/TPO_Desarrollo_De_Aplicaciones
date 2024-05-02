@@ -17,7 +17,7 @@ import java.util.List;
 public class DenunciaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDenuncia;
+    private Long idDenuncia;
     @ManyToOne
     @JoinColumn(name="vecino") // Nombre de la columna en la base de datos.
     private VecinoModel vecino;

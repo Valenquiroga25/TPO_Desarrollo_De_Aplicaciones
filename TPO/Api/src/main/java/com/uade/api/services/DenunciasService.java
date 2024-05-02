@@ -41,13 +41,13 @@ public class DenunciasService {
         return this.denunciasRepository.save(newDenuncia);
     }
 
-    public DenunciaModel updateDenuncia(int id, String descripcion) throws Exception{
+    public DenunciaModel updateDenuncia(Long id, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
         }
 
-        Optional<DenunciaModel> denunciaOp = denunciasRepository.findDenunciaById(id);
+        Optional<DenunciaModel> denunciaOp = denunciasRepository.findById(id);
 
         if(denunciaOp.isEmpty()){
             log.error("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
@@ -61,8 +61,8 @@ public class DenunciasService {
         return this.denunciasRepository.save(denunciaDb);
     }
 
-    public String deleteServicio(int id) throws Exception{
-        Optional<DenunciaModel> denunciaOp = this.denunciasRepository.findDenunciaById(id);
+    public String deleteServicio(Long id) throws Exception{
+        Optional<DenunciaModel> denunciaOp = this.denunciasRepository.findById(id);
 
         if(denunciaOp.isEmpty()){
             log.error("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
@@ -75,9 +75,9 @@ public class DenunciasService {
         return "Denuncia eliminada con éxito!";
     }
 
-    public DenunciaModel findDenunciaById(int idDenuncia) throws Exception {
+    public DenunciaModel findDenunciaById(Long idDenuncia) throws Exception {
         log.info("id ingresado: " + idDenuncia);
-        Optional<DenunciaModel> denunciaOp = denunciasRepository.findDenunciaById(idDenuncia);
+        Optional<DenunciaModel> denunciaOp = denunciasRepository.findById(idDenuncia);
 
         if (denunciaOp.isEmpty()) {
             log.error("Denuncia no encontrada");

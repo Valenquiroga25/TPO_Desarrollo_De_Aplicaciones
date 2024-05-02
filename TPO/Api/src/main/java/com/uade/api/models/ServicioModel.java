@@ -1,6 +1,7 @@
 package com.uade.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,18 +20,18 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idServicio")
 public class ServicioModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idServicio;
     @ManyToOne
-    @JoinColumn(name="Vecino")
+    @JoinColumn(name="documentoVecino")
     private VecinoModel vecino;
     private String direccion;
     private String telefono;
     @ManyToOne
-    @JoinColumn(name="Rubro")
+    @JoinColumn(name="rubro")
     private RubroModel rubro;
     private String descripcion;
     @OneToMany
-    @JoinColumn(name="Imagenes")
+    @JoinColumn(name="idImagen")
     private List<ImagenModel> imagenes;
 }

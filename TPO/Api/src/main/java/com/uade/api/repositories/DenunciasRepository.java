@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface DenunciasRepository extends JpaRepository<DenunciaModel, Long>{
-    Optional<DenunciaModel> findDenunciaById(int idDenuncia);
 }
