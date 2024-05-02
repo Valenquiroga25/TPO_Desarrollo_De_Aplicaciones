@@ -1,109 +1,108 @@
-create database Municipios;
+create database municipios;
 
 create table barrios(
-	idBarrio BIGINT not null AUTO_INCREMENT,
-	nombre varchar(150) not null,
-	constraint pk_barrios primary key (idBarrio)
+    idBarrio BIGINT not null AUTO_INCREMENT,
+    nombre varchar(150) not null,
+    constraint pk_barrios primary key (idBarrio)
 );
 
 create table vecinos(
-	documento varchar(20) not null,
-	nombre varchar(150) not null,
-	apellido varchar(150) not null,
-	direccion varchar(250) null, 
-	codigoBarrio int null,
-	constraint pk_vecinos primary key (documento),
+    documento varchar(20) not null,
+    nombre varchar(150) not null,
+    apellido varchar(150) not null,
+    direccion varchar(250) null,
+    codigoBarrio BIGINT null,
+    constraint pk_vecinos primary key (documento),
     constraint fk_vecinos_barrios foreign key (codigoBarrio) references barrios(idBarrio)
 );
 
 create table personal(
-	legajo BIGINT not null AUTO_INCREMENT,
-	nombre varchar(150) not null,
-	apellido varchar(150) not null,
-	documento varchar(20) not null,
-	password varchar(40) not null,
-	sector varchar(200) not null,
-	categoria int,
-	fechaIngreso datetime,
-	constraint pk_personal primary key (legajo)
+     legajo BIGINT not null AUTO_INCREMENT,
+     nombre varchar(150) not null,
+     apellido varchar(150) not null,
+     documento varchar(20) not null,
+     password varchar(40) not null,
+     sector varchar(200) not null,
+     categoria int,
+     fechaIngreso datetime,
+     constraint pk_personal primary key (legajo)
 );
 
 create table sitios(
-	idSitio BIGINT not null AUTO_INCREMENT,
-	latitud decimal(9,5),
-	longitud decimal(9,5),
-	calle varchar(150) null,
-	numero int,
-	entreCalleA varchar(150) null,
-	entreCalleB varchar(150) null,
-	descripcion varchar(300),
-	aCargoDe varchar(200),
-	apertura time,
-	cierre time,
-	comentarios text,
-	constraint pk_sitios primary key (idSitio)
+    idSitio BIGINT not null AUTO_INCREMENT,
+    latitud decimal(9,5),
+    longitud decimal(9,5),
+    calle varchar(150) null,
+    numero int,
+    entreCalleA varchar(150) null,
+    entreCalleB varchar(150) null,
+    descripcion varchar(300),
+    aCargoDe varchar(200),
+    apertura time,
+    cierre time,
+    comentarios text,
+    constraint pk_sitios primary key (idSitio)
 );
 
 create table rubros(
-	idRubro BIGINT not null AUTO_INCREMENT,
-	descripcion varchar(200) not null,
-	constraint pk_rubros primary key (idRubro)
+    idRubro BIGINT not null AUTO_INCREMENT,
+    descripcion varchar(200) not null,
+    constraint pk_rubros primary key (idRubro)
 );
 
 create table desperfectos(
-	idDesperfecto BIGINT not null AUTO_INCREMENT,
-	descripcion varchar(200) not null,
-	idRubro int null,
-	constraint pk_desperfectos primary key (idDesperfecto)
+     idDesperfecto BIGINT not null AUTO_INCREMENT,
+     descripcion varchar(200) not null,
+     idRubro int null,
+     constraint pk_desperfectos primary key (idDesperfecto)
 );
 
 create table reclamos(
-	idReclamo BIGINT not null AUTO_INCREMENT,
-    documentoVecino varchar(20),
-	legajo BIGINT,
-	idSitio BIGINT not null,
-	idDesperfecto BIGINT null,
-	descripcion varchar(1000) null,
-	estado varchar(30),
-	IdReclamoUnificado int null,
-	constraint pk_reclamos primary key (idReclamo),
-	constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
-    constraint fk_reclamos_personal foreign key (legajo) references personal(legajo),
-    constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
-	constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
+     idReclamo BIGINT not null AUTO_INCREMENT,
+     documentoVecino varchar(20),
+     legajo BIGINT,
+     idSitio BIGINT not null,
+     idDesperfecto BIGINT null,
+     descripcion varchar(1000) null,
+     estado varchar(30),
+     IdReclamoUnificado int null,
+     constraint pk_reclamos primary key (idReclamo),
+     constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
+     constraint fk_reclamos_personal foreign key (legajo) references personal(legajo),
+     constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
+     constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
 );
 
 create table movimientosReclamo(
-	idMovimiento BIGINT not null AUTO_INCREMENT,
-	idReclamo BIGINT not null,
-	responsable varchar(150) not null,
-	causa varchar(1000) not null,
-	fecha datetime default current_timestamp(),
-	constraint pk_movimientosReclamo primary key (idMovimiento),
-	constraint fk_movimientosReclamo_reclamos foreign key (idReclamo) references reclamos(idReclamo)
+    idMovimiento BIGINT not null AUTO_INCREMENT,
+    idReclamo BIGINT not null,
+    responsable varchar(150) not null,
+    causa varchar(1000) not null,
+    fecha datetime default current_timestamp(),
+    constraint pk_movimientosReclamo primary key (idMovimiento),
+    constraint fk_movimientosReclamo_reclamos foreign key (idReclamo) references reclamos(idReclamo)
 );
 
-
 create table denuncias(
-	idDenuncias BIGINT null AUTO_INCREMENT,
-	documentoVecino varchar(20) not null,
-	idSitio BIGINT null,
-	descripcion varchar(1000) null,
-	estado varchar(150),
-	aceptaResponsabilidad int,
-	constraint pk_denuncias primary key (idDenuncias),
-	constraint fk_denuncias_vecinos foreign key (documentoVecino) references vecinos(documento),
-	constraint fk_denuncias_sitios foreign key (idSitio) references sitios(idSitio)
+    idDenuncias BIGINT not null AUTO_INCREMENT,
+    documentoVecino varchar(20) not null,
+    idSitio BIGINT not null,
+    descripcion varchar(1000) not null,
+    estado varchar(150),
+    aceptaResponsabilidad int,
+    constraint pk_denuncias primary key (idDenuncias),
+    constraint fk_denuncias_vecinos foreign key (documentoVecino) references vecinos(documento),
+    constraint fk_denuncias_sitios foreign key (idSitio) references sitios(idSitio)
 );
 
 create table movimientosDenuncia(
-	idMovimiento BIGINT not null AUTO_INCREMENT,
-	idDenuncia BIGINT not null,
-	responsable varchar(150) not null,
-	causa varchar(1000) not null,
-	fecha datetime default current_timestamp(),
-	constraint pk_movimientosDenuncia primary key (idMovimiento),
-	constraint fk_movimientosDenuncia_denuncias foreign key (idDenuncia) references denuncias(idDenuncias)
+    idMovimiento BIGINT not null AUTO_INCREMENT,
+    idDenuncia BIGINT not null,
+    responsable varchar(150) not null,
+    causa varchar(1000) not null,
+    fecha datetime default current_timestamp(),
+    constraint pk_movimientosDenuncia primary key (idMovimiento),
+    constraint fk_movimientosDenuncia_denuncias foreign key (idDenuncia) references denuncias(idDenuncias)
 );
 
 create table servicios(
@@ -117,25 +116,13 @@ create table servicios(
     constraint pk_servicio primary key(idServicio),
     constraint fk_servicio_vecino foreign key (documentoVecino) references vecinos(documento),
     constraint fk_servicio_rubro foreign key (rubro) references rubros(idRubro)
-    );
+);
 
 create table imagenes(
-    idImagen BIGINT not null AUTO_INCREMENT primary key,
-    datosImagen blob not null
+     idImagen BIGINT not null AUTO_INCREMENT primary key,
+     datosImagen blob not null
 )
 
-select * from servicios;
-select * from imagenes;
-select * from reclamos;
-
-drop table reclamos
-drop table movimientosreclamo
-drop table sitios
-drop table denuncias
-drop table barrios 
-drop table desperfectos
-drop table imagenes
-drop table servicios
 INSERT personal (nombre, apellido, documento, password, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'password', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 
 SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';

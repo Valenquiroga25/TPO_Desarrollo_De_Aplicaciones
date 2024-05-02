@@ -14,7 +14,6 @@ import lombok.*;
 
 public class VecinoModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String documento;
     private String nombre;
     private String apellido;
