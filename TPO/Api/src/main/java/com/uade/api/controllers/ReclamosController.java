@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @CrossOrigin() // Para que un controlador externo (un front alojado en otro dominio) acceda a nuestro sistema.
 @RestController
 @RequestMapping(path ="/tpo_desarrollo_mobile/vecinos/reclamos")
@@ -37,15 +35,15 @@ public class ReclamosController {
     }
 
     @PutMapping(path = "/reclamo-editar/{id}")
-    public ResponseEntity<?> updateReclamo(@RequestBody Long id, Long idDesperfecto, String descripcion, List<ImagenModel> imagenes){
+    public ResponseEntity<?> updateReclamo(@PathVariable Long id,@RequestBody ReclamoModelDTO reclamoDTO){
         try{
-            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,idDesperfecto, descripcion, imagenes), HttpStatus.OK);
+            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getIdDesperfecto(), reclamoDTO.getDescripcion(), reclamoDTO.getImagenes()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
-    @DeleteMapping(path="{id}")
+    @DeleteMapping(path="/reclamo-eliminar/{id}")
     public ResponseEntity<?> deleteReclamo(@PathVariable Long id){ // PathVariable -> Se utiliza para encontrar el objeto en la BD que tiene el ID que se manda.
         try{
             return new ResponseEntity<>(this.reclamosService.deleteReclamo(id),HttpStatus.OK);
@@ -63,7 +61,7 @@ public class ReclamosController {
         }
     }
 
-    @GetMapping(path = "{/allFromVecino/{id}")
+    @GetMapping(path = "{/allFromVecino/{documento}")
     public ResponseEntity<?> getAllReclamosByDocumento(@PathVariable String documento){
         try{
             return new ResponseEntity<>(reclamosService.findAllReclamosFromVecino(documento),HttpStatus.OK);
@@ -109,7 +107,7 @@ public class ReclamosController {
         }
     }
 
-    public ReclamoModelDTO convertToDTO(ReclamoModel reclamo) throws Exception {
+    public ReclamoModelDTO convertToDTO(ReclamoModel reclamo){
         if(reclamo.getPersonal() != null){
             ReclamoModelDTO reclamoDTO =  new ReclamoModelDTO(reclamo.getPersonal(),
                     reclamo.getSitio(),

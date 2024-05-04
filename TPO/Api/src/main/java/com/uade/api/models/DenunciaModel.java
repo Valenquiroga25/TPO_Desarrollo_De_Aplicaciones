@@ -28,6 +28,10 @@ public class DenunciaModel {
     private Estado estado;
     private int aceptaResponsabilidad;
 
+    public DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion, Estado estado, int aceptaResponsabilidad) {
+        this.estado = Estado.EN_PROCESO;
+    }
+
     public void DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion){
         this.estado = Estado.EN_PROCESO;
     }

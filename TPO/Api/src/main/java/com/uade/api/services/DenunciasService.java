@@ -1,9 +1,6 @@
 package com.uade.api.services;
 
-import com.uade.api.models.DenunciaModel;
-import com.uade.api.models.ServicioModel;
-import com.uade.api.models.SitioModel;
-import com.uade.api.models.VecinoModel;
+import com.uade.api.models.*;
 import com.uade.api.repositories.DenunciasRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -85,5 +85,15 @@ public class DenunciasService {
         }
 
         return denunciaOp.get();
+    }
+    public List<DenunciaModel> findAllDenunciasFromVecino(String documento){
+        List<DenunciaModel> allDenuncias= this.denunciasRepository.findAll();
+        List<DenunciaModel> allDenunciasFromVecinos = new ArrayList<>();
+
+        for(DenunciaModel r : allDenuncias){
+            if (Objects.equals(r.getVecino().getDocumento(), documento))
+                allDenunciasFromVecinos.add(r);
+        }
+        return allDenunciasFromVecinos;
     }
 }
