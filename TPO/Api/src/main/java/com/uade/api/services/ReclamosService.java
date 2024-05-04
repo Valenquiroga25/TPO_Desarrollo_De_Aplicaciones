@@ -25,6 +25,8 @@ public class ReclamosService {
     private SitiosService sitiosService;
     @Autowired
     private DesperfectosService desperfectosService;
+    @Autowired
+    private ImagenService imagenService;
 
     public ReclamoModel createReclamo(ReclamoModel newReclamo) throws Exception{
 
@@ -76,7 +78,7 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public ReclamoModel updateReclamo(Long id, String descripcion) throws Exception{
+    public ReclamoModel updateReclamo(Long id, Long idDesperfecto, String descripcion, List<ImagenModel> imagenes) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
@@ -90,10 +92,38 @@ public class ReclamosService {
         }
 
         ReclamoModel reclamoDb = reclamoOp.get();
-        reclamoDb.setDescripcion(descripcion);
+        if(idDesperfecto != null)
+            reclamoDb.getDesperfecto().setIdDesperfecto(idDesperfecto);
+        if(descripcion != null)
+            reclamoDb.setDescripcion(descripcion);
+        if(imagenes != null)
+            reclamoDb.setImagenes(imagenes);
 
-        log.info("Descripción actualizada del reclamo " + reclamoDb.getIdReclamo());
+        log.info("Reclamo " + reclamoDb.getIdReclamo() + " actualizado correctamente!");
         return this.reclamosRepository.save(reclamoDb);
+    }
+
+    // Estas dos funciones hay que ver si se usan más adelante.
+    public List<ImagenModel> agregarImagen(List<ImagenModel> imagenes, ImagenModel imagen) throws Exception{
+        if(imagenes.size() > 7)
+            throw new Exception("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
+        imagenes.add(imagen);
+
+        return imagenes;
+    }
+
+    // Estas dos funciones hay que ver si se usan más adelante.
+    public List<ImagenModel> eliminarImagen(List<ImagenModel> imagenes, ImagenModel imagen) throws Exception{
+        Optional<ImagenModel> imagenOp = Optional.ofNullable(imagenService.findImagenById(imagen.getIdImagen()));
+        if(imagenOp.isEmpty()) {
+            log.error("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
+            throw new Exception("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
+        }
+
+        ImagenModel imagenDb = imagenOp.get();
+        imagenes.remove(imagenDb);
+
+        return imagenes;
     }
 
     public String deleteReclamo(Long id) throws Exception{

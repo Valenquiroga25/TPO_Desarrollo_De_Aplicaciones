@@ -136,7 +136,7 @@ INSERT personal (legajo, nombre, apellido, documento, password, sector, categori
 INSERT personal (legajo, nombre, apellido, documento, password, sector, categoria, fechaIngreso) VALUES (9, N'ADRIAN', N'BEGUET', N'DNI30780521', N'password', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
 select * from personal;
-
+select * from reclamos
 
 
 

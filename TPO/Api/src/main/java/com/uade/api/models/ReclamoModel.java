@@ -37,7 +37,11 @@ public class ReclamoModel {
     private Estado estado;
     private int idReclamoUnificado;
 
-    public void ReclamoModel(VecinoModel vecino, PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes){
+    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
+        this.estado = Estado.EN_PROCESO;
+    }
+
+    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
         this.estado = Estado.EN_PROCESO;
     }
 }
