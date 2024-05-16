@@ -12,7 +12,8 @@ import lombok.*;
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "legajo")
 
-public class MovimientoReclamoModel {
+public class
+MovimientoReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovimiento;
