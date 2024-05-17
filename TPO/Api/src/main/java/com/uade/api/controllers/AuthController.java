@@ -6,10 +6,7 @@ import java.util.Optional;
 import javax.crypto.SecretKey;
 
 import com.uade.api.models.UsuarioModel;
-import com.uade.api.models.VecinoModel;
 import com.uade.api.services.UsuarioService;
-import com.uade.api.services.VecinosService;
-import com.uade.api.services.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,18 +30,18 @@ public class AuthController {
     private SecretKey secretKey; // Inyecta la clave secreta
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsuarioModel credentials) throws Exception {
+    public ResponseEntity<String> login(@RequestBody UsuarioModel credentials){
         // Validar las credenciales aquí (puedes usar Spring Security u otros
         // mecanismos)
-        Optional <UsuarioModel> usuarioOp = Optional.ofNullable(this.vecinoService.findUsuarioVecino(credentials.getUsuario().getDocumento(), credentials.getUsuario().getContrasenia()));
+        Optional <UsuarioModel> usuarioOp = Optional.ofNullable(this.usuarioService.findUsuario(credentials.getIdentificador(), credentials.getContrasenia()));
         if (usuarioOp.isEmpty())
             return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
 
         // Crear el token JWT
         String token = Jwts.builder()
-                .subject(credentials.getUsuario().getDocumento()).issuedAt(new Date())
-                .claim("rol", usuario.getTipoUsuario())
-                .claim("id", usuario.getIdUsuario())
+                .subject(credentials.getIdentificador()).issuedAt(new Date())
+                .claim("rol", credentials.getContrasenia())
+                .claim("id", credentials.getId())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
                 .signWith(secretKey, SignatureAlgorithm.HS256).compact();

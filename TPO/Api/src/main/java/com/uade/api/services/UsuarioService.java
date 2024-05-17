@@ -1,7 +1,6 @@
 package com.uade.api.services;
 
 import com.uade.api.models.UsuarioModel;
-import com.uade.api.models.VecinoModel;
 import com.uade.api.repositories.IUsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,10 @@ public class UsuarioService {
     @Autowired
     IUsuarioRepository usuarioRepository;
 
-    public UsuarioModel findUsuario(String identificador, String contrasenia) throws Exception {
-        Optional<VecinoModel> vecinoOp = Optional.ofNullable(this.findUsuario(identificador));
-        if(vecinoOp.isPresent() && checkPassword(contrasenia,vecinoOp.get().getUsuario().getContrasenia())){
-            return vecinoOp.get().getUsuario();
+    public UsuarioModel findUsuario(String identificador, String contrasenia){
+        Optional<UsuarioModel> usuarioOp = Optional.ofNullable(this.usuarioRepository.findUsuario(identificador));
+        if(usuarioOp.isPresent() && checkPassword(contrasenia,usuarioOp.get().getContrasenia())){
+            return usuarioOp.get();
         }
         return null;
     }
