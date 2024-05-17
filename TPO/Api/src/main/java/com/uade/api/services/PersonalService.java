@@ -16,13 +16,14 @@ public class PersonalService {
     @Autowired
     private PersonalRepository personalRepository;
 
-    public PersonalModel findPersonalByLegajo(Long legajo) throws Exception{
+    public PersonalModel findPersonalByLegajo(String legajo) throws Exception{
+        Long legajoLong = Long.parseLong(legajo);
         log.info("Legajo ingresado " + legajo);
-        if(legajo < 0){
+        if(legajoLong < 0){
             log.error("El legajo ingresado no es válido. Ingrese un legajo positivo!");
             throw new Exception("El legajo no es válido. Ingrese un legajo positivo!");
         }
-        Optional<PersonalModel> personalOp = this.personalRepository.findById(legajo);
+        Optional<PersonalModel> personalOp = this.personalRepository.findById(legajoLong);
         if (personalOp.isEmpty()){
             log.error("El personal con el legajo " + legajo + " no se encuentra registrado en la base de datos!");
             throw new Exception("El personal con el legajo " + legajo + " no se encuentra registrado en la base de datos!");

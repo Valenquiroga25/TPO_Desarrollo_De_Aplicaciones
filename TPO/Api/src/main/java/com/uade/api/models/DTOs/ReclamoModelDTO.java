@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ReclamoModelDTO {
     private String documentoVecino;
-    private Long legajoPersonal;
+    private String legajoPersonal;
     private Long idSitio;
     private Long idDesperfecto;
     private String descripcion;

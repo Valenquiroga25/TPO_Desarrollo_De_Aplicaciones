@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 public class PersonalModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long legajo;
+    private String legajo;
     private String nombre;
     private String apellido;
     private String documento;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class PersonalController {
     @Autowired
     private PersonalService personalService;
-    public ResponseEntity<?> getPersonalByLegajo(@PathVariable Long legajo){
+    public ResponseEntity<?> getPersonalByLegajo(@PathVariable String legajo){
         try {
             return new ResponseEntity<>(personalService.findPersonalByLegajo(legajo), HttpStatus.OK);
         } catch (Exception e) {

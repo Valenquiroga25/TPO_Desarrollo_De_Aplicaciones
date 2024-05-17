@@ -3,6 +3,8 @@ package com.uade.api.repositories;
 import com.uade.api.models.UsuarioModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IUsuarioRepository extends JpaRepository<UsuarioModel, Long> {
-    UsuarioModel findUsuario(String identificador);
+import java.util.Optional;
+
+public interface IUsuarioRepository extends JpaRepository<UsuarioModel, String> {
+    Optional<UsuarioModel> findUsuarioByIdentificador(String identificador);
 }

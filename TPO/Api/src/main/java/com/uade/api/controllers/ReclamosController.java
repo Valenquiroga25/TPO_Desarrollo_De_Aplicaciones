@@ -61,7 +61,7 @@ public class ReclamosController {
         }
     }
 
-    @GetMapping(path = "{/allFromVecino/{documento}")
+    @GetMapping(path = "/allFromVecino/{documento}")
     public ResponseEntity<?> getAllReclamosByDocumento(@PathVariable String documento){
         try{
             return new ResponseEntity<>(reclamosService.findAllReclamosFromVecino(documento),HttpStatus.OK);
@@ -70,8 +70,8 @@ public class ReclamosController {
         }
     }
 
-    @GetMapping(path = "{/allFromPersonal/{id}")
-    public ResponseEntity<?> getAllReclamosByLegajo(@PathVariable Long legajo){
+    @GetMapping(path = "allFromPersonal/{legajo}")
+    public ResponseEntity<?> getAllReclamosByLegajo(@PathVariable String legajo){
         try{
             return new ResponseEntity<>(reclamosService.findAllReclamosFromPersonal(legajo),HttpStatus.OK);
         }catch (Exception e){

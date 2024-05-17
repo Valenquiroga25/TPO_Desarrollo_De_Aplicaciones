@@ -161,7 +161,7 @@ public class ReclamosService {
         return allReclamosFromVecinos;
     }
 
-    public List<ReclamoModel> findAllReclamosFromPersonal(Long legajo){
+    public List<ReclamoModel> findAllReclamosFromPersonal(String legajo){
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromPersonal = new ArrayList<>();
 

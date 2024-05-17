@@ -17,7 +17,7 @@ public class UsuarioService {
     IUsuarioRepository usuarioRepository;
 
     public UsuarioModel findUsuario(String identificador, String contrasenia){
-        Optional<UsuarioModel> usuarioOp = Optional.ofNullable(this.usuarioRepository.findUsuario(identificador));
+        Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(identificador);
         if(usuarioOp.isPresent() && checkPassword(contrasenia,usuarioOp.get().getContrasenia())){
             return usuarioOp.get();
         }

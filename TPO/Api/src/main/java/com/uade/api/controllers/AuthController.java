@@ -2,17 +2,13 @@ package com.uade.api.controllers;
 
 import java.util.Date;
 import java.util.Optional;
-
 import javax.crypto.SecretKey;
-
 import com.uade.api.models.UsuarioModel;
 import com.uade.api.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -20,7 +16,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     private final int EXPIRATION_TIME_IN_MIN = 60;
 
     @Autowired
