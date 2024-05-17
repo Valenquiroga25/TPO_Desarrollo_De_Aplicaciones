@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin() // Para que un controlador externo (un front alojado en otro dominio) acceda a nuestro sistema.
 @RestController
-@RequestMapping(path ="/tpo_desarrollo_mobile/vecinos/reclamos")
+@RequestMapping(path ="/tpo_desarrollo_mobile/reclamos")
 public class ReclamosController {
 
     @Autowired

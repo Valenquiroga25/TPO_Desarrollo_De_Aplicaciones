@@ -1,7 +1,11 @@
 package com.uade.api.models;
 
-import javax.persistence.*;
-import lombok.*;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "imagenes")

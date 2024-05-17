@@ -1,8 +1,11 @@
 package com.uade.api.models;
 
 import com.fasterxml.jackson.annotation.*;
-import javax.persistence.*;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="vecinos")
@@ -19,4 +22,8 @@ public class VecinoModel {
     private String apellido;
     private String direccion;
     private int codigoBarrio;
+    private String mail;
+    @OneToOne
+    @JoinColumn(name = "documento")
+    private UsuarioModel usuario;
 }

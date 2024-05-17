@@ -8,8 +8,10 @@ create table barrios(
 
 create table vecinos(
     documento varchar(20) not null,
+    contrasenia varchar(20) null,
     nombre varchar(150) not null,
     apellido varchar(150) not null,
+    mail varchar(50),
     direccion varchar(250) null,
     codigoBarrio BIGINT null,
     constraint pk_vecinos primary key (documento),
@@ -21,12 +23,19 @@ create table personal(
      nombre varchar(150) not null,
      apellido varchar(150) not null,
      documento varchar(20) not null,
-     password varchar(40) not null,
      sector varchar(200) not null,
      categoria int,
      fechaIngreso datetime,
      constraint pk_personal primary key (legajo)
 );
+
+create table usuarios(
+    identificador varchar(20) not null,
+    contrasenia varchar(20) not null,
+    clave_acceso varchar(20) not null,
+    tipoUsuario varchar(20) not null,
+    constraint pk_usuario primary key (identificador)
+)
 
 create table sitios(
     idSitio BIGINT not null AUTO_INCREMENT,
