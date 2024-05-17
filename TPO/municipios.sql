@@ -30,11 +30,12 @@ create table personal(
 );
 
 create table usuarios(
+    id BIGINT not null,
     identificador varchar(20) not null,
     contrasenia varchar(20) not null,
     clave_acceso varchar(20) not null,
     tipoUsuario varchar(20) not null,
-    constraint pk_usuario primary key (identificador)
+    constraint pk_usuario primary key (id)
 )
 
 create table sitios(
