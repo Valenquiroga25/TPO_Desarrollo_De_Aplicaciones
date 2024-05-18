@@ -36,7 +36,7 @@ public class AuthController {
         String token = Jwts.builder()
                 .subject(credentials.getIdentificador()).issuedAt(new Date())
                 .claim("rol", credentials.getTipoUsuario())
-                .claim("id", credentials.getId())
+                .claim("id", credentials.getIdentificador())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
                 .signWith(secretKey, SignatureAlgorithm.HS256).compact();

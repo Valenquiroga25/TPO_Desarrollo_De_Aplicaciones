@@ -7,21 +7,22 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class ApiApplication {
-	private MailService mailService;
+	//private MailService mailService;
 
+	/*
 	public ApiApplication(MailService mailService) {
 			this.mailService = mailService;
 	}
-
+	*/
 
 	public static void main(String[] args) {
-
 		ApplicationContext context = SpringApplication.run(ApiApplication.class,args);
-
-		ApiApplication app = context.getBean(ApiApplication.class);
-		app.testMail();
+		//ApiApplication app = context.getBean(ApiApplication.class);
+		//app.testMail();
 	}
+	/*
 	private void testMail(){
 		mailService.sendMail("rosellomateo@gmail.com","prueba","VAMO VIEJO");
 	}
+	 */
 }
