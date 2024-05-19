@@ -16,11 +16,16 @@ public class UsuarioService {
     @Autowired
     IUsuarioRepository usuarioRepository;
 
-    public UsuarioModel findUsuario(String identificador, String contrasenia){
+    public UsuarioModel findUsuario(String identificador, String contrasenia) throws Exception{
         Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(identificador);
-        if(usuarioOp.isPresent() && checkPassword(contrasenia,usuarioOp.get().getContrasenia())){
-            return usuarioOp.get();
+        if(usuarioOp.isEmpty())
+            throw new Exception("El usuario no se encuentra registrado en la base de datos!");
+
+        UsuarioModel usuarioDb = usuarioOp.get();
+        if(checkPassword(contrasenia,usuarioDb.getContrasenia())){
+            return usuarioDb;
         }
+
         return null;
     }
 

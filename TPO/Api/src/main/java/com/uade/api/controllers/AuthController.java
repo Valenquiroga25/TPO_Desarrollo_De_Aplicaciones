@@ -25,7 +25,7 @@ public class AuthController {
     private SecretKey secretKey; // Inyecta la clave secreta
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsuarioModel credentials){
+    public ResponseEntity<String> login(@RequestBody UsuarioModel credentials) throws Exception {
         // Validar las credenciales aquí (puedes usar Spring Security u otros
         // mecanismos)
         Optional <UsuarioModel> usuarioOp = Optional.ofNullable(this.usuarioService.findUsuario(credentials.getIdentificador(), credentials.getContrasenia()));
