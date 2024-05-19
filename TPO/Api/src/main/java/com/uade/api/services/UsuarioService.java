@@ -19,14 +19,16 @@ public class UsuarioService {
     IUsuarioRepository usuarioRepository;
     @Autowired
     MailService mailService;
-    public UsuarioModel createUsuario (UsuarioModelDTO usuarioModelDTO)throws Exception{
-        UsuarioModel newUsuario = convertToEntity(usuarioModelDTO);
-        Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(newUsuario.getIdentificador());
+    public UsuarioModel createUsuario (UsuarioModel usuario)throws Exception{
+        Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(usuario.getIdentificador());
         if(usuarioOp.isPresent()){
             throw new Exception("Este usuario ya esta creado");
         }
-        mailService.sendMail(newUsuario.getMail(), "Bienvenido a la Aplicación","Su codigo de acceso es: "+ newUsuario.getClave_acceso());
-        return this.usuarioRepository.save(newUsuario);
+
+        String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
+        usuario.setClave_acceso(claveDeAcceso);
+        mailService.sendMail(usuario.getMail(), "Bienvenido a la Aplicación. ","Su código de acceso es: " + usuario.getClave_acceso());
+        return this.usuarioRepository.save(usuario);
     }
 
     public UsuarioModel findUsuario(String identificador, String contrasenia) throws Exception{
@@ -48,14 +50,5 @@ public class UsuarioService {
         System.out.println("passwordDB: " + passwordDB);
         boolean passwordMatches = passwordEncoder.matches(password, passwordDB);
         return passwordMatches;
-    }
-    private UsuarioModel convertToEntity(UsuarioModelDTO usuarioModelDTO){
-        String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
-        UsuarioModel usuarioModel = new UsuarioModel(usuarioModelDTO.getIdentificador(),
-                null,
-                usuarioModelDTO.getMail(),
-                claveDeAcceso,
-                usuarioModelDTO.getTipoUsuario());
-        return usuarioModel;
     }
 }
