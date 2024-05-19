@@ -12,5 +12,7 @@ public class UsuarioModel {
     @Id
     private String identificador;
     private String contrasenia;
+    private String mail;
+    private String clave_acceso;
     private String tipoUsuario;
 }
