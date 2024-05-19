@@ -13,7 +13,6 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class VecinosService {
-
     @Autowired
     private VecinosRepository vecinosRepository;
 

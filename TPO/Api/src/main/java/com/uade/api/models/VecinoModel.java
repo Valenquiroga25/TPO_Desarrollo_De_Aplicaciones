@@ -22,7 +22,6 @@ public class VecinoModel {
     private String apellido;
     private String direccion;
     private int codigoBarrio;
-    private String mail;
     @OneToOne
     @JoinColumn(name = "documento")
     private UsuarioModel usuario;
