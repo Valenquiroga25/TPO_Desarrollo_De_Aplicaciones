@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="usuarios")
 public class UsuarioModel {
     @Id
     private String identificador;
@@ -16,5 +17,10 @@ public class UsuarioModel {
     private String clave_acceso;
     private String tipoUsuario;
 
-    public UsuarioModel(String identificador, String contrasenia, String mail, String tipoUsuario){}
+    public UsuarioModel(String identificador, String contrasenia, String mail, String tipoUsuario){
+        this.identificador=identificador;
+        this.contrasenia=contrasenia;
+        this.mail=mail;
+        this.tipoUsuario=tipoUsuario;
+    }
 }

@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface VecinosRepository extends JpaRepository<VecinoModel, Long>{
+public interface VecinosRepository extends JpaRepository<VecinoModel, String>{
+    Optional<VecinoModel> findVecinoByDocumento(String documento);
 }

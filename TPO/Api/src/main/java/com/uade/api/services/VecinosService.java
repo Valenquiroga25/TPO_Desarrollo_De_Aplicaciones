@@ -18,15 +18,16 @@ public class VecinosService {
 
     public VecinoModel findVecinoByDocumento(String documento) throws Exception{
         Long documentoLong = Long.parseLong(documento);
-        log.info("Id ingresado " + documentoLong);
+        log.info("Documento ingresado " + documentoLong);
         if(documentoLong < 0){
-            log.error("El Id ingresado no es válido. Ingrese un Id positivo!");
-            throw new Exception("El Id no es válido. Ingrese un Id positivo!");
+            log.error("El documento ingresado no es válido. Ingrese un documento positivo!");
+            throw new Exception("El documento no es válido. Ingrese un documento positivo!");
         }
-        Optional<VecinoModel> vecinoOp = vecinosRepository.findById(documentoLong);
+
+        Optional<VecinoModel> vecinoOp = vecinosRepository.findVecinoByDocumento(documento);
         if (vecinoOp.isEmpty()){
-            log.error("El vecino con el Id " + documentoLong + " no se encuentra registrado en la base de datos!");
-            throw new Exception("El vecino con el Id " + documentoLong + " no se encuentra registrado en la base de datos!");
+            log.error("El vecino con el Id " + documento + " no se encuentra registrado en la base de datos!");
+            throw new Exception("El vecino con el Id " + documento + " no se encuentra registrado en la base de datos!");
         }
         return vecinoOp.get();
     }

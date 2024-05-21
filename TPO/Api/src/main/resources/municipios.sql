@@ -1,5 +1,5 @@
 create database municipios;
-
+use municipios;
 create table barrios(
     idBarrio BIGINT not null AUTO_INCREMENT,
     nombre varchar(150) not null,
@@ -144,7 +144,11 @@ INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaI
 INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ('8', N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
 INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('9', N'ADRIAN', N'BEGUET', N'DNI30780521', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
+INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('2', 'Patito124', 'SLK-457', 'Inspector');
+INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('9', N'ADRIAN', N'BEGUET', N'DNI30780521', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
+
 select * from personal;
+select * from usuarios;
 select * from reclamos
 
 

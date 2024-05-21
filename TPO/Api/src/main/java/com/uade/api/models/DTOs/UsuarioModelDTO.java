@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class UsuarioModelDTO {
     private String identificador;
-    private String mail;
-    private String tipoUsuario;
+    private String contrasenia;
 }
