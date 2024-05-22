@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin() // Para que un controlador externo (un front alojado en otro dominio) acceda a nuestro sistema.
 @RestController
-@RequestMapping(path ="/tpo_desarrollo_mobile/reclamos")
+@RequestMapping(path ="/tpo-desarrollo-mobile/reclamos")
 public class ReclamosController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class ReclamosController {
     @Autowired
     DesperfectosService desperfectosService;
 
-    @PostMapping(path = "/reclamo-generar/{id}")
+    @PostMapping(path = "/")
     public ResponseEntity<?> createReclamo(@RequestBody ReclamoModelDTO reclamoDTO){ // RequestBody -> Se utiliza para vincular el cuerpo de un objeto con el dato que se pasa como parámetro (para actualizar o crear un objeto).
         try{
             ReclamoModel reclamo = convertToEntity(reclamoDTO);
@@ -34,7 +34,7 @@ public class ReclamosController {
         }
     }
 
-    @PutMapping(path = "/reclamo-editar/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateReclamo(@PathVariable Long id,@RequestBody ReclamoModelDTO reclamoDTO){
         try{
             return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getIdDesperfecto(), reclamoDTO.getDescripcion(), reclamoDTO.getImagenes()), HttpStatus.OK);
@@ -43,7 +43,7 @@ public class ReclamosController {
         }
     }
 
-    @DeleteMapping(path="/reclamo-eliminar/{id}")
+    @DeleteMapping(path="/{id}")
     public ResponseEntity<?> deleteReclamo(@PathVariable Long id){ // PathVariable -> Se utiliza para encontrar el objeto en la BD que tiene el ID que se manda.
         try{
             return new ResponseEntity<>(this.reclamosService.deleteReclamo(id),HttpStatus.OK);
@@ -52,7 +52,7 @@ public class ReclamosController {
         }
     }
 
-    @GetMapping(path = "{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<?> getReclamoById(@PathVariable Long id){
         try{
             return new ResponseEntity<>(this.reclamosService.findReclamoById(id),HttpStatus.OK);

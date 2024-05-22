@@ -8,4 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface PersonalRepository extends JpaRepository<PersonalModel, Long>{
+    Optional<PersonalModel> findPersonalByLegajo(String legajo);
 }

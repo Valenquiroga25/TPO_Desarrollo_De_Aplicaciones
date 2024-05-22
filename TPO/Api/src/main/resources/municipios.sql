@@ -30,7 +30,7 @@ create table personal(
 
 create table usuarios(
     identificador varchar(20) not null,
-    contrasenia varchar(20) null,
+    contrasenia varchar(100) null,
     mail varchar(50),
     clave_acceso varchar(20) not null,
     tipoUsuario varchar(20) not null,
@@ -135,23 +135,24 @@ create table imagenes(
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 
 SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';
-INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('2', N'JAVIER', N'ESPINOZA', N'DNI30616697', N'Escuelas', 2, CAST(N'2016-08-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('3', N'JOSE', N'OLIVERA', N'DNI30667193', N'Museos', 7, CAST(N'2015-02-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('4', N'MARCELO', N'DIAZ', N'DNI30669003', N'Bacheo y Demarcacion', 8, CAST(N'2020-07-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ('5', N'PABLO', N'BLANCO', N'DNI30702760', N'Bacheo y Demarcacion', 6, CAST(N'2019-07-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ('6', N'PABLO', N'CRUZ', N'DNI30724804', N'Plazas y Parques', 4, CAST(N'2020-12-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ('7', N'CRISTIAN', N'MEDINA', N'DNI30732736', N'Semaforos y Señalectica', 6, CAST(N'2019-05-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ('8', N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
-INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('9', N'ADRIAN', N'BEGUET', N'DNI30780521', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("2", N'JAVIER', N'ESPINOZA', N'DNI30616697', N'Escuelas', 2, CAST(N'2016-08-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("3", N'JOSE', N'OLIVERA', N'DNI30667193', N'Museos', 7, CAST(N'2015-02-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("4", N'MARCELO', N'DIAZ', N'DNI30669003', N'Bacheo y Demarcacion', 8, CAST(N'2020-07-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("5", N'PABLO', N'BLANCO', N'DNI30702760', N'Bacheo y Demarcacion', 6, CAST(N'2019-07-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("6", N'PABLO', N'CRUZ', N'DNI30724804', N'Plazas y Parques', 4, CAST(N'2020-12-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("7", N'CRISTIAN', N'MEDINA', N'DNI30732736', N'Semaforos y Señalectica', 6, CAST(N'2019-05-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("8", N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
+INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("9", N'ADRIAN', N'BEGUET', N'DNI30780521', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
-INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('2', 'Patito124', 'SLK-457', 'Inspector');
+INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('2', 'Patito124', 'valenquiroga2017@gmail.com','SLK-457', 'Inspector');
 INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ('9', N'ADRIAN', N'BEGUET', N'DNI30780521', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
 select * from personal;
 select * from usuarios;
 select * from reclamos
 
-
+use municipios
+delete from usuarios where identificador = "2"
 
 
 

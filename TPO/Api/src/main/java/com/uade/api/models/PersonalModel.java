@@ -27,7 +27,6 @@ public class PersonalModel {
     private String nombre;
     private String apellido;
     private String documento;
-    private String password;
     private String sector;
     private int categoria;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

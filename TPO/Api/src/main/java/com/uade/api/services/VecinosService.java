@@ -25,10 +25,8 @@ public class VecinosService {
         }
 
         Optional<VecinoModel> vecinoOp = vecinosRepository.findVecinoByDocumento(documento);
-        if (vecinoOp.isEmpty()){
-            log.error("El vecino con el Id " + documento + " no se encuentra registrado en la base de datos!");
-            throw new Exception("El vecino con el Id " + documento + " no se encuentra registrado en la base de datos!");
-        }
-        return vecinoOp.get();
+        if(vecinoOp.isEmpty())
+            log.error("El personal con el documento " + documento + " no se encuentra registrado en la base de datos!");
+        return vecinoOp.orElse(null);
     }
 }

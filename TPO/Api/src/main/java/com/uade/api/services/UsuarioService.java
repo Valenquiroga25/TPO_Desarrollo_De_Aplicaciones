@@ -30,10 +30,16 @@ public class UsuarioService {
         }
 
         Optional<VecinoModel> vecinoOp = Optional.ofNullable(this.vecinosService.findVecinoByDocumento(usuario.getIdentificador()));
-        if(vecinoOp.isEmpty())
-            throw new Exception("No existe ningún vecino con ese documento en la base de datos. Consultar en el municipio!");
+        if(vecinoOp.isEmpty()) {
+            Optional<PersonalModel> personalOp = Optional.ofNullable(this.personalService.findPersonalByLegajo(usuario.getIdentificador()));
+            if(personalOp.isEmpty()){
+                throw new Exception("No existe ningún vecino con ese documento, tampoco un inspector con ese legajo. Operación inválida!");
+            }
+        }
 
-
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = bCryptPasswordEncoder.encode(usuario.getContrasenia()); // Se hashea la contraseña.
+        usuario.setContrasenia(encodedPassword);
         String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
         usuario.setClave_acceso(claveDeAcceso);
         mailService.sendMail(usuario.getMail(), "Bienvenido a la Aplicación. ","Su código de acceso es: " + usuario.getClave_acceso());
@@ -103,8 +109,7 @@ public class UsuarioService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println("Password: " + password);
         System.out.println("passwordDB: " + passwordDB);
-        boolean passwordMatches = passwordEncoder.matches(password, passwordDB);
-        return passwordMatches;
+        return passwordEncoder.matches(password, passwordDB); // COMPARA HASH DE LA CONTRASEÑA PUESTA CON HASH DE LS BD.
     }
 
 }

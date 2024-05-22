@@ -1,7 +1,6 @@
 package com.uade.api.controllers;
 
 import java.util.Date;
-import java.util.Optional;
 import javax.crypto.SecretKey;
 
 import com.uade.api.models.DTOs.UsuarioModelDTO;

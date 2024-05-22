@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path ="/tpo_desarrollo_mobile/personal")
+@RequestMapping(path ="/tpo-desarrollo-mobile/personal")
 public class PersonalController {
     @Autowired
     private PersonalService personalService;

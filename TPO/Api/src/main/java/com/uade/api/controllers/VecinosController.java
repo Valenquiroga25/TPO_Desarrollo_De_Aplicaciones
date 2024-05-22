@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path ="/tpo_desarrollo_mobile/vecinos")
+@RequestMapping(path ="/tpo-desarrollo-mobile/vecinos")
 public class VecinosController {
     @Autowired
     private VecinosService vecinosService;

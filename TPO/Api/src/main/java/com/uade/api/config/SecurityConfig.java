@@ -33,7 +33,7 @@ public class SecurityConfig {
     }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("tpo-desarrollo-mobile/signUp", "auth/login");
+        return (web) -> web.ignoring().requestMatchers("tpo-desarrollo-mobile/usuarios/signUp", "auth/login");
     }
 
     @Bean

@@ -8,7 +8,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "vecinos/denuncias")
+@RequestMapping(path = "/tpo-desarrollo-mobile/denuncias")
 public class DenunciasController {
     @Autowired
     private DenunciasService denunciasService;
@@ -18,7 +18,7 @@ public class DenunciasController {
     private SitiosService sitiosService;
 
 
-    @PostMapping(path = "/denuncia-generar")
+    @PostMapping(path = "/")
     public ResponseEntity<?> createDenuncia(@RequestBody DenunciaModelDTO denunciaDTO){
         try {
             DenunciaModel denuncia = convertToEntity(denunciaDTO);
@@ -27,7 +27,7 @@ public class DenunciasController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
-    @PutMapping(path = "/denuncia-editar/{id}")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateDenuncia(@PathVariable Long id, @RequestBody DenunciaModelDTO denunciaDTO){
         try {
             return new ResponseEntity<>(denunciasService.updateDenuncia(id,denunciaDTO.getDescripcion()),HttpStatus.OK);
@@ -44,7 +44,7 @@ public class DenunciasController {
         }
     }
 
-    @DeleteMapping("/denuncia-eliminar/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDenuncia(@PathVariable Long id){
         try{
             return new ResponseEntity<>(denunciasService.deleteServicio(id),HttpStatus.OK);
