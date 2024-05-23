@@ -20,7 +20,7 @@ import java.util.List;
 public class ServicioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idServicio;
+    private Long idServicio;
     @ManyToOne
     @JoinColumn(name="documentoVecino")
     private VecinoModel vecino;
@@ -33,4 +33,13 @@ public class ServicioModel {
     @OneToMany
     @JoinColumn(name="idImagen")
     private List<ImagenModel> imagenes;
+
+    public ServicioModel(VecinoModel vecino, String direccion, String telefono, RubroModel rubro, String descripcion, List<ImagenModel> imagenes){
+        this.vecino = vecino;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.rubro = rubro;
+        this.descripcion = descripcion;
+        this.imagenes = imagenes;
+    }
 }
