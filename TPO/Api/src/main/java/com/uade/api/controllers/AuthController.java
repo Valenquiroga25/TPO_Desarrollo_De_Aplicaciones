@@ -33,6 +33,9 @@ public class AuthController {
         if (usuario == null)
             return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
 
+        if(!usuarioService.checkPasswordCreate(credentials.getIdentificador())){
+            //generatePassword(credentials);
+        }
         // Crear el token JWT
         String token = Jwts.builder()
                 .subject(usuario.getIdentificador()).issuedAt(new Date())
@@ -42,5 +45,11 @@ public class AuthController {
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
                 .signWith(secretKey, SignatureAlgorithm.HS256).compact();
         return new ResponseEntity<>(token, HttpStatus.OK);
-        }
+    }
+
+    @PostMapping("/generarContraseña")
+    private ResponseEntity<?> generatePassword(@RequestParam String contraseaña, UsuarioModel credentials) throws Exception {
+        //usuarioService.createPassword(contraseaña, credentials);
+        return new ResponseEntity<>("Se ha generado con exito la contraseña",HttpStatus.OK);
+    }
 }
