@@ -39,7 +39,7 @@ public class ComercioController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity<?> deleteService(@PathVariable Long idComercio){
+    public ResponseEntity<?> deleteComercio(@PathVariable Long idComercio){
         try{
             return new ResponseEntity<>(this.comerciosService.deleteComercio(idComercio),HttpStatus.OK);
         } catch (Exception e) {
@@ -48,9 +48,18 @@ public class ComercioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findServicioById(@PathVariable Long idComercio){
+    public ResponseEntity<?> findComercioById(@PathVariable Long idComercio){
         try{
             return new ResponseEntity<>(this.comerciosService.findComercioById(idComercio),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping("/getAllComercios")
+    public ResponseEntity<?> getAllComercios(){
+        try{
+            return new ResponseEntity<>(this.comerciosService.getAllComercios(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }

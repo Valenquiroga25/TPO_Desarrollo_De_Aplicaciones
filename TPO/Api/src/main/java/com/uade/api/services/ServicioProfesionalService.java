@@ -1,5 +1,6 @@
 package com.uade.api.services;
 
+import com.uade.api.models.ComercioModel;
 import com.uade.api.models.RubroModel;
 import com.uade.api.models.ServicioProfesionalModel;
 import com.uade.api.repositories.ServicioProfesionalRepository;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -73,4 +75,11 @@ public class ServicioProfesionalService {
             throw new Exception("El servicio con el id " + id + " no está registrado en la base de datos.");
         }
         return servicioOp.get();
-    }}
+    }
+
+    public List<ServicioProfesionalModel> getAllServicios(){
+        List<ServicioProfesionalModel> allServicios = this.servicioProfesionalRepository.findAll();
+        return allServicios;
+    }
+
+}

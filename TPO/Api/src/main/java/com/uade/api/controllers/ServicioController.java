@@ -58,6 +58,15 @@ public class ServicioController {
         }
     }
 
+    @GetMapping("/getAllServicios")
+    public ResponseEntity<?> getAllServicios(){
+        try{
+            return new ResponseEntity<>(this.servicioPrfesionalService.getAllServicios(),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+
     private ServicioProfesionalModel convertToEntity(ServicioModelDTO servicioDTO) throws Exception {
         ServicioProfesionalModel servicio = new ServicioProfesionalModel(this.vecinosService.findVecinoByDocumento(servicioDTO.getVecino().getDocumento()),
                 servicioDTO.getDireccion(),

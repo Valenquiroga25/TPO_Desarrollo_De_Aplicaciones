@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -61,5 +63,10 @@ public class ComerciosService {
             throw new Exception("El comercio con el Id "+id+" no se encuentra registrado en la base de datos.");
         }
         return comercioOp.get();
+    }
+
+    public List<ComercioModel> getAllComercios(){
+        List<ComercioModel> allComercios = this.comercioRepository.findAll();
+        return allComercios;
     }
 }

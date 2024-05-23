@@ -25,9 +25,9 @@ public class UsuarioController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> updateUsuario(@RequestBody UsuarioModel usuario, @PathVariable String identificador) {
+    public ResponseEntity<?> updateUsuario(@PathVariable String identificador, @RequestBody UsuarioModel usuario) {
         try {
-            return new ResponseEntity<>(usuarioService.updateUsuario(usuario, identificador), HttpStatus.OK);
+            return new ResponseEntity<>(usuarioService.updateUsuario(identificador, usuario), HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);

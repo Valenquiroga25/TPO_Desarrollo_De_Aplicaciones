@@ -26,16 +26,13 @@ public class AuthController {
     private SecretKey secretKey; // Inyecta la clave secreta
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsuarioModelDTO credentials) throws Exception {
+    public ResponseEntity<String> login(@RequestBody UsuarioModelDTO usuarioDTO) throws Exception {
         // Validar las credenciales aquí (puedes usar Spring Security u otros
         // mecanismos)
-        UsuarioModel usuario = this.usuarioService.findUsuario(credentials.getIdentificador(), credentials.getContrasenia());
+        UsuarioModel usuario = this.usuarioService.findUsuario(usuarioDTO.getIdentificador(), usuarioDTO.getContrasenia());
         if (usuario == null)
             return new ResponseEntity<>("Credenciales inválidas.", HttpStatus.UNAUTHORIZED);
 
-        if(!usuarioService.checkPasswordCreate(credentials.getIdentificador())){
-            //generatePassword(credentials);
-        }
         // Crear el token JWT
         String token = Jwts.builder()
                 .subject(usuario.getIdentificador()).issuedAt(new Date())
@@ -47,9 +44,9 @@ public class AuthController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    @PostMapping("/generarContraseña")
-    private ResponseEntity<?> generatePassword(@RequestParam String contraseaña, UsuarioModel credentials) throws Exception {
-        //usuarioService.createPassword(contraseaña, credentials);
+    @PutMapping("/generarContraseña/{id}")
+    private ResponseEntity<?> generatePassword(@PathVariable String identificador, @RequestBody String contrasenia) throws Exception {
+        usuarioService.generatePassword(identificador, contrasenia);
         return new ResponseEntity<>("Se ha generado con exito la contraseña",HttpStatus.OK);
     }
 }
