@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/tpo_desarrollo_mobile/imagenes")
+@RequestMapping("/tpo-desarrollo-mobile/imagenes")
 public class ImagenController {
     @Autowired
     private ImagenService imagenService;

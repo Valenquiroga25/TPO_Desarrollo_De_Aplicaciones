@@ -4,18 +4,15 @@ import com.uade.api.services.DesperfectosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path="vecinos/desperfectos")
+@RequestMapping(path="/tpo-desarrollo-mobile/vecinos/desperfectos")
 public class DesperfectosController {
     @Autowired
     private DesperfectosService desperfectosService;
 
-    @PostMapping(path="/{id}")
+    @GetMapping(path="/{id}")
     public ResponseEntity<?> getDesperfectoById(@PathVariable Long id){
         try{
             return new ResponseEntity<>(desperfectosService.findDesperfectoById(id), HttpStatus.OK);
