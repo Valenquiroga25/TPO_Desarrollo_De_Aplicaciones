@@ -13,7 +13,6 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UsuarioService {
-
     @Autowired
     IUsuarioRepository usuarioRepository;
     @Autowired
@@ -94,7 +93,7 @@ public class UsuarioService {
         }
     }
 
-    private boolean checkPasswordCreate(String identificador){
+    public boolean checkPasswordCreate(String identificador){
         UsuarioModel usuario = this.usuarioRepository.findUsuarioByIdentificador(identificador).get();
         return usuario.getContrasenia() != null;
     }
