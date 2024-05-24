@@ -1,8 +1,6 @@
 package com.uade.api.controllers;
 
-import com.uade.api.models.ComercioModel;
 import com.uade.api.models.DTOs.ComercioModelDTO;
-import com.uade.api.services.ComerciosService;
 import com.uade.api.services.VecinosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idRubro")
-
 public class RubroModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

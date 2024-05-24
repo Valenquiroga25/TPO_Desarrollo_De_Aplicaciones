@@ -115,29 +115,20 @@ create table movimientosDenuncia(
     constraint fk_movimientosDenuncia_denuncias foreign key (idDenuncia) references denuncias(idDenuncias)
 );
 
-create table serviciosProfesionales(
+create table servicios(
     idServicio BIGINT not null AUTO_INCREMENT,
     documentoVecino varchar(20) not null,
     titulo varchar(100) not null,
     direccion varchar(100) not null,
     telefono varchar(100) not null,
-    rubro BIGINT,
     descripcion varchar(1000) not null,
+    rubro BIGINT,
+    tipoServicio varchar(100) not null,
     constraint pk_servicio primary key(idServicio),
     constraint fk_servicio_vecino foreign key (documentoVecino) references vecinos(documento),
-    constraint fk_servicio_rubro foreign key (rubro) references rubros(idRubro)
+    constraint fk_servicio_rubro foreign key (rubro) references rubros(idRubro),
 );
 
-create table comercios(
-    idComercio BIGINT not null AUTO_INCREMENT,
-    documentoVecino varchar(20) not null,
-    titulo varchar(100) not null,
-    direccion varchar(100) not null,
-    telefono varchar(100) not null,
-    descripcion varchar(1000) not null,
-    constraint pk_comercio primary key(idComercio),
-    constraint fk_comercio_vecino foreign key (documentoVecino) references vecinos(documento)
-);
 
 create table imagenes(
      idImagen BIGINT not null AUTO_INCREMENT primary key,

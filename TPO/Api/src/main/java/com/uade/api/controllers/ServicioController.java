@@ -1,7 +1,7 @@
 package com.uade.api.controllers;
 
 import com.uade.api.models.DTOs.ServicioModelDTO;
-import com.uade.api.models.ServicioProfesionalModel;
+import com.uade.api.models.ServicioModel;
 import com.uade.api.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/tpo-desarrollo-mobile/servicios")
 public class ServicioController {
     @Autowired
-    ServicioProfesionalService servicioPrfesionalService;
-    @Autowired
-    ComerciosService comercioService;
+    ServicioService servicioService;
     @Autowired
     VecinosService vecinosService;
     @Autowired
@@ -23,8 +21,8 @@ public class ServicioController {
     @PostMapping(path = "/")
     public ResponseEntity<?> createServicio(@RequestBody ServicioModelDTO servicioDTO){
         try{
-            ServicioProfesionalModel servicio = convertToEntity(servicioDTO);
-            return new ResponseEntity<>(this.servicioPrfesionalService.createServicio(servicio), HttpStatus.OK);
+            ServicioModel servicio = convertToEntity(servicioDTO);
+            return new ResponseEntity<>(this.servicioService.createServicio(servicio), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
@@ -33,8 +31,8 @@ public class ServicioController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateServicio(@PathVariable Long idServicio, @RequestBody ServicioModelDTO servicioDTO){
         try{
-            ServicioProfesionalModel servicio = convertToEntity(servicioDTO);
-            return new ResponseEntity<>(this.servicioPrfesionalService.updateServicio(idServicio,servicio.getDescripcion()),HttpStatus.OK);
+            ServicioModel servicio = convertToEntity(servicioDTO);
+            return new ResponseEntity<>(this.servicioService.updateServicio(idServicio,servicio.getDescripcion()),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -43,7 +41,7 @@ public class ServicioController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteService(@PathVariable Long idServicio){
         try{
-            return new ResponseEntity<>(this.servicioPrfesionalService.deleteServicio(idServicio),HttpStatus.OK);
+            return new ResponseEntity<>(this.servicioService.deleteServicio(idServicio),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -52,7 +50,7 @@ public class ServicioController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findServicioById(@PathVariable Long idServicio){
         try{
-            return new ResponseEntity<>(this.servicioPrfesionalService.findServicioById(idServicio),HttpStatus.OK);
+            return new ResponseEntity<>(this.servicioService.findServicioById(idServicio),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -61,19 +59,39 @@ public class ServicioController {
     @GetMapping("/getAllServicios")
     public ResponseEntity<?> getAllServicios(){
         try{
-            return new ResponseEntity<>(this.servicioPrfesionalService.getAllServicios(),HttpStatus.OK);
+            return new ResponseEntity<>(this.servicioService.getAllServicios(),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
 
-    private ServicioProfesionalModel convertToEntity(ServicioModelDTO servicioDTO) throws Exception {
-        ServicioProfesionalModel servicio = new ServicioProfesionalModel(this.vecinosService.findVecinoByDocumento(servicioDTO.getVecino().getDocumento()),
+    @GetMapping("/getComercios")
+    public ResponseEntity<?>getAllComercios(){
+        try{
+            return new ResponseEntity<>(this.servicioService.getComercios(),HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+    @GetMapping("/getProfesionales")
+    public ResponseEntity<?>getAllProfesionales(){
+        try{
+            return new ResponseEntity<>(this.servicioService.getProfesionales(),HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+
+
+    private ServicioModel convertToEntity(ServicioModelDTO servicioDTO) throws Exception {
+        ServicioModel servicio = new ServicioModel(this.vecinosService.findVecinoByDocumento(servicioDTO.getVecino().getDocumento()),
+                servicioDTO.getTitulo(),
                 servicioDTO.getDireccion(),
                 servicioDTO.getTelefono(),
                 servicioDTO.getDescripcion(),
+                servicioDTO.getRubro(),
                 servicioDTO.getImagenes(),
-                this.rubrosService.findRubroById(servicioDTO.getRubro().getIdRubro()));
+                servicioDTO.getTipoServicio());
         return servicio;
     }
 }
