@@ -1,20 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from './src/pages/Login';
+import Registro from './src/pages/Registro';
+import PaginaNoRegistrados from './src/pages/PaginaNoRegistrado';
+import PaginaVecinos from './src/pages/PaginaVecino';
+import PaginaPersonal from './src/pages/PaginaPersonal';
+import Error404 from './src/pages/Error404';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+
+function App() {
+  const Stack = createNativeStackNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Puto el que lee!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Login'>
+        <Stack.Screen name='Login' component={Login} options={{title:'Login'}}/>
+        <Stack.Screen name='Registro' component={Registro}/>
+        <Stack.Screen name='PaginaNoRegistrado' component={PaginaNoRegistrados}/>
+        <Stack.Screen name='PaginaVecino' component={PaginaVecinos}/>
+        <Stack.Screen name='PaginaPersonal' component={PaginaPersonal}/>
+        <Stack.Screen name='Error404' component={Error404}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;

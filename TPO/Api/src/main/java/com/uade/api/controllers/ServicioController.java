@@ -65,7 +65,7 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/getComercios")
+    @GetMapping("/getAllComercios")
     public ResponseEntity<?>getAllComercios(){
         try{
             return new ResponseEntity<>(this.servicioService.getComercios(),HttpStatus.OK);
@@ -73,7 +73,7 @@ public class ServicioController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
-    @GetMapping("/getProfesionales")
+    @GetMapping("/getAllProfesionales")
     public ResponseEntity<?>getAllProfesionales(){
         try{
             return new ResponseEntity<>(this.servicioService.getProfesionales(),HttpStatus.OK);
