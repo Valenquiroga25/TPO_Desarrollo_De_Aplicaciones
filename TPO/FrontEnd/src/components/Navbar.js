@@ -1,15 +1,35 @@
-import React, { useState } from 'react'
-import {View, Image, StyleSheet, TouchableOpacity} from 'react-native'
+import React, {useState} from 'react'
+import {View, Image, StyleSheet, TouchableOpacity, Modal, Text, Pressable} from 'react-native'
 
 function Navbar(){
-    const [identificador, setIdentificador] = useState('');
-    const [contrasenia, setContrasenia] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
 
     return(
     <View style={styles.containar}>
-        <TouchableOpacity onPress={() => {}}>
+
+        <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+            setModalVisible(!modalVisible);
+            }}>
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Hello World!</Text>
+                    <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.textStyle}>Hide Modal</Text>
+                    </Pressable>
+                </View>
+            </View>
+        </Modal>
+
+        <TouchableOpacity onPress={() => (setModalVisible(true))}>
             <View>
-                <Image style={styles.images} source={require('../../assets/ImagenCasa.png')}/>
+                <Image style={styles.images} source={require('../../assets/Pregunta1.png')}/>
             </View>
         </TouchableOpacity>
         

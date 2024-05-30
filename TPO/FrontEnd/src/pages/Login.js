@@ -1,8 +1,58 @@
-import React from 'react'
+import {React, useState} from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import Navbar from '../components/Navbar';
+import { useNavigation } from '@react-navigation/native';
 
-function Login() {
+function Login({navigation}) {
+  const [identificador, setIdentificador] = useState('');
+  const [contrasenia, setContrasenia] = useState('');
+  const nav = useNavigation();
+  const handleSubmit =  async(event) => {
+    try{
+      event.preventDefault();
+      
+      const data = {identificador, contrasenia}
+      console.log(data);
+
+      const response = await fecth('/auth/login',{
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify(data)
+      })
+      
+      if(!response.ok){
+        throw new Error(await response.Text)
+      }
+
+      const token = response.Text;
+      localStorage.setItem('token', token);
+      const decodeToken = token.decodeToken;
+
+      if(!isExpired(decodeToken)){
+        console.log(decodeToken);
+
+        if(decodeToken.rol === 'Vecino'){
+          nav.navigate('/DashboardNeighbor')
+        }
+        else{
+          nav.navigate('/DashboardPersonal')
+        }
+      }
+
+    }catch(error){
+      alert(error);
+      console.error(error);
+    }
+  } 
+
+  function handleIdentificador(event){
+    setIdentificador(event);
+  }
+
+  function handleContrasenia(event){
+    setContrasenia(event);
+  }
+
   return (
     <View>
       <View style={styles.container}>
@@ -16,16 +66,26 @@ function Login() {
         </View>
 
         <View style={{backgroundColor:'#FFD600', marginTop:50}}>
-          <TextInput inputMode='text' style={styles.input} placeholder='Identificador'></TextInput>
+          <TextInput 
+          inputMode='text'
+          style={styles.input}
+          placeholder='Identificador'
+          onChangeText={handleIdentificador} value={identificador}></TextInput>
         </View>
 
         <View style={{backgroundColor:'#FFD600', marginTop:50}}>
-          <TextInput inputMode='text' style={styles.input} placeholder='Contraseña'></TextInput>
+          <TextInput
+          secureTextEntry={true}
+          inputMode='text' 
+          style={styles.input}
+          placeholder='Contraseña'
+          onChangeText={handleContrasenia} value={contrasenia}></TextInput>
         </View>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={handleSubmit}>
           <View
             title='Botón ingresar' 
+            type='submit'
             style={{    
             height:60,
             margin:15,
@@ -40,7 +100,7 @@ function Login() {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.containerBoton} onPress={() => {}}>
+        <TouchableOpacity style={styles.containerBoton} onPress={''}>
         <View
             title='Botón Registrarse' 
             style={{    
@@ -59,7 +119,7 @@ function Login() {
         </TouchableOpacity>
       </View>
       
-      <Navbar title='Navbar'/>
+      <Navbar title='Navbar' navigation={navigation}/>
     
     </View>
   );
@@ -89,6 +149,10 @@ const styles = StyleSheet.create({
   },
   "containerBoton":{
     marginTop:80,
+  },
+  "boton":{
+    backgroundColor:'red',
+    width:100
   }
 });
 
