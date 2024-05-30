@@ -3,17 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/pages/Login';
 import Registro from './src/pages/Registro';
-<<<<<<< HEAD
 import DashboardNeighbor from './src/pages/DashboardNeighbor';
 import DashboardPersonal from './src/pages/DashboardPersonal';
 import Navbar from './src/components/Navbar';
 import PopupInfo from './src/components/PopupInfo';
-=======
 import Menu from './src/pages/Menu';
-
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
->>>>>>> 1d52c1b9356d9b09de3a41db2b0120b8696160fa
-
 
 function App() {
 
@@ -21,19 +15,16 @@ function App() {
 
   return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Menu'>
+        <Stack.Navigator initialRouteName='Login'>
           <Stack.Screen name='Login' component={Login}/>
           <Stack.Screen name='Registro' component={Registro}/>
-<<<<<<< HEAD
           <Stack.Screen name='DashboardNeighbor' component={DashboardNeighbor}/>
           <Stack.Screen name='DashboardPersonal' component={DashboardPersonal}/>
           <Stack.Screen name='PopupInfo' component={PopupInfo}/>
 
           <Stack.Screen name='Navbar' component={Navbar}/>
 
-=======
           <Stack.Screen name='Menu' component={Menu}/>
->>>>>>> 1d52c1b9356d9b09de3a41db2b0120b8696160fa
         </Stack.Navigator>
       </NavigationContainer>
   );

@@ -88,13 +88,12 @@ function Login({navigation}) {
             type='submit'
             style={{    
             height:60,
-            margin:15,
+            margin:10,
             backgroundColor: '#FFD600',
             alignItems: 'center',
             justifyContent:'center',
             borderWidth:1,
             borderRadius: 10,
-            marginTop:50
             }}>
             <Text>Ingresar</Text>
           </View>
@@ -110,7 +109,6 @@ function Login({navigation}) {
             justifyContent:'center',
             borderWidth:1,
             borderRadius: 10,
-            marginTop:15,
             marginLeft:25,
             marginRight:27
             }}>
