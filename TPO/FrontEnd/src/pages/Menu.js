@@ -17,17 +17,17 @@ const Menu = ({ navigation }) => {
 
       <View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Reclamos')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuReclamos')}>
             <Text style={styles.buttonText}>Reclamos</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Servicios')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuServicios')}>
             <Text style={styles.buttonText}>Servicios</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Denuncias')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuDenuncias')}>
             <Text style={styles.buttonText}>Denuncias</Text>
           </TouchableOpacity>
         </View>
