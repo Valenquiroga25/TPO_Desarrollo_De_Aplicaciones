@@ -1,12 +1,11 @@
 import {React, useState} from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import Navbar from '../components/Navbar';
-import { useNavigation } from '@react-navigation/native';
 
 function Login({navigation}) {
   const [identificador, setIdentificador] = useState('');
   const [contrasenia, setContrasenia] = useState('');
-  const nav = useNavigation();
+
   const handleSubmit =  async(event) => {
     try{
       event.preventDefault();
@@ -14,7 +13,7 @@ function Login({navigation}) {
       const data = {identificador, contrasenia}
       console.log(data);
 
-      const response = await fecth('/auth/login',{
+      const response = await fetch('/auth/login',{
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(data)
@@ -32,10 +31,10 @@ function Login({navigation}) {
         console.log(decodeToken);
 
         if(decodeToken.rol === 'Vecino'){
-          nav.navigate('/DashboardNeighbor')
+          navigation.navigate('DashboardNeighbor')
         }
         else{
-          nav.navigate('/DashboardPersonal')
+          navigation.navigate('DashboardPersonal')
         }
       }
 
@@ -94,12 +93,13 @@ function Login({navigation}) {
             justifyContent:'center',
             borderWidth:1,
             borderRadius: 10,
+              marginTop:50
             }}>
             <Text>Ingresar</Text>
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.containerBoton} onPress={''}>
+        <TouchableOpacity style={styles.containerBoton} onPress={() => navigation.navigate('Registro','')}>
         <View
             title='Botón Registrarse' 
             style={{    
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   "titulo":{
-    marginTop:45,
+    marginTop:35,
     fontSize:30,
     fontWeight:'bold'
   },
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   "containerBoton":{
-    marginTop:80,
+    marginTop:50,
   },
   "boton":{
     backgroundColor:'red',

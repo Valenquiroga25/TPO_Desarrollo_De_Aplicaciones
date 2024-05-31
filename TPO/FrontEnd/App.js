@@ -6,7 +6,7 @@ import Registro from './src/pages/Registro';
 import DashboardNeighbor from './src/pages/DashboardNeighbor';
 import DashboardPersonal from './src/pages/DashboardPersonal';
 import Navbar from './src/components/Navbar';
-import PopupInfo from './src/components/PopupInfo';
+import Info from './src/components/Info';
 import Menu from './src/pages/Menu';
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
           <Stack.Screen name='Registro' component={Registro}/>
           <Stack.Screen name='DashboardNeighbor' component={DashboardNeighbor}/>
           <Stack.Screen name='DashboardPersonal' component={DashboardPersonal}/>
-          <Stack.Screen name='PopupInfo' component={PopupInfo}/>
+          <Stack.Screen name='Info' component={Info}/>
 
           <Stack.Screen name='Navbar' component={Navbar}/>
 
