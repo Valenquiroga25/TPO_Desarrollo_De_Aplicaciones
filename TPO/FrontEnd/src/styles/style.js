@@ -35,5 +35,5 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
-  },
+  }
 });

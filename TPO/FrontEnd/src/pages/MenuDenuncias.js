@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { View, Image } from 'react-native';
 import Navbar from '../components/Navbar';
 import styles from '../styles/style';
 

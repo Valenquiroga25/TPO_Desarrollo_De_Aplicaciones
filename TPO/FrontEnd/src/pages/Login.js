@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   "containerBoton":{
-    marginTop:50,
+    marginTop:55,
   },
   "boton":{
     backgroundColor:'red',
