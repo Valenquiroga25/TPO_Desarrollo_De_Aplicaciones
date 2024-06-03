@@ -1,6 +1,9 @@
 import {React, useState} from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
 import Navbar from '../components/Navbar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {jwtDecode} from 'jwt-decode';
+import { isExpired } from 'react-jwt';
 
 function Login({navigation}) {
   const [identificador, setIdentificador] = useState('');
@@ -13,28 +16,35 @@ function Login({navigation}) {
       const data = {identificador, contrasenia}
       console.log(data);
 
-      const response = await fetch('/auth/login',{
+      const response = await fetch('http://192.168.0.48:8080/auth/login',{
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(data)
       })
       
       if(!response.ok){
-        throw new Error(await response.Text)
+        throw new Error(await response.text())
       }
 
-      const token = response.Text;
-      localStorage.setItem('token', token);
-      const decodeToken = token.decodeToken;
+      const token = await response.text(); // Obtener el cuerpo de la respuesta como texto
+      await AsyncStorage.setItem('token', token); // Guardar el token en AsyncStorage como una cadena de texto
+      const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
+      console.log(token);
 
-      if(!isExpired(decodeToken)){
+      const tipoUsuario = decodeToken.rol;
+
+      if(!isExpired(token)){
         console.log(decodeToken);
 
-        if(decodeToken.rol === 'Vecino'){
-          navigation.navigate('DashboardNeighbor')
-        }
-        else{
-          navigation.navigate('DashboardPersonal')
+        if(decodeToken.isPasswordNull){
+          navigation.navigate('DashboardAcceso', {identificador, contrasenia, tipoUsuario})
+        }else{
+          if(tipoUsuario === 'Vecino'){
+            navigation.navigate('DashboardNeighbor');
+          }
+          else{
+            navigation.navigate('DashboardPersonal');
+          }
         }
       }
 
@@ -53,9 +63,8 @@ function Login({navigation}) {
   }
 
   return (
-    <View>
-      <View style={styles.container}>
-        
+    <View style={styles.container}>
+      <View style={styles.containerDatos}>
         <View style={{alignItems:'center'}}>
           <Image style={{width:150, height:65, marginRight:25, marginTop:15}} source={require('../../assets/BuenosAires.png')}/>
         </View>
@@ -66,7 +75,7 @@ function Login({navigation}) {
 
         <View style={{backgroundColor:'#FFD600', marginTop:50}}>
           <TextInput 
-          inputMode='text'
+          inputMode='numeric'
           style={styles.input}
           placeholder='Identificador'
           onChangeText={handleIdentificador} value={identificador}></TextInput>
@@ -117,26 +126,29 @@ function Login({navigation}) {
         </TouchableOpacity>
       </View>
       
-      <Navbar title='Navbar' navigation={navigation}/>
+      <Navbar title='Navbar'/>
     
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  "container":{
+  container:{
+    flex:1,
     backgroundColor:'#FFFFFF',
+  },
+  containerDatos:{
     padding:20
   },
-  "containerTitulo":{
+  containerTitulo:{
     alignItems:'center'
   },
-  "titulo":{
+  titulo:{
     marginTop:35,
     fontSize:30,
     fontWeight:'bold'
   },
-  "input":{
+  input:{
     padding:10,
     margin:7,
     marginTop:7,
@@ -145,12 +157,8 @@ const styles = StyleSheet.create({
     borderColor: "#FFFFFF",
     backgroundColor: '#FFFFFF'
   },
-  "containerBoton":{
-    marginTop:55,
-  },
-  "boton":{
-    backgroundColor:'red',
-    width:100
+  containerBoton:{
+    marginTop:55
   }
 });
 

@@ -38,14 +38,16 @@ public class AuthController {
                 .subject(usuario.getIdentificador()).issuedAt(new Date())
                 .claim("rol", usuario.getTipoUsuario())
                 .claim("id", usuario.getIdentificador())
+                .claim("isPasswordNull", usuario.getContrasenia() == null) // Añadir un claim para indicar si la contraseña es null
+                .claim("clave_acceso", usuario.getClave_acceso())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
                 .signWith(secretKey, SignatureAlgorithm.HS256).compact();
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    @PutMapping("/generarContraseña/{id}")
-    private ResponseEntity<?> generatePassword(@PathVariable String identificador, @RequestBody String contrasenia) throws Exception {
+    @PutMapping("/generarContrasenia/{id}")
+    private ResponseEntity<?> generatePassword(@PathVariable String identificador, @RequestBody String contrasenia) {
         usuarioService.generatePassword(identificador, contrasenia);
         return new ResponseEntity<>("Se ha generado con exito la contraseña",HttpStatus.OK);
     }

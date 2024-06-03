@@ -10,7 +10,6 @@ const MenuDenuncias = ({ navigation }) => {
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={require('../../assets/BuenosAires.png')} />
         </View>
-        
       </View>
 
       <Navbar title='Navbar' />

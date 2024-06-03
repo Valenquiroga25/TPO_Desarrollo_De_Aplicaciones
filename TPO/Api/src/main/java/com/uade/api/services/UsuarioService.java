@@ -34,7 +34,10 @@ public class UsuarioService {
             if(personalOp.isEmpty()){
                 throw new Exception("No existe ningún vecino con ese documento, tampoco un inspector con ese legajo. Operación inválida!");
             }
-        }
+            usuario.setTipoUsuario("Inspector");
+        }else
+            usuario.setTipoUsuario("Vecino");
+
 
         String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
         usuario.setClave_acceso(claveDeAcceso);

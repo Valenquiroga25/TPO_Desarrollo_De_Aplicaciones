@@ -33,8 +33,8 @@ create table usuarios(
     identificador varchar(20) not null,
     contrasenia varchar(100) null,
     mail varchar(50),
-    clave_acceso varchar(20) not null,
-    tipoUsuario varchar(20) not null,
+    clave_acceso varchar(20),
+    tipoUsuario varchar(20),
     constraint pk_usuario primary key (identificador)
 )
 
@@ -147,12 +147,14 @@ INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaI
 INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("8", N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
 INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("10", N'PEPE', N'SANZ', N'DNI30780522', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
-INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', 'JAJA1234', 'pepito@gmail.com','SLK-457', 'Inspector');
+INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', 'pepito@gmail.com','SLK-457', 'Inspector');
 
 select * from personal;
 select * from usuarios;
 select * from reclamos
 use municipios
+
+delete from usuarios where identificador='10'
 
 
 

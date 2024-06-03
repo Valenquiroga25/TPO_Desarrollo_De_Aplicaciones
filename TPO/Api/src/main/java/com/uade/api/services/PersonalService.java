@@ -26,6 +26,8 @@ public class PersonalService {
         Optional<PersonalModel> personalOp = this.personalRepository.findPersonalByLegajo(legajo);
         if(personalOp.isEmpty())
             log.error("El personal con el legajo " + legajo + " no se encuentra registrado en la base de datos!");
+
+        log.info("Personal encontrado");
         return personalOp.orElse(null);
     }
 }

@@ -46,7 +46,6 @@ function Navbar(){
                     </TouchableOpacity>
                 </View>
             </View>
-            
         </Modal>
 
         <TouchableOpacity onPress={() => {}}>
