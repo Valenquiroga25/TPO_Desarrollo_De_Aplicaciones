@@ -104,15 +104,18 @@ public class UsuarioService {
         }
     }
 
-    public void generatePassword(String identificador, String contrasenia){
-        Optional<UsuarioModel> usuario = this.usuarioRepository.findUsuarioByIdentificador(identificador);
-        UsuarioModel usuarioDb = usuario.get();
+    public void generatePassword(String identificador, String contrasenia) throws Exception {
+        Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(identificador);
+        if(usuarioOp.isEmpty()){
+            throw new Exception("El usuario no se encuentra registrado en la base de datos!");
+        }
 
+        UsuarioModel usuarioDb = usuarioOp.get();
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = bCryptPasswordEncoder.encode(usuarioDb.getContrasenia()); // Se hashea la contraseña.
+        String encodedPassword = bCryptPasswordEncoder.encode(contrasenia); // Se hashea la contraseña.
         usuarioDb.setContrasenia(encodedPassword);
 
-        usuarioDb.setContrasenia(contrasenia);
+        this.usuarioRepository.save(usuarioDb);
     }
 
     public boolean checkPasswordExists(String identificador){
@@ -125,6 +128,7 @@ public class UsuarioService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println("Password: " + password);
         System.out.println("passwordDB: " + passwordDB);
+        System.out.println(passwordEncoder.encode(password));
         return passwordEncoder.matches(password, passwordDB); // COMPARA HASH DE LA CONTRASEÑA PUESTA CON HASH DE LS BD.
     }
 }

@@ -1,12 +1,12 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {React, useState} from 'react'
 import {Text, TextInput, View, TouchableOpacity, StyleSheet} from 'react-native'
+import {jwtDecode} from 'jwt-decode';
 
 function DashboardAcceso({route, navigation}){
-    const {identificador} = route.params;
-    const {contrasenia} = route.params;
-    const {tipoUsuario} = route.params;
+    const {tipoDeUsuario} = route.params;
+    const [contrasenia, setContrasenia] = useState('')
 
-    const[contraseniaNueva, setContraseniaNueva] = useState('')
     
     const handleSubmit = async(event) =>{
         try{
@@ -15,30 +15,29 @@ function DashboardAcceso({route, navigation}){
             if(contrasenia === '')
               throw new Error('Complete todos los campos para registrarse!')
             
-            const contrasenia = contraseniaNueva;
-            const data = {identificador, contrasenia}
-            console.log(data);
-      
-            const response = await fetch(`http://192.168.0.48:8080/auth/generarContrasenia/${identificador}`,{
+            const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
+            const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
+
+            console.log(JSON.stringify(tipoDeUsuario))
+            const response = await fetch(`http://192.168.0.48:8080/auth/generarContrasenia/${decodeToken.id}`,{
               method: 'PUT',
-              headers: {'Content-Type' : 'application/json'},
-              body: JSON.stringify(data)
+              headers: 
+              {'Content-Type' : 'application/json',
+              "Authorization": `Bearer ${token}`},
+              body: contrasenia
             })
             
-            if(!response.ok){
-              throw new Error(await response.text())
+            if(response.ok){
+              console.log("Contraseña creada con éxito!")
+              console.log(await response.text())
+        
+              alert("Contraseña con exito!")
+  
+              if(tipoDeUsuario === 'Vecino')
+                  navigation.navigate('DashboardNeighbor')
+              else
+                  navigation.navigate('DashboardPersonal')
             }
-      
-            console.log("Contraseña creada con exito!")
-            console.log(await response.json())
-      
-            alert("Contraseña con exito!")
-
-            if(JSON.stringify(tipoUsuario) === 'Vecino')
-                navigation.navigate('DashboardNeighbor')
-            else
-                navigation.navigate('DashboardPersonal')
-
           }
           catch(error){
             alert(error);
@@ -47,7 +46,7 @@ function DashboardAcceso({route, navigation}){
     }
 
     function handleContrasenia(event){
-        setContraseniaNueva(event);
+        setContrasenia(event);
     }
     
     return(
@@ -60,7 +59,7 @@ function DashboardAcceso({route, navigation}){
                 inputMode='text'
                 style={styles.input}
                 placeholder='Contraseña'
-                onChangeText={handleContrasenia} value={contraseniaNueva}></TextInput>
+                onChangeText={handleContrasenia} value={contrasenia}></TextInput>
             </View>
 
             <TouchableOpacity style={{

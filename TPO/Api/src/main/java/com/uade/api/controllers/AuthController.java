@@ -46,9 +46,9 @@ public class AuthController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    @PutMapping("/generarContrasenia/{id}")
-    private ResponseEntity<?> generatePassword(@PathVariable String identificador, @RequestBody String contrasenia) {
+    @PutMapping("/generarContrasenia/{identificador}")
+    private ResponseEntity<?> generatePassword(@PathVariable String identificador, @RequestBody String contrasenia) throws Exception {
         usuarioService.generatePassword(identificador, contrasenia);
-        return new ResponseEntity<>("Se ha generado con exito la contraseña",HttpStatus.OK);
+        return new ResponseEntity<>("Contraseña generada con éxito!",HttpStatus.OK);
     }
 }

@@ -37,7 +37,7 @@ function Login({navigation}) {
         console.log(decodeToken);
 
         if(decodeToken.isPasswordNull){
-          navigation.navigate('DashboardAcceso', {identificador, contrasenia, tipoUsuario})
+          navigation.navigate('DashboardAcceso', {tipoDeUsuario: tipoUsuario})
         }else{
           if(tipoUsuario === 'Vecino'){
             navigation.navigate('DashboardNeighbor');
