@@ -28,7 +28,7 @@ public class ServicioController {
         }
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{idServicio}")
     public ResponseEntity<?> updateServicio(@PathVariable Long idServicio, @RequestBody ServicioModelDTO servicioDTO){
         try{
             ServicioModel servicio = convertToEntity(servicioDTO);
@@ -38,7 +38,7 @@ public class ServicioController {
         }
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "/{idServicio}")
     public ResponseEntity<?> deleteService(@PathVariable Long idServicio){
         try{
             return new ResponseEntity<>(this.servicioService.deleteServicio(idServicio),HttpStatus.OK);
@@ -47,7 +47,7 @@ public class ServicioController {
         }
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{idServicio}")
     public ResponseEntity<?> findServicioById(@PathVariable Long idServicio){
         try{
             return new ResponseEntity<>(this.servicioService.findServicioById(idServicio),HttpStatus.OK);
@@ -84,13 +84,13 @@ public class ServicioController {
 
 
     private ServicioModel convertToEntity(ServicioModelDTO servicioDTO) throws Exception {
-        ServicioModel servicio = new ServicioModel(this.vecinosService.findVecinoByDocumento(servicioDTO.getVecino().getDocumento()),
+        ServicioModel servicio = new ServicioModel(this.vecinosService.findVecinoByDocumento(servicioDTO.getDocumentoVecino()),
                 servicioDTO.getTitulo(),
                 servicioDTO.getDireccion(),
                 servicioDTO.getTelefono(),
                 servicioDTO.getDescripcion(),
-                servicioDTO.getRubro(),
-                servicioDTO.getImagenes(),
+                this.rubrosService.findRubroById(servicioDTO.getIdRubro()),
+                null,
                 servicioDTO.getTipoServicio());
         return servicio;
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -18,14 +19,14 @@ public class ServicioService {
     @Autowired
     ServicioRepository servicioRepository;
     @Autowired
-    RubrosRepository rubrosRepository;
-    @Autowired
     RubrosService rubrosService;
+    @Autowired
+    VecinosService vecinosService;
 
     public ServicioModel createServicio(ServicioModel newServicio) throws Exception {
-        if(newServicio.getTipoServicio()=="Profesional"){
+        if(Objects.equals(newServicio.getTipoServicio(), "Profesional")){
             if(newServicio.getRubro()==null){
-                log.error("El rubro no puede ser nul");
+                log.error("El rubro no puede ser nulo");
                 throw new Exception("El rubro no puede ser nulo");
             }else{
                 Optional<RubroModel> rubroOp = Optional.ofNullable(rubrosService.findRubroById(newServicio.getRubro().getIdRubro()));
@@ -35,9 +36,12 @@ public class ServicioService {
                 }
             }
         }
-        if(newServicio.getImagenes().size() > 5){
-            log.error("La publicación del servicio no puede tener más de 5 imágenes.");
-            throw new Exception("La publicación del servicio no puede tener más de 5 imágenes.");
+
+        if(newServicio.getImagenes() != null){
+            if(newServicio.getImagenes().size() > 5){
+                log.error("La publicación del servicio no puede tener más de 5 imágenes.");
+                throw new Exception("La publicación del servicio no puede tener más de 5 imágenes.");
+            }
         }
         return this.servicioRepository.save(newServicio);
     }
@@ -85,15 +89,14 @@ public class ServicioService {
     }
 
     public List<ServicioModel> getAllServicios(){
-        List<ServicioModel> allServicios = this.servicioRepository.findAll();
-        return allServicios;
+        return this.servicioRepository.findAll();
     }
     public List<ServicioModel> getProfesionales(){
         List<ServicioModel> allServicios = this.servicioRepository.findAll();
         List<ServicioModel> servicioProfesionales = new ArrayList<>();
 
         for(ServicioModel servicio : allServicios){
-            if (servicio.getTipoServicio()=="Profesional")
+            if (Objects.equals(servicio.getTipoServicio(), "Profesional"))
                 servicioProfesionales.add(servicio);
         }
         return servicioProfesionales;
@@ -104,7 +107,7 @@ public class ServicioService {
         List<ServicioModel> comercios = new ArrayList<>();
 
         for(ServicioModel servicio : allServicios){
-            if (servicio.getTipoServicio()=="Comercio")
+            if (Objects.equals(servicio.getTipoServicio(), "Comercio"))
                 comercios.add(servicio);
         }
         return comercios;

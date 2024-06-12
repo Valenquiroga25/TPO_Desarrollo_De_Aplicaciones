@@ -15,24 +15,29 @@ function Registro({navigation}) {
       if(identificador === '' || mail === '')
         throw new Error('Complete todos los campos para registrarse!')
       
-      const data = {identificador, mail}
-      console.log(data);
-
-      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/usuarios/signUp',{
-        method: 'POST',
-        headers: {'Content-Type' : 'application/json'},
-        body: JSON.stringify(data)
-      })
-      
-      if(!response.ok){
-        throw new Error(await response.text())
+      if(!isValidEmail(mail))
+        alert("Indique un email válido (debe contener '@')")
+      else{
+        const data = {identificador, mail}
+        console.log(data);
+  
+        const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/usuarios/signUp',{
+          method: 'POST',
+          headers: {'Content-Type' : 'application/json'},
+          body: JSON.stringify(data)
+        })
+        
+        if(!response.ok){     
+          throw new Error(await response.text())
+        }
+  
+        console.log("Usuario registrado con exito!")
+        console.log(await response.json())
+  
+        openModal();
       }
-
-      console.log("Usuario registrado con exito!")
-      console.log(await response.json())
-
-      openModal();
     }
+
     catch(error){
       alert(error);
       console.error(error);
@@ -56,6 +61,10 @@ function Registro({navigation}) {
     console.log(event)
   }
 
+  function isValidEmail(event) {
+    return event.includes('@');
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
@@ -70,7 +79,7 @@ function Registro({navigation}) {
 
           <View style={{backgroundColor:'#FFD600', marginTop:50}}>
             <TextInput
-            inputMode='email-address' 
+            inputMode='email' 
             style={styles.input}
             placeholder='Email'
             onChangeText={handleEmail} value={mail}></TextInput>

@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {React, useState} from 'react'
-import {Text, TextInput, View, TouchableOpacity, StyleSheet} from 'react-native'
+import {Text, TextInput, View, TouchableOpacity, StyleSheet, Modal} from 'react-native'
 import {jwtDecode} from 'jwt-decode';
 
-function DashboardAcceso({route, navigation}){
+function PaginaAcceso({route, navigation}){
     const {tipoDeUsuario} = route.params;
     const [contrasenia, setContrasenia] = useState('')
-
+    const [isVisible, setIsVisible] = useState(false);
     
     const handleSubmit = async(event) =>{
         try{
@@ -31,12 +31,8 @@ function DashboardAcceso({route, navigation}){
               console.log("Contraseña creada con éxito!")
               console.log(await response.text())
         
-              alert("Contraseña con exito!")
-  
-              if(tipoDeUsuario === 'Vecino')
-                  navigation.navigate('DashboardNeighbor')
-              else
-                  navigation.navigate('DashboardPersonal')
+              openModal();
+            
             }
           }
           catch(error){
@@ -45,9 +41,26 @@ function DashboardAcceso({route, navigation}){
           }
     }
 
-    function handleContrasenia(event){
-        setContrasenia(event);
-    }
+    
+  function openModal(){
+    setIsVisible(true);
+  }
+
+  function closeModal(){
+      setIsVisible(false);
+  }
+
+
+  function handleContrasenia(event){
+      setContrasenia(event);
+  }
+
+  function redireccion(tipoDeUsuario){
+    if(tipoDeUsuario === 'Vecino')
+      navigation.navigate('MenuVecino')
+    else
+      navigation.navigate('MenuPersonal')
+  }
     
     return(
         <View style={styles.container}>
@@ -74,6 +87,34 @@ function DashboardAcceso({route, navigation}){
                 marginTop:80}} onPress={handleSubmit}>
                 <Text>Generar</Text>
             </TouchableOpacity>
+
+            <Modal
+            animationType='slide'
+            transparent={true}
+            visible={isVisible}
+            onRequestClose={closeModal}
+            >
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Contraseña generada con éxito!</Text>
+                    <Text style={styles.text}>Aprete "Continuar" para ser redirigido a la página principal.</Text>
+                </View>
+                <View style={styles}>
+                  <TouchableOpacity style={{
+                          width:300,
+                          height:60,
+                          margin:10,
+                          backgroundColor: '#FFD600',
+                          alignItems: 'center',
+                          justifyContent:'center',
+                          borderWidth:1,
+                          borderRadius: 10,
+                          marginTop:80}} onPress={() => redireccion(tipoDeUsuario)}>
+                          <Text>Continuar</Text>
+                  </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
         </View>
     )
 }
@@ -103,7 +144,29 @@ function DashboardAcceso({route, navigation}){
     },
     containerBoton:{
       marginTop:55
-    }
+    },
+    modalContainer:{
+      flex:1,
+      alignItems:'center',
+      justifyContent:'center',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo blanco con 50% de opacidad
+  },
+  modalContent:{
+      backgroundColor:'#FFD600',
+      height:150,
+      marginLeft:20,
+      marginRight:20,
+      borderRadius:5,
+      padding:15
+  },
+  modalTitle:{
+      fontSize:20,
+      textAlign:'center'
+  },
+  text:{
+      fontSize:17,
+      marginTop:25
+  }
   });
 
-export default DashboardAcceso;
+export default PaginaAcceso;

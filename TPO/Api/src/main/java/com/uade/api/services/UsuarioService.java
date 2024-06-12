@@ -40,7 +40,7 @@ public class UsuarioService {
 
 
         String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
-        usuario.setClave_acceso(claveDeAcceso);
+        usuario.setClave_acceso(claveDeAcceso.toUpperCase());
         mailService.sendMail(usuario.getMail(), "Bienvenido a la Aplicación. ","Su código de acceso es: " + usuario.getClave_acceso());
         return this.usuarioRepository.save(usuario);
     }
@@ -128,7 +128,6 @@ public class UsuarioService {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println("Password: " + password);
         System.out.println("passwordDB: " + passwordDB);
-        System.out.println(passwordEncoder.encode(password));
         return passwordEncoder.matches(password, passwordDB); // COMPARA HASH DE LA CONTRASEÑA PUESTA CON HASH DE LS BD.
     }
 }

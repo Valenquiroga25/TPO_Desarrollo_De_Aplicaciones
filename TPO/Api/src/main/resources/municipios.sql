@@ -130,8 +130,11 @@ create table servicios(
 
 
 create table imagenes(
-     idImagen BIGINT not null AUTO_INCREMENT primary key,
-     datosImagen blob not null
+     idImagen BIGINT not null AUTO_INCREMENT,
+     datosImagen blob not null,
+     idUsuario varchar(20) not null, 
+     constraint pk_imagen primary key(idImagen),
+     constraint fk_imagen_usuario foreign key (idUsuario) references usuarios(identificador)
 )
 
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
@@ -146,17 +149,26 @@ INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaI
 INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("8", N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
 INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("10", N'PEPE', N'SANZ', N'DNI30780522', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
-INSERT vecinos (documento, nombre, apellido, direccion, codigoBarrio) VALUES ('28000046', 'Valentin',  'Quiroga' , 'Las Heras 3744', 1);
+INSERT vecinos (documento, nombre, apellido, direccion, codigoBarrio) VALUES ('44367389', 'Valentin',  'Quiroga' , 'Las Heras 3744', 1);
 
 INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', 'pepito@gmail.com','SLK-457', 'Inspector');
 
 insert barrios(nombre) values ("Palermo")
+
+insert into rubros(descripcion) values ("Encomienda")
+
+select * from vecinos;
 select * from personal;
 select * from usuarios;
 select * from reclamos
+select * from servicios;
+select * from rubros
+
 use municipios
 
-delete from usuarios where identificador='10'
+delete from usuarios where identificador='9'
+delete from usuarios where identificador='44367389'
+
 
 
 

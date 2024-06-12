@@ -24,7 +24,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/{identificador}")
     public ResponseEntity<?> updateUsuario(@PathVariable String identificador, @RequestBody UsuarioModel usuario) {
         try {
             return new ResponseEntity<>(usuarioService.updateUsuario(identificador, usuario), HttpStatus.OK);
@@ -34,7 +34,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping(path ="/{id}")
+    @GetMapping(path ="/{identificador}")
     public ResponseEntity<?> getUsuarioByIdentificador(@PathVariable String identificador) {
         try {
             UsuarioModel user = usuarioService.findUsuarioByIdentificador(identificador);

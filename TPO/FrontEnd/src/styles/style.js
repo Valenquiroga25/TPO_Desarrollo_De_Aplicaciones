@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    padding: 20,
     justifyContent: 'space-between',
   },
   imageContainer: {
@@ -22,14 +21,15 @@ export default StyleSheet.create({
     marginTop: 15,
   },
   buttonWrapper: {
-    marginBottom: 15,
+    padding: 40,
   },
   button: {
     backgroundColor: '#FFD600',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 15,
+    height:60,
     alignItems: 'center',
+    justifyContent:'center',
+    borderWidth:1,
+    borderRadius: 10,
   },
   buttonText: {
     color: 'black',

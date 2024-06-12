@@ -13,12 +13,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicioModelDTO {
-    private VecinoModel vecino;
+    private String documentoVecino;
     private String titulo;
     private String direccion;
     private String telefono;
-    private RubroModel rubro;
     private String descripcion;
-    private List<ImagenModel> imagenes;
+    private Long idRubro;
     private String tipoServicio;
 }

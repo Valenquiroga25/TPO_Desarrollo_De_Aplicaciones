@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DenunciaModelDTO {
-    private String idVecino;
+    private String documentoVecino;
     private Long idSitio;
     private String descripcion;
     private Estado estado;

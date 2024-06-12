@@ -9,9 +9,8 @@ function Login({navigation}) {
   const [identificador, setIdentificador] = useState('');
   const [contrasenia, setContrasenia] = useState('');
 
-  const handleSubmit =  async(event) => {
+  const handleSubmit =  async() => {
     try{
-      event.preventDefault();
       
       const data = {identificador, contrasenia}
       console.log(data);
@@ -30,20 +29,19 @@ function Login({navigation}) {
       await AsyncStorage.setItem('token', token); // Guardar el token en AsyncStorage como una cadena de texto
       const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
       console.log(token);
-
       const tipoUsuario = decodeToken.rol;
 
       if(!isExpired(token)){
         console.log(decodeToken);
 
         if(decodeToken.isPasswordNull){
-          navigation.navigate('DashboardAcceso', {tipoDeUsuario: tipoUsuario})
+          navigation.navigate('PaginaAcceso', {tipoDeUsuario: tipoUsuario})
         }else{
           if(tipoUsuario === 'Vecino'){
-            navigation.navigate('DashboardNeighbor');
+            navigation.navigate('MenuVecino');
           }
           else{
-            navigation.navigate('DashboardPersonal');
+            navigation.navigate('MenuPersonal');
           }
         }
       }
