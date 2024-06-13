@@ -123,7 +123,8 @@ function PaginaAcceso({route, navigation}){
     container:{
       flex:1,
       backgroundColor:'#FFFFFF',
-      padding:20
+      padding:20,
+      marginTop:30
     },
     containerTitulo:{
       alignItems:'center',

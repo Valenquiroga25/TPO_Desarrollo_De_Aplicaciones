@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MenuInicio from './src/pages/MenuInicio';
 import MenuNR from './src/pages/MenuNR'
 import Login from './src/pages/Login';
 import Registro from './src/pages/Registro';
@@ -20,7 +21,8 @@ function App() {
 
   return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Login' screenOptions={{headerShown:false}}>
+        <Stack.Navigator initialRouteName='MenuInicio' screenOptions={{headerShown:false}}>
+        <Stack.Screen name='MenuInicio' component={MenuInicio} />
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>
@@ -29,6 +31,8 @@ function App() {
         <Stack.Screen name='MenuPersonal' component={MenuPersonal}/>
 
         <Stack.Screen name='Navbar' component={Navbar}/>
+        <Stack.Screen name='ListaServicios' component={ListaServicios}/>
+        <Stack.Screen name='PaginaDetalleServicio' component={PaginaDetalleServicio}/>
 
         <Stack.Screen name='MenuReclamosVecino' component={MenuReclamosVecino}/>
         <Stack.Screen name='MenuServiciosVecino' component={MenuServiciosVecino}/>

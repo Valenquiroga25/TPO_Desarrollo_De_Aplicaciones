@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import {Text, View, Image, StyleSheet, TouchableOpacity, Modal, KeyboardAvoidingView} from 'react-native'
+import {Text, View, Image, StyleSheet, TouchableOpacity, Modal, HideWithKeyboard} from 'react-native'
 
 function Navbar(){
     const [isVisible, setIsVisible] = useState(false);
@@ -65,10 +65,6 @@ function Navbar(){
 
 const styles = StyleSheet.create({
     containar:{
-        position:'absolute',
-        bottom:0,
-        left: 0,
-        right: 0,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingRight:30,

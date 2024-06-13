@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Text, TextInput, View, Image, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 import Navbar from '../components/Navbar';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 function Registro({navigation}) {
 
@@ -67,8 +68,10 @@ function Registro({navigation}) {
 
   return (
     <View style={styles.container}>
+      
+      <Image style={styles.imagen} resizeMode='contain' source={require('../../assets/BuenosAiresCiudad.png')}></Image>
+      
       <View style={styles.containerDatos}>
-        <Image style={{width:320, height:100}} source={require('../../assets/BuenosAiresCiudad.png')}></Image>
         <View style={{backgroundColor:'#FFD600', marginTop:80}}>
             <TextInput 
             inputMode='numeric'
@@ -130,8 +133,11 @@ function Registro({navigation}) {
             </View>
         </TouchableOpacity>
       </View>
-      <Navbar />
-    </View>
+
+      <HideWithKeyboard style={styles.navbar}>
+        <Navbar />
+      </HideWithKeyboard>
+      </View>
   );
 }
 
@@ -140,8 +146,18 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#FFFFFF',
   },
+  imagen:{
+    position:'absolute',
+    top:50,
+    bottom:0,
+    left:10,
+    width:180, 
+    height:100
+  },
   containerDatos:{
-    padding:20
+    flex:1,
+    padding:20,
+    marginTop:170
   },
   input:{
     padding:10,
@@ -176,6 +192,12 @@ modalTitle:{
 text:{
     fontSize:17,
     marginTop:25
+},
+navbar:{
+  position:'absolute',
+  bottom:0,
+  left:0,
+  right:0
 }
 })
 
