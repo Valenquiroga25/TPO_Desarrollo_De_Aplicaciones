@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import { isExpired } from 'react-jwt';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
 function Login({navigation}) {
   const [identificador, setIdentificador] = useState('');
@@ -62,11 +63,12 @@ function Login({navigation}) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerDatos}>
+       
         <View style={{alignItems:'center'}}>
-          <Image style={{width:150, height:65, marginRight:25, marginTop:15}} source={require('../../assets/BuenosAires.png')}/>
+          <Image style={styles.imagen} source={require('../../assets/BuenosAires.png')}/>
         </View>
-
+      
+      <View style={styles.containerDatos}>
         <View style={styles.containerTitulo}>
           <Text style={styles.titulo}>Bienvenido!</Text>
         </View>
@@ -110,6 +112,7 @@ function Login({navigation}) {
         <View
             title='Botón Registrarse' 
             style={{    
+            marginTop:30,
             height:50,
             backgroundColor: '#E6E6E6',
             alignItems: 'center',
@@ -124,8 +127,9 @@ function Login({navigation}) {
         </TouchableOpacity>
       </View>
       
-      <Navbar title='Navbar'/>
-    
+      <HideWithKeyboard style={styles.navbar}>
+        <Navbar />
+      </HideWithKeyboard>
     </View>
   );
 }
@@ -135,7 +139,17 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#FFFFFF',
   },
+  imagen:{
+  position:'absolute',
+  top:50,
+  right:107,
+  width:150,
+  height:65,
+  marginRight:25,
+  marginTop:15
+  },
   containerDatos:{
+    marginTop:140,
     padding:20
   },
   containerTitulo:{
@@ -157,6 +171,12 @@ const styles = StyleSheet.create({
   },
   containerBoton:{
     marginTop:55
+  },
+  navbar:{
+    position:'absolute',
+    bottom:0,
+    left:0,
+    right:0
   }
 });
 

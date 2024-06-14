@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView} from 'react-native'
+import { View, StyleSheet, TextInput, Image} from 'react-native'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaServicios from '../components/ListaServicios';
@@ -30,7 +30,7 @@ function MenuNR() {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#FFFFFF',
+        backgroundColor:'#FFFFFF'
     },
     imagen:{
         position:'absolute',

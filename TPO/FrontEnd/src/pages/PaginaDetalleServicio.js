@@ -25,7 +25,7 @@ function PaginaDetalleServicio({ route }) {
     title: {
       fontSize: 24,
       fontWeight: 'bold',
-    },
+    }
   });
 
 export default PaginaDetalleServicio
