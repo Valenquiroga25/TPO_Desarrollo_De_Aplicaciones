@@ -15,7 +15,7 @@ function Login({navigation}) {
       const data = {identificador, contrasenia}
       console.log(data);
 
-      const response = await fetch('http://192.168.0.48:8080/auth/login',{
+      const response = await fetch('http://192.168.0.199:8080/auth/login',{
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(data)
@@ -25,9 +25,9 @@ function Login({navigation}) {
         throw new Error(await response.text())
       }
 
-      const token = await response.text(); // Obtener el cuerpo de la respuesta como texto
-      await AsyncStorage.setItem('token', token); // Guardar el token en AsyncStorage como una cadena de texto
-      const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
+      const token = await response.text(); 
+      await AsyncStorage.setItem('token', token); 
+      const decodeToken = jwtDecode(token); 
       console.log(token);
       const tipoUsuario = decodeToken.rol;
 
