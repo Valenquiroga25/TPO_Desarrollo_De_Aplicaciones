@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import Navbar from '../../components/Navbar';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CrearReclamo = () => {
   const [nombreSitio, setNombreSitio] = useState('');
@@ -31,9 +33,12 @@ const CrearReclamo = () => {
         imagenes: imagen ? [imagen] : []
       };
 
-      const response = await fetch('http://192.168.0.199:8080/tpo-desarrollo-mobile/reclamos/', {
+      const token = await AsyncStorage.getItem('token');
+      
+      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/reclamos/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+                   "Authorization": `Bearer ${token}`},
         body: JSON.stringify(data)
       });
 
@@ -44,6 +49,7 @@ const CrearReclamo = () => {
       const result = await response.json();
       console.log(result);
       openModal();
+      
     } catch (error) {
       console.error(error);
       alert('Error al crear el reclamo: ' + error.message);
@@ -60,81 +66,86 @@ const CrearReclamo = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
-      
-      <Text style={styles.enviarReclamo}>Crear Reclamo</Text>
-      
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setDocumento}
-        value={documento}
-        placeholder="Documento"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setNombreSitio}
-        value={nombreSitio}
-        placeholder="Nombre Sitio"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setDesperfecto}
-        value={desperfecto}
-        placeholder="Desperfecto"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setIdReclamoUnificado}
-        value={idReclamoUnificado}
-        placeholder="idReclamoUnificado"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setLegajo}
-        value={legajo}
-        placeholder="Legajo"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput, styles.textArea]}
-        placeholder="Texto explicativo"
-        onChangeText={setTextoExplicativo}
-        value={textoExplicativo}
-        multiline={true}
-        numberOfLines={4} 
-      />
+      <View style={styles.containerDatos}>
+        <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
+        
+        <Text style={styles.enviarReclamo}>Crear Reclamo</Text>
+        
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setDocumento}
+          value={documento}
+          placeholder="Documento"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setNombreSitio}
+          value={nombreSitio}
+          placeholder="Nombre Sitio"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setDesperfecto}
+          value={desperfecto}
+          placeholder="Desperfecto"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setIdReclamoUnificado}
+          value={idReclamoUnificado}
+          placeholder="idReclamoUnificado"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setLegajo}
+          value={legajo}
+          placeholder="Legajo"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput, styles.textArea]}
+          placeholder="Texto explicativo"
+          onChangeText={setTextoExplicativo}
+          value={textoExplicativo}
+          multiline={true}
+          numberOfLines={4} 
+        />
 
-      <TouchableOpacity
-        style={[styles.crearReclamoChild2]}
-        onPress={() => console.log('Insertar imagen')}>
-        <Text style={styles.archivo}>Insertar imagen</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.crearReclamoChild2]}
+          onPress={() => console.log('Insertar imagen')}>
+          <Text style={styles.archivo}>Insertar imagen</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
-        onPress={handleSubmit}
-        disabled={!isFormComplete}>
-        <Text style={styles.enviarReclamoButtonText}>Enviar Reclamo</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          onPress={handleSubmit}
+          disabled={!isFormComplete}>
+          <Text style={styles.enviarReclamoButtonText}>Enviar Reclamo</Text>
+        </TouchableOpacity>
 
-      <Modal
-        animationType='slide'
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Reclamo creado con éxito!</Text>
-            <Text style={styles.text}>Gracias por enviar su reclamo.</Text>
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Reclamo creado con éxito!</Text>
+              <Text style={styles.text}>Gracias por enviar su reclamo.</Text>
+            </View>
+            <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+              <Text>Continuar</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
-            <Text>Continuar</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+        </Modal>
+      </View>
 
-      <Navbar />
-    </View>
+      <HideWithKeyboard style={styles.navbar}>
+        <Navbar />
+      </HideWithKeyboard>    
+      
+      </View>
   );
 };
 
@@ -142,8 +153,10 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'#FFFFFF',
-    paddingHorizontal: 20,
-    paddingTop: 30,
+  },
+  containerDatos:{
+    marginTop:15,
+    padding:20
   },
   imagen: {
     width: 140,
@@ -151,8 +164,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   enviarReclamo: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 25,
+    marginBottom: 25,
     fontFamily: "Gotham Rounded",
   },
   input: {
@@ -177,7 +190,6 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 100,
-    textAlignVertical: 'top',
   },
   archivo: {
     fontSize: 17,
@@ -186,7 +198,7 @@ const styles = StyleSheet.create({
     fontFamily: "Gotham Rounded"
   },
   crearReclamoChild2: {
-    top: 630,
+    top: 620,
     borderRadius: 50,
     width: 148,
     left: 20,
@@ -199,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   crearReclamoChild: {
-    top: 675,
+    top: 690,
     left: 167,
     borderRadius: 5,
     width: 182,
@@ -256,6 +268,12 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius: 10,
     marginTop:20
+  },
+  navbar:{
+    position:'absolute',
+    bottom:0,
+    left:0,
+    right:0
   }
 });
 

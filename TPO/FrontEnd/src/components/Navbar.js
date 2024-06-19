@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
-import {Text, View, Image, StyleSheet, TouchableOpacity, Modal, HideWithKeyboard} from 'react-native'
+import {Text, View, Image, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 
-function Navbar(){
+function Navbar({navigation}){
     const [isVisible, setIsVisible] = useState(false);
 
     function openModal(){
@@ -11,6 +11,10 @@ function Navbar(){
 
     function closeModal(){
         setIsVisible(false);
+    }
+
+    function redireccionar(){
+        navigation.navigate('MenuInicio')
     }
 
     return(
@@ -48,7 +52,7 @@ function Navbar(){
             </View>
         </Modal>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => {redireccionar()}}>
             <View>
                 <Image style={styles.images} source={require('../../assets/ImagenCasa.png')}/>
             </View>

@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import {React, useState, useEffect} from 'react'
 import { Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 
@@ -8,12 +7,10 @@ function ListaServicios({navigation}) {
     useEffect(() => { // Se utiliza el useEffect con la lista de dependencias vacía ([]) para asegurar que la función se ejecuta cuando se monta el componente.
     
         async function showServicios(){
-            const token = AsyncStorage.getItem('token')
 
             const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
                 method: 'GET',
-                headers: {'Content-Type' : 'application/json',
-                    "Authorization": `Bearer ${token}`}
+                headers: {'Content-Type' : 'application/json'}
                 })
 
             if(!response.ok){
@@ -30,13 +27,14 @@ function ListaServicios({navigation}) {
 
 
     function redireccion(servicio){
+
         navigation.navigate('PaginaDetalleServicio', {
             titulo: servicio.titulo,
             direccion: servicio.direccion,
             telefono: servicio.telefono,
-            rubro: servicio.rubro,
+            rubro: servicio.rubro.descripcion,
             descripcion: servicio.descripcion,
-            imagenes: servicio.imagenes,
+            imagenes: servicio.imagenes
         });   
      }
 

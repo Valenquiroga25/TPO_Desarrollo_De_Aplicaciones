@@ -11,6 +11,7 @@ function PaginaDetalleServicio({ route }) {
         <Text>{telefono}</Text>
         <Text>{rubro}</Text>
         <Text>{descripcion}</Text>
+        {imagenes.map(imagen)}
         {/* Renderiza las imágenes aquí */}
       </View>
     );

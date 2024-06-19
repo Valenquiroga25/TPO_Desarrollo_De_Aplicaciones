@@ -163,10 +163,13 @@ select * from usuarios;
 select * from reclamos
 select * from servicios;
 select * from rubros
+select * from imagenes
+
 
 use municipios
 
-delete from usuarios where identificador='9'
+delete from usuarios where identificador = '10'
+drop table imagenes 
 delete from usuarios where identificador='44367389'
 
 

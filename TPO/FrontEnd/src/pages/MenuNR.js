@@ -1,10 +1,9 @@
-import React from 'react'
+import {React} from 'react'
 import { View, StyleSheet, TextInput, Image} from 'react-native'
-import Navbar from '../components/Navbar'
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaServicios from '../components/ListaServicios';
 
-function MenuNR() {
+function MenuNR({navigation}) {
+
   return (
     <View style={styles.container}>
         <View style={styles.containerDatos}>
@@ -18,11 +17,7 @@ function MenuNR() {
             <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
         </View>
 
-        <ListaServicios />
-
-        <HideWithKeyboard>
-            <Navbar />
-        </HideWithKeyboard> 
+        <ListaServicios navigation={navigation}/>
     </View>
   )
 }
@@ -84,7 +79,21 @@ const styles = StyleSheet.create({
   text:{
       fontSize:17,
       marginTop:25
-  }
+  },
+    containerServicios:{
+    padding:10
+},
+    botonServicio:{
+        height:70,
+        margin:10,
+        backgroundColor: '#E6E6E6',
+        alignItems: 'center',
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:"#FFD600",
+        borderRadius: 10,
+        marginTop:130
+    }
   })
 
 export default MenuNR

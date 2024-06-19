@@ -19,7 +19,7 @@ function PaginaAcceso({route, navigation}){
             const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
 
             console.log(JSON.stringify(tipoDeUsuario))
-            const response = await fetch(`http://192.168.0.199:8080/auth/generarContrasenia/${decodeToken.id}`,{
+            const response = await fetch(`http://192.168.0.48:8080/auth/generarContrasenia/${decodeToken.id}`,{
               method: 'PUT',
               headers: 
               {'Content-Type' : 'application/json',

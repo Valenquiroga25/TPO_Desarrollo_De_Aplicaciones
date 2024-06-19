@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, CheckBox, Linking } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Linking, Modal } from "react-native";
 import Navbar from '../../components/Navbar';
+import CheckBox from 'react-native-check-box'
 
-const CrearDenuncia = () => {
+function CrearDenuncia({navigation}){
+  
   const [nombreSitio, setNombreSitio] = useState('');
   const [documento, setDocumento] = useState('');
   const [textoExplicativo, setTextoExplicativo] = useState('');
@@ -28,7 +30,7 @@ const CrearDenuncia = () => {
         imagenes: imagen ? [imagen] : []
       };
 
-      const response = await fetch('http://192.168.0.199:8080/tpo-desarrollo-mobile/reclamos/', {
+      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/reclamos/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -56,84 +58,85 @@ const CrearDenuncia = () => {
   }
 
   function openPDF() {
-    const pdfURL = '../../assets/declaracionJurada.pdf';
-    Linking.openURL(pdfURL).catch(err => console.error('Error al abrir el PDF:', err));
+    navigation.navigate('LeerPdf')
   }
 
   return (
     <View style={styles.container}>
-      <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
-      
-      <Text style={styles.enviarDenuncia}>Crear Denuncia</Text>
-      
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setDocumento}
-        value={documento}
-        placeholder="Documento"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setNombreSitio}
-        value={nombreSitio}
-        placeholder="Nombre Sitio"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setEstado}
-        value={Estado}
-        placeholder="Estado"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput, styles.textArea]}
-        placeholder="Texto explicativo"
-        onChangeText={setTextoExplicativo}
-        value={textoExplicativo}
-        multiline={true}
-        numberOfLines={4} 
-      />
-
-      {/* Declaración jurada */}
-      <View style={styles.declaracionContainer}>
-        <CheckBox
-          value={aceptoDeclaracion}
-          onValueChange={setAceptoDeclaracion}
-          style={styles.checkbox}
+      <View style={styles.containerDatos}>
+        <Image style={styles.imagen} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
+        
+        <Text style={styles.enviarDenuncia}>Crear Denuncia</Text>
+        
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setDocumento}
+          value={documento}
+          placeholder="Documento"
         />
-        <Text style={styles.declaracionText}>
-          Acepto en carácter de declaración jurada que lo indicado en el objeto de la denuncia y pruebas aportadas, en caso de falsedad, puede dar lugar a una acción judicial por parte del municipio y/o los denunciados.
-        </Text>
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setNombreSitio}
+          value={nombreSitio}
+          placeholder="Nombre Sitio"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setEstado}
+          value={Estado}
+          placeholder="Estado"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput, styles.textArea]}
+          placeholder="Texto explicativo"
+          onChangeText={setTextoExplicativo}
+          value={textoExplicativo}
+          multiline={true}
+          numberOfLines={4} 
+        />
+
+        {/* Declaración jurada */}
+        <View style={styles.declaracionContainer}>
+          <CheckBox
+            value={aceptoDeclaracion}
+            onValueChange={setAceptoDeclaracion}
+            style={styles.checkbox}
+          />
+          <Text style={styles.declaracionText}>
+            Acepto en carácter de declaración jurada que lo indicado en el objeto de la denuncia y pruebas aportadas, en caso de falsedad, puede dar lugar a una acción judicial por parte del municipio y/o los denunciados.
+          </Text>
+        </View>
+
+        {/* Enlace al PDF */}
+        <TouchableOpacity onPress={openPDF}>
+          <Text>Leer declaración jurada</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          onPress={handleSubmit}
+          disabled={!isFormComplete}>
+          <Text style={styles.enviarReclamoButtonText}>Enviar Denuncia</Text>
+        </TouchableOpacity>
+
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Denuncia creada con éxito!</Text>
+              <Text style={styles.text}>Te mantendremos al tanto ante cualquier noticia.</Text>
+            </View>
+            <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+              <Text>Continuar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
       </View>
 
-      {/* Enlace al PDF */}
-      <TouchableOpacity onPress={openPDF}>
-        <Text style={styles.pdfLink}>Ver Declaración Jurada</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
-        onPress={handleSubmit}
-        disabled={!isFormComplete}>
-        <Text style={styles.enviarReclamoButtonText}>Enviar Denuncia</Text>
-      </TouchableOpacity>
-
-      <Modal
-        animationType='slide'
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Denuncia creada con éxito!</Text>
-            <Text style={styles.text}>Te mantendremos al tanto ante cualquier noticia.</Text>
-          </View>
-          <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
-            <Text>Continuar</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
-      
       <Navbar />
     </View>
   );
@@ -143,8 +146,11 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     backgroundColor:'#FFFFFF',
-    paddingHorizontal: 20,
-    paddingTop: 30,
+  },
+  containerDatos:{
+    flex:1,
+    padding:20,
+    marginTop:50
   },
   imagen: {
     width: 140,
