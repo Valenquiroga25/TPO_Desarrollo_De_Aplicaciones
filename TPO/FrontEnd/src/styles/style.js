@@ -13,12 +13,12 @@ export default StyleSheet.create({
   image: {
     width: 150,
     height: 65,
-    marginTop: 15,
+    marginTop: 20,
   },
   dengueImage: {
-    width: 280,
-    height: 170,
-    marginTop: 15,
+    width: 300,
+    height: 220,
+
   },
   buttonWrapper: {
     padding: 40,

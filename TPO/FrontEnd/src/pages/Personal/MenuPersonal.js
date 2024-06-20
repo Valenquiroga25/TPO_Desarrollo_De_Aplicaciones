@@ -1,54 +1,36 @@
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import Navbar from '../../components/Navbar'
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import buttonStyles from '../../styles/styleMenu';
+import style from '../../styles/style';
 
 function MenuPersonal() {
   return (
-    <View style={styles.container}>
-        <View style={styles.datosContainer}>
-            <View style={{alignItems:'center'}}>
-                <Image style={styles.imagenLogo} source={require('../../../assets/BuenosAires.png')}/>
-            </View>
+    <View style={style.container}>
+      <View>
+        <View style={style.imageContainer}>
+          <Image style={style.image} source={require('../../../assets/BuenosAires.png')} />
+        </View>
+        <View style={style.imageContainer}>
+          <Image style={style.dengueImage} source={require('../../../assets/dengue.png')} />
+        </View>
+      </View>
 
-            <View style={styles.imageContainer}>
-                <Image style={styles.dengueImage} resizeMode='contain' source={require('../../../assets/dengue.png')} />
-            </View>
+      <View title='Botones'>
 
-            <View style={styles.botonesContainer}>
-                <TouchableOpacity style={{
-                    height:80,
-                    margin:30,
-                    backgroundColor: '#FFD600',
-                    alignItems: 'center',
-                    justifyContent:'center',
-                    borderWidth:1,
-                    borderRadius: 20,
-                    marginTop:30
-                }} onPress={() => navigation.navigate('')}>
-                    <Text style={styles.buttonText}>Reclamos</Text>
-                </TouchableOpacity>
-                
-                <TouchableOpacity style={{
-                    height:80,
-                    margin:30,
-                    backgroundColor: '#FFD600',
-                    alignItems: 'center',
-                    justifyContent:'center',
-                    borderWidth:1,
-                    borderRadius: 20,
-                    marginTop:20
-                }}  onPress={() => navigation.navigate('')}>
-                    <Text style={styles.buttonText}>Servicios</Text>
+            <View style={buttonStyles.buttonWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosVecino')}>
+                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
                 </TouchableOpacity>
             </View>
-        </View> 
+            <View style={buttonStyles.buttonWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosVecino')}>
+                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
+                </TouchableOpacity>
+            </View>
+            </View>
 
-
-        <HideWithKeyboard style={styles.navbar}>
-            <Navbar />
-        </HideWithKeyboard> 
-
+        <Navbar title='Navbar' />
     </View>
   )
 }

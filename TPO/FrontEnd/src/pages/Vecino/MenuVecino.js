@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
 import Navbar from '../../components/Navbar';
 import styles from '../../styles/style';
+import buttonStyles from '../../styles/styleMenu';
+
 
 const MenuVecino = ({ navigation }) => {
   return (
@@ -17,19 +19,19 @@ const MenuVecino = ({ navigation }) => {
 
       <View title='Botones'>
 
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuReclamosVecino')}>
-            <Text style={styles.buttonText}>Reclamos</Text>
+        <View style={buttonStyles.buttonWrapper}>
+          <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosVecino')}>
+            <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
           </TouchableOpacity>
         </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuServiciosVecino')}>
-            <Text style={styles.buttonText}>Servicios</Text>
+        <View style={buttonStyles.buttonWrapper}>
+          <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosVecino')}>
+          <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
           </TouchableOpacity>
         </View>
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('MenuDenuncias')}>
-            <Text style={styles.buttonText}>Denuncias</Text>
+        <View style={buttonStyles.buttonWrapper}>
+          <TouchableOpacity onPress={() => navigation.navigate('MenuDenuncias')}>
+          <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenDenunciaDefinitivo2.jpg')}></Image>
           </TouchableOpacity>
         </View>
         

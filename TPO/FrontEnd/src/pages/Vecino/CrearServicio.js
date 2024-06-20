@@ -31,7 +31,7 @@ const CrearServicio = () => {
         imagenes: imagen ? [imagen] : []
       };
 
-      const response = await fetch('http://192.168.0.199:8080/tpo-desarrollo-mobile/servicios/', {
+      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
