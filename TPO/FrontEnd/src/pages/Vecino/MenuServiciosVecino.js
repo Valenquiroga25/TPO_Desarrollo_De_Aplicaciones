@@ -1,32 +1,79 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
 
-const MenuServicios = () => {
+const MenuServiciosVecino = () => {
   const navigation = useNavigation();
+  const [listaServicios, setListaServicios] = useState([]);
+
+  useEffect(() => {
+    async function showServicios() {
+      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/getAllServicios', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      const servicios = await response.json();
+      console.log(servicios);
+      setListaServicios(servicios);
+    }
+
+    showServicios();
+  }, []);
+
+  function redireccion(servicio) {
+    navigation.navigate('PaginaDetalleServicio', {
+      titulo: servicio.titulo,
+      direccion: servicio.direccion,
+      telefono: servicio.telefono,
+      rubro: servicio.rubro.descripcion,
+      descripcion: servicio.descripcion,
+      imagenes: servicio.imagenes
+    });
+  }
 
   return (
     <View style={styles.container}>
-      <Image style={styles.image} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-      
-      <TouchableOpacity 
-        style={styles.floatingButton} 
-        onPress={() => navigation.navigate('CrearServicio')}>
-        <Text style={styles.plusSign}>+</Text>
-      </TouchableOpacity>
-
-      <NavbarVecino navigation={navigation}/>
+      <View style={styles.containerDatos}>
+        <Image style={styles.image} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
+        <TouchableOpacity
+          style={styles.floatingButton}
+          onPress={() => navigation.navigate('CrearServicio')}>
+          <Text style={styles.plusSign}>+</Text>
+        </TouchableOpacity>
+        <ScrollView style={styles.containerServicios}>
+          {listaServicios.map((servicio, indice) => (
+            <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
+              <Text>{servicio.titulo}</Text>
+              <Text>Contacto: {servicio.telefono}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+      <HideWithKeyboard style={styles.navbar}>
+        <NavbarVecino />
+      </HideWithKeyboard>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    backgroundColor:'#FFFFFF',
+    flex: 1,
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 20,
     paddingTop: 30,
+  },
+  containerDatos: {
+    flex: 1,
+    marginTop: 15,
+    padding: 20
   },
   image: {
     width: 140,
@@ -35,15 +82,15 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 80, 
+    bottom: 120,
     right: 30,
-    backgroundColor: '#FFFFFF', 
+    backgroundColor: '#FFFFFF',
     borderRadius: 50,
     width: 60,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1, 
+    borderWidth: 1,
     borderColor: '#000',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -53,8 +100,28 @@ const styles = StyleSheet.create({
   },
   plusSign: {
     fontSize: 30,
-    color: '#000', 
+    color: '#000',
   },
+  navbar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
+  containerServicios: {
+    padding: 10,
+    maxHeight:470
+  },
+  botonServicio: {
+    height: 70,
+    backgroundColor: '#E6E6E6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: "#FFD600",
+    borderRadius: 10,
+    marginTop: 20
+  }
 });
 
-export default MenuServicios;
+export default MenuServiciosVecino;
