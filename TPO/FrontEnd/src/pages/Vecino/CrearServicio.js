@@ -1,45 +1,71 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, Picker } from "react-native";
-import Navbar from '../../components/Navbar';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal} from "react-native";
+import NavbarVecino from '../../components/NavbarVecino';
+import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import {launchImageLibrary} from 'react-native-image-picker'
+import {Picker} from '@react-native-picker/picker'
+import { jwtDecode } from "jwt-decode";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AbrirGaleria from "../../components/AbrirGaleria";
 
-const CrearServicio = () => {
-  const [nombreServicio, setNombreServicio] = useState('');
+const CrearServicio = ({navigation}) => {
+  const [titulo, setTitulo] = useState('');
   const [direccion, setDireccion] = useState('');
-  const [textoExplicativo, setTextoExplicativo] = useState('');
+  const [descripcion, setDescripcion] = useState('');
   const [telefono, setTelefono] = useState('');
-  const [horarios, setHorarios] = useState('');
+  const [idRubro, setIdRubro] = useState('');
   const [tipoServicio, setTipoServicio] = useState('');
-  const [imagen, setImagen] = useState(null);
+  const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
+  //cconst [selectImage, setSelectImage] = useState('')   
+  const isFormComplete = titulo && direccion && telefono && descripcion && idRubro && tipoServicio;
 
-  const isFormComplete = nombreServicio && direccion && telefono && horarios && tipoServicio && textoExplicativo;
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.persist();
     if (!isFormComplete) {
       alert('Todos los campos son obligatorios');
       return;
     }
-
+    
     try {
-      const data = {
-        documentoVecino: direccion, 
-        legajoPersonal: horarios, 
-        idSitio: nombreServicio,
-        idDesperfecto: tipoServicio,
-        descripcion: textoExplicativo,
-        idReclamoUnificado: telefono,
-        imagenes: imagen ? [imagen] : []
-      };
+      const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
+      const decodeToken = jwtDecode(token);
+      const documentoVecino = decodeToken.sub
+      
+      const data = {documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio, imagenes};
+      console.log(JSON.stringify(data))
 
       const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+                   "Authorization": `Bearer ${token}`},
         body: JSON.stringify(data)
       });
 
       if (!response.ok) {
         throw new Error(await response.text());
       }
+
+      const formData = new FormData();
+      imagenes.forEach((imagen, index) => {
+        formData.append('archivo', {
+          uri: imagen,
+          type: 'image/jpeg', // Asegúrate de que el tipo coincida con el tipo de imagen seleccionado
+          name: `image${index}.jpg`
+        });
+      });
+
+      //fetch de las imagenes
+      const imageResponse = await fetch("http://192.168.0.48:8080/tpo-desarrollo-mobile/imagenes", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` },
+        body: formData
+      });
+
+      if (!imageResponse.ok) {
+          throw new Error(await imageResponpse.text())
+      }
+      console.log("Reclamo Creado!");
 
       const result = await response.json();
       console.log(result);
@@ -48,6 +74,10 @@ const CrearServicio = () => {
       console.error(error);
       alert('Error al crear el servicio: ' + error.message);
     }
+  };
+
+  const handleImageSelect = (uri) => {
+    setImagenes([...imagenes, uri]);
   };
 
   function openModal(){
@@ -60,92 +90,98 @@ const CrearServicio = () => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
-      
-      <Text style={styles.enviarReclamo}>Crear Servicio</Text>
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setNombreServicio}
-        value={nombreServicio}
-        placeholder="Nombre del Servicio"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setDireccion}
-        value={direccion}
-        placeholder="Dirección"
-      />
-      
-      <View style={[styles.input, styles.pickerContainer]}>
-        <Picker
-            selectedValue={tipoServicio}
-            onValueChange={(itemValue) => setTipoServicio(itemValue)}
-            style={styles.picker}
-        >
-        <Picker.Item label="Seleccione el tipo de servicio" value="" />
-        <Picker.Item label="Comercio" value="comercio" />
-        <Picker.Item label="Servicio Profesional" value="servicio profesional" />
-        </Picker>
-      </View>
-      
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setTelefono}
-        value={telefono}
-        placeholder="Teléfono"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput]}
-        onChangeText={setHorarios}
-        value={horarios}
-        placeholder="Horarios"
-      />
-      <TextInput
-        style={[styles.input, styles.textInput, styles.textArea]}
-        placeholder="Cuentanos sobre tu servicio!"
-        onChangeText={setTextoExplicativo}
-        value={textoExplicativo}
-        multiline={true}
-        numberOfLines={4} 
-      />
-
-      <TouchableOpacity
-        style={[styles.crearReclamoChild2]}
-        onPress={() => console.log('Insertar imagen')}>
-        <Text style={styles.archivo}>Insertar imagen</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
-        onPress={handleSubmit}
-        disabled={!isFormComplete}>
-        <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
-      </TouchableOpacity>
-
-      <Modal
-        animationType='slide'
-        transparent={true}
-        visible={isVisible}
-        onRequestClose={closeModal}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Servicio creado con éxito!</Text>
-            <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
-          </View>
-          <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
-            <Text>Continuar</Text>
-          </TouchableOpacity>
+      <View style={styles.containerDatos}>
+        <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
+        
+        <Text style={styles.enviarReclamo}>Crear Servicio</Text>
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setTitulo}
+          value={titulo}
+          placeholder="Titulo"
+        />
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setDireccion}
+          value={direccion}
+          placeholder="Dirección"
+        />
+        
+        <View style={[styles.input, styles.pickerContainer]}>
+          <Picker
+              selectedValue={tipoServicio}
+              onValueChange={(itemValue) => setTipoServicio(itemValue)}
+              style={styles.picker}
+          >
+          <Picker.Item label="Seleccione el tipo de servicio" value="" />
+          <Picker.Item label="Comercio" value="Comercio" />
+          <Picker.Item label="Servicio profesional" value="Servicio profesional" />
+          </Picker>
         </View>
-      </Modal>
+        
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          inputMode='numeric'
+          onChangeText={setTelefono}
+          value={telefono}
+          placeholder="Teléfono"
+        />
 
-      <Navbar />
-    </View>
+        <TextInput 
+          style={[styles.input, styles.textInput]}
+          onChangeText={setIdRubro}
+          value={idRubro}
+          inputMode='numeric'
+          placeholder="Rubro"/>
+
+        <TextInput
+          style={[styles.input, styles.textInput, styles.textArea]}
+          placeholder="Descripción"
+          onChangeText={setDescripcion}
+          value={descripcion}
+          multiline={true}
+          numberOfLines={4} 
+        />
+
+        <AbrirGaleria onImageSelect={handleImageSelect}/>
+
+        <TouchableOpacity
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          onPress={handleSubmit}
+          disabled={!isFormComplete}>
+          <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
+        </TouchableOpacity>
+
+        <Modal
+          animationType='slide'
+          transparent={true}
+          visible={isVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Servicio creado con éxito!</Text>
+              <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
+            </View>
+            <TouchableOpacity style={styles.modalButton} onPress={() => navigation.goBack()}>
+              <Text>Continuar</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+      </View>
+
+      <HideWithKeyboard style={styles.navbar}>
+        <NavbarVecino navigation={navigation}/>
+      </HideWithKeyboard>    
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container:{
+    flex:1
+  },
+  containerDatos:{
     flex:1,
     backgroundColor:'#FFFFFF',
     paddingHorizontal: 20,
@@ -157,9 +193,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   enviarReclamo: {
-    fontSize: 18,
+    fontSize: 22,
     marginBottom: 10,
-    fontFamily: "Gotham Rounded",
   },
   input: {
     height: 40,
@@ -183,13 +218,12 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 100,
-    textAlignVertical: 'top',
+    textAlign: 'center',
   },
   archivo: {
     fontSize: 17,
     textAlign: "center",
     color: "#000",
-    fontFamily: "Gotham Rounded"
   },
   crearReclamoChild2: {
     top: 630,
@@ -228,11 +262,13 @@ const styles = StyleSheet.create({
   enviarReclamoButtonText: {
     fontSize: 18,
     color: "#000",
-    fontFamily: "Gotham Rounded"
   },
   picker: {
     height: 50,
     width: 340,
+  },
+  pickerContainer:{
+    justifyContent:'center',
   },
   modalContainer: {
     flex:1,
@@ -266,6 +302,12 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius: 10,
     marginTop:20
+  },
+  navbar:{
+    position:'absolute',
+    bottom:0,
+    left:0,
+    right:0
   }
 });
 

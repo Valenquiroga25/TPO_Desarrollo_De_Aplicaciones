@@ -43,6 +43,7 @@ function DetalleReclamo({ route }) {
               alignItems:'center',
             }}>
               <Image
+                key={index}
                 source={{ uri: item }}
                 style={styles.posterImage}
               />

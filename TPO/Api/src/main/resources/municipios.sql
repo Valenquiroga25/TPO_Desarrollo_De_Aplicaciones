@@ -71,10 +71,10 @@ create table reclamos(
      documentoVecino varchar(20),
      legajo varchar(20),
      idSitio BIGINT not null,
-     idDesperfecto BIGINT null,
-     descripcion varchar(1000) null,
+     idDesperfecto BIGINT,
+     descripcion varchar(1000),
      estado varchar(30),
-     IdReclamoUnificado int null,
+     IdReclamoUnificado int,
      constraint pk_reclamos primary key (idReclamo),
      constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
      constraint fk_reclamos_personal foreign key (legajo) references personal(legajo),
@@ -132,10 +132,13 @@ create table servicios(
 create table imagenes(
      idImagen BIGINT not null AUTO_INCREMENT,
      datosImagen blob not null,
-     idUsuario varchar(20) not null, 
+     identificador varchar(20) not null, 
+     idServicio BIGINT not null,
      constraint pk_imagen primary key(idImagen),
-     constraint fk_imagen_usuario foreign key (idUsuario) references usuarios(identificador)
+     constraint fk_imagen_usuario foreign key (identificador) references usuarios(identificador)
 )
+
+drop table imagenes
 
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 
@@ -151,7 +154,7 @@ INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIn
 
 INSERT vecinos (documento, nombre, apellido, direccion, codigoBarrio) VALUES ('44367389', 'Valentin',  'Quiroga' , 'Las Heras 3744', 1);
 
-INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', 'pepito@gmail.com','SLK-457', 'Inspector');
+INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', null, 'pepito@gmail.com','SLK-457', 'Inspector');
 
 insert barrios(nombre) values ("Palermo")
 
@@ -164,7 +167,10 @@ select * from reclamos
 select * from servicios;
 select * from rubros
 select * from imagenes
+select * from sitios
+select * from desperfectos
 
+truncate table imagenes
 
 use municipios
 

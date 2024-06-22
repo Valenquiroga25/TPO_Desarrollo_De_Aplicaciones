@@ -1,6 +1,6 @@
 package com.uade.api.models.DTOs;
 
-import com.uade.api.models.*;
+import com.uade.api.models.ImagenModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +19,6 @@ public class ServicioModelDTO {
     private String telefono;
     private String descripcion;
     private Long idRubro;
+    private List<ImagenModel> imagenes;
     private String tipoServicio;
 }

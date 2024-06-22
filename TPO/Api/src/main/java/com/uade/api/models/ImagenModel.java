@@ -21,5 +21,13 @@ public class ImagenModel {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] datosImagen;
+    @ManyToOne
+    @JoinColumn(name="identificador")
+    private UsuarioModel usuario;
+
+    public ImagenModel(byte[] datosImagen, UsuarioModel usuario){
+        this.datosImagen = datosImagen;
+        this.usuario = usuario;
+    }
 }
 

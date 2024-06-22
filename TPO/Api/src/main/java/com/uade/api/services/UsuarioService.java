@@ -30,11 +30,7 @@ public class UsuarioService {
 
         Optional<VecinoModel> vecinoOp = Optional.ofNullable(this.vecinosService.findVecinoByDocumento(usuario.getIdentificador()));
         if(vecinoOp.isEmpty()) {
-            Optional<PersonalModel> personalOp = Optional.ofNullable(this.personalService.findPersonalByLegajo(usuario.getIdentificador()));
-            if(personalOp.isEmpty()){
-                throw new Exception("No existe ningún vecino con ese documento, tampoco un inspector con ese legajo. Operación inválida!");
-            }
-            usuario.setTipoUsuario("Inspector");
+            throw new Exception("No existe ningún vecino con ese documento. Operación inválida!");
         }else
             usuario.setTipoUsuario("Vecino");
 
@@ -97,7 +93,7 @@ public class UsuarioService {
             log.error("El identificador ingresado no es valido.");
             throw new Exception("El identificador ingresado no es valido");
         }else{
-        Optional<UsuarioModel> usuarioOp = Optional.ofNullable(this.findUsuarioByIdentificador(identificador));
+        Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(identificador);
         if (usuarioOp.isEmpty())
             throw new Exception("El usuario no se encuentra regisytrado en la base de datos!");
         return usuarioOp.get();

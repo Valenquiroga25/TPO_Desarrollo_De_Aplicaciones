@@ -8,6 +8,8 @@ import Registro from './src/pages/Registro';
 import PaginaAcceso from './src/pages/PaginaAcceso';
 import MenuPersonal from './src/pages/Personal/MenuPersonal';
 import Navbar from './src/components/Navbar';
+import NavbarVecino from './src/components/NavbarVecino';
+import NavbarPersonal from './src/components/NavbarPersonal';
 import MenuVecino from './src/pages/Vecino/MenuVecino';
 import CrearReclamo from './src/pages/Vecino/CrearReclamo';
 import CrearServicio from './src/pages/Vecino/CrearServicio';
@@ -28,6 +30,8 @@ function App() {
         <Stack.Navigator initialRouteName='MenuInicio' screenOptions={{headerShown:false}}>
         <Stack.Screen name='MenuInicio' component={MenuInicio} />
         <Stack.Screen name='Navbar' component={Navbar}/>
+        <Stack.Screen name='NavbarVecino' component={NavbarVecino}/>
+        <Stack.Screen name='NavbarPersonal' component={NavbarPersonal}/>
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>

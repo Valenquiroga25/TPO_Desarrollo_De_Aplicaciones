@@ -63,10 +63,10 @@ public class ReclamosService {
             }
         }
 
-        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioById(newReclamo.getSitio().getIdSitio()));
+        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(newReclamo.getSitio().getCalle(), newReclamo.getSitio().getNumero()));
         if (sitioOp.isEmpty()){
-            log.error("El sitio con el id " + newReclamo.getSitio().getIdSitio() + " no se encuentra registrado en la base de datos!");
-            throw new Exception("El sitio con el id " + newReclamo.getSitio().getIdSitio() + " no se encuentra registrado en la base de datos!");
+            log.error("No hay ningún sitio en la dirección " + newReclamo.getSitio().getCalle() + " " + newReclamo.getSitio().getNumero());
+            throw new Exception("No hay ningún sitio en la dirección " + newReclamo.getSitio().getCalle() + " " + newReclamo.getSitio().getNumero());
         }
 
         Optional<DesperfectoModel> desperfectoOp = Optional.ofNullable(desperfectosService.findDesperfectoById(newReclamo.getDesperfecto().getIdDesperfecto()));

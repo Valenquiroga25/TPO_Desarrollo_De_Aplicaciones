@@ -8,4 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface SitiosRepository extends JpaRepository<SitioModel, Long>{
+
+    Optional<SitioModel> findByCalleAndNumero(String calle, Long numero);
 }

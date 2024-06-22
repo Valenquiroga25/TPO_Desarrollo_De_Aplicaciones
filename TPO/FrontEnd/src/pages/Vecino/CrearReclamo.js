@@ -5,16 +5,17 @@ import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const CrearReclamo = () => {
-  const [nombreSitio, setNombreSitio] = useState('');
-  const [documento, setDocumento] = useState('');
-  const [textoExplicativo, setTextoExplicativo] = useState('');
-  const [idReclamoUnificado, setIdReclamoUnificado] = useState('');
-  const [legajo, setLegajo] = useState('');
-  const [desperfecto, setDesperfecto] = useState('');
-  const [imagen, setImagen] = useState(null);
+  const [documentoVecino, setDocumentoVecino] = useState('');
+  const [legajoPersonal, setLegajoPersonal] = useState('');
+  const [calleSitio, setCalleSitio] = useState('');
+  const [numeroSitio, setNumeroSitio] = useState('');
+  const [idDesperfecto, setIdDesperfecto] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [imagenes, setImagenes] = useState([]);
+  const [idReclamoUnificado, setIdReclamoUnificado] = useState('')
   const [isVisible, setIsVisible] = useState(false);
 
-  const isFormComplete = nombreSitio && documento && idReclamoUnificado && legajo && desperfecto && textoExplicativo;
+  const isFormComplete = (documentoVecino || legajoPersonal) && calleSitio && numeroSitio && idDesperfecto && descripcion;
 
   const handleSubmit = async () => {
     if (!isFormComplete) {
@@ -23,19 +24,12 @@ const CrearReclamo = () => {
     }
 
     try {
-      const data = {
-        documentoVecino: documento, 
-        legajoPersonal: legajo, 
-        idSitio: nombreSitio,
-        idDesperfecto: desperfecto,
-        descripcion: textoExplicativo,
-        idReclamoUnificado: idReclamoUnificado,
-        imagenes: imagen ? [imagen] : []
-      };
+      const data = {documentoVecino, legajoPersonal, calleSitio, numeroSitio, idDesperfecto, descripcion, imagenes, idReclamoUnificado};
 
       const token = await AsyncStorage.getItem('token');
-      
-      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/reclamos/', {
+      console.log(data)
+
+      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/reclamos/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
                    "Authorization": `Bearer ${token}`},
@@ -73,39 +67,52 @@ const CrearReclamo = () => {
         
         <TextInput
           style={[styles.input, styles.textInput]}
-          onChangeText={setDocumento}
-          value={documento}
+          onChangeText={setDocumentoVecino}
+          value={documentoVecino}
+          inputMode='numeric'
           placeholder="Documento"
         />
         <TextInput
           style={[styles.input, styles.textInput]}
-          onChangeText={setNombreSitio}
-          value={nombreSitio}
-          placeholder="Nombre Sitio"
+          onChangeText={setLegajoPersonal}
+          value={legajoPersonal}
+          inputMode='numeric'
+          placeholder="Legajo"
         />
         <TextInput
           style={[styles.input, styles.textInput]}
-          onChangeText={setDesperfecto}
-          value={desperfecto}
+          onChangeText={setCalleSitio}
+          value={calleSitio}
+          placeholder="Calle sitio"
+        />
+
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setNumeroSitio}
+          value={numeroSitio}
+          inputMode='numeric'
+          placeholder="Numeración sitio"
+        />
+
+        <TextInput
+          style={[styles.input, styles.textInput]}
+          onChangeText={setIdDesperfecto}
+          value={idDesperfecto}
+          inputMode='numeric'
           placeholder="Desperfecto"
         />
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setIdReclamoUnificado}
           value={idReclamoUnificado}
+          inputMode='numeric'
           placeholder="idReclamoUnificado"
         />
         <TextInput
-          style={[styles.input, styles.textInput]}
-          onChangeText={setLegajo}
-          value={legajo}
-          placeholder="Legajo"
-        />
-        <TextInput
           style={[styles.input, styles.textInput, styles.textArea]}
-          placeholder="Texto explicativo"
-          onChangeText={setTextoExplicativo}
-          value={textoExplicativo}
+          placeholder="Descripción"
+          onChangeText={setDescripcion}
+          value={descripcion}
           multiline={true}
           numberOfLines={4} 
         />
@@ -155,7 +162,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFFFFF',
   },
   containerDatos:{
-    marginTop:15,
     padding:20
   },
   imagen: {
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
     fontFamily: "Gotham Rounded"
   },
   crearReclamoChild2: {
-    top: 620,
+    top: 670,
     borderRadius: 50,
     width: 148,
     left: 20,

@@ -65,7 +65,7 @@ public class DenunciasController {
     public DenunciaModel convertToEntity(DenunciaModelDTO denunciaDTO)throws Exception{
         return new DenunciaModel(
                 this.vecinosService.findVecinoByDocumento(denunciaDTO.getDocumentoVecino()),
-                this.sitiosService.findSitioById(denunciaDTO.getIdSitio()),
+                sitiosService.findSitioByDireccion(denunciaDTO.getCalleSitio(), denunciaDTO.getNumeroSitio()),
                 denunciaDTO.getDescripcion(),
                 denunciaDTO.getEstado(),
                 denunciaDTO.getAceptaResponsabilidad());
