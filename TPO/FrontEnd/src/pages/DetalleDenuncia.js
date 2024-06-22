@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView} from 'react-native'
+import { ScrollView } from 'react-native-web';
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
@@ -9,23 +10,16 @@ const espacio = 10;
 function DetalleDenuncia({ route }) {
     //const { titulo, sitio, documento, estado, descripcion, imagenes } = route.params;
     const imagenes = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png','assets/ImagenServicioDefinitiva2.png']
-    //<View style={styles.imageContainer}> {imagenes.map((imagen, index) => (
-    //    <Image
-    //        key={index}
-    //        source={{ uri: `data:image/jpeg;base64,${imagen}` }}
-    //        style={styles.image}
-    //    />
-    //))}</View>
-    
     return (
       <View style={styles.container}>
+        <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{'Denuncia'}</Text>
         <Text style={styles.detalle}>{'SITIO: '}</Text>
         <Text style={styles.detalle}>{'DOCUMENTO: '}</Text>
         <Text style={styles.detalle}>{'ESTADO: '}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black'}}>
+        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,}}>
           <Text style={styles.textDescripcion}> {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus justo, ultricies vel tortor et, facilisis pulvinar justo. Pellentesque egestas metus id dolor venenatis, sit amet pellentesque dui pretium. Integer posuere dui ac massa rhoncus pretium. Nam ac diam ultricies, tempor neque et, dictum diam. '}</Text>
         </View>
 
@@ -54,6 +48,8 @@ function DetalleDenuncia({ route }) {
           
             </View>
     )}}/>
+        </ScrollView>
+        
 
         <HideWithKeyboard style={styles.navbar}>
             <Navbar />
@@ -65,7 +61,7 @@ function DetalleDenuncia({ route }) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
+      padding:20,
       backgroundColor: '#fff',
     },
     title: {
@@ -112,15 +108,14 @@ function DetalleDenuncia({ route }) {
       position:'absolute',
       bottom:0,
       left:0,
-      right:0
+      right:0,
     },
-    posterImage:{
-      width: "100%",
-      height: espacio_contendor,
-      resizeMode:"cover",
-      borderRadius:10,
-      margin:0,
-      marginBottom:10
+    posterImage: {
+      width: width * 0.6, 
+      height: height * 0.4,
+      resizeMode: "cover",
+      borderRadius: 10,
+      marginBottom:10,
     },
   });
 
