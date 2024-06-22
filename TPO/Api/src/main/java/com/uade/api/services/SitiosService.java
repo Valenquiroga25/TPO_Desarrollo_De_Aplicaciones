@@ -15,16 +15,13 @@ public class SitiosService {
     @Autowired
     private SitiosRepository sitiosRepository;
 
-    public SitioModel findSitioById(Long idSitio) throws Exception{
-        log.info("Id ingresado " + idSitio);
-        if(idSitio < 0){
-            log.error("El Id ingresado no es válido. Ingrese un Id positivo!");
-            throw new Exception("El Id no es válido. Ingrese un Id positivo!");
-        }
-        Optional<SitioModel> sitioOp = sitiosRepository.findById(idSitio);
+    public SitioModel findSitioByDireccion(String calleSitio, Long numeroSitio) throws Exception{
+        log.info("Dirección ingresada: " + calleSitio + " " + numeroSitio);
+
+        Optional<SitioModel> sitioOp = this.sitiosRepository.findByCalleAndNumero(calleSitio, numeroSitio);
         if (sitioOp.isEmpty()){
-            log.error("El sitio con el Id " + idSitio + " no se encuentra registrado en la base de datos!");
-            throw new Exception("El sitio con el Id " + idSitio + " no se encuentra registrado en la base de datos!");
+            log.error("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+            throw new Exception("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
         }
         return sitioOp.get();
     }

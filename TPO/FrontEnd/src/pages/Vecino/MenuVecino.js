@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
-import Navbar from '../../components/Navbar';
+import { View, TouchableOpacity, Image } from 'react-native';
 import styles from '../../styles/style';
 import buttonStyles from '../../styles/styleMenu';
+import NavbarVecino from '../../components/NavbarVecino';
 
 
 const MenuVecino = ({ navigation }) => {
@@ -37,7 +37,8 @@ const MenuVecino = ({ navigation }) => {
         
       </View>
 
-      <Navbar title='Navbar' />
+      <NavbarVecino navigation={navigation}/>
+
     </View>
   );
 };

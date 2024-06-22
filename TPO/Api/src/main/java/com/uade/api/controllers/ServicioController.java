@@ -1,12 +1,15 @@
 package com.uade.api.controllers;
 
 import com.uade.api.models.DTOs.ServicioModelDTO;
+import com.uade.api.models.ImagenModel;
 import com.uade.api.models.ServicioModel;
 import com.uade.api.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/tpo-desarrollo-mobile/servicios")
@@ -17,6 +20,8 @@ public class ServicioController {
     VecinosService vecinosService;
     @Autowired
     RubrosService rubrosService;
+    @Autowired
+    ImagenService imagenService;
 
     @PostMapping(path = "/")
     public ResponseEntity<?> createServicio(@RequestBody ServicioModelDTO servicioDTO){
@@ -29,10 +34,9 @@ public class ServicioController {
     }
 
     @PutMapping(path = "/{idServicio}")
-    public ResponseEntity<?> updateServicio(@PathVariable Long idServicio, @RequestBody ServicioModelDTO servicioDTO){
+    public ResponseEntity<?> updateServicio(@PathVariable Long idServicio,@RequestBody UpdateServicio servicioActualizado){
         try{
-            ServicioModel servicio = convertToEntity(servicioDTO);
-            return new ResponseEntity<>(this.servicioService.updateServicio(idServicio,servicio.getDescripcion()),HttpStatus.OK);
+            return new ResponseEntity<>(this.servicioService.updateServicio(idServicio,servicioActualizado.getDescripcion(),servicioActualizado.getImagenes()),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -90,7 +94,7 @@ public class ServicioController {
                 servicioDTO.getTelefono(),
                 servicioDTO.getDescripcion(),
                 this.rubrosService.findRubroById(servicioDTO.getIdRubro()),
-                null,
+                servicioDTO.getImagenes(),
                 servicioDTO.getTipoServicio());
         return servicio;
     }

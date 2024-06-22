@@ -22,7 +22,7 @@ public class SitioModel {
     private Double latitud;
     private Double longitud;
     private String calle;
-    private int numero;
+    private Long numero;
     private String entreCalleA;
     private String entreCalleB;
     private String descripcion;

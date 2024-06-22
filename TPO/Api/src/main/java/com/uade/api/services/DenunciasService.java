@@ -31,11 +31,10 @@ public class DenunciasService {
             throw new Exception("El vecino con el documento " + newDenuncia.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
         }
 
-        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioById(newDenuncia.getSitio().getIdSitio()));
-
+        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(newDenuncia.getSitio().getCalle(), newDenuncia.getSitio().getNumero()));
         if (sitioOp.isEmpty()){
-            log.error("El sitio con el id " + newDenuncia.getSitio().getIdSitio() + " no se encuentra registrado en la base de datos!");
-            throw new Exception("El sitio con el id " + newDenuncia.getSitio().getIdSitio() + " no se encuentra registrado en la base de datos!");
+            log.error("No hay ningún sitio en la dirección " + newDenuncia.getSitio().getCalle() + " " + newDenuncia.getSitio().getNumero());
+            throw new Exception("No hay ningún sitio en la dirección " + newDenuncia.getSitio().getCalle() + " " + newDenuncia.getSitio().getNumero());
         }
 
         return this.denunciasRepository.save(newDenuncia);

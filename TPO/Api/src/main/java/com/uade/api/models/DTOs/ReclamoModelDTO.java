@@ -10,15 +10,21 @@ import java.util.List;
 public class ReclamoModelDTO {
     private String documentoVecino;
     private String legajoPersonal;
-    private Long idSitio;
+    private String calleSitio;
+    private Long numeroSitio;
     private Long idDesperfecto;
     private String descripcion;
     private List<ImagenModel> imagenes;
-    private int idReclamoUnificado;
+    private Long idReclamoUnificado;
 
-    public ReclamoModelDTO(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
-    }
-
-    public ReclamoModelDTO(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
+    public ReclamoModelDTO(String documentoVecino, String legajoPersonal, String calleSitio, Long numeroSitio, Long idDesperfecto, String descripcion,List<ImagenModel> imagenes, Long idReclamoUnificado){
+        this.documentoVecino = documentoVecino;
+        this.legajoPersonal = legajoPersonal;
+        this.calleSitio = calleSitio;
+        this.numeroSitio = numeroSitio;
+        this.idDesperfecto = idDesperfecto;
+        this.descripcion = descripcion;
+        this.imagenes = imagenes;
+        this.idReclamoUnificado = idReclamoUnificado;
     }
 }

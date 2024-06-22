@@ -44,13 +44,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
+            // Continue the filter chain only if no exception is thrown
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-            return;
+            if (!response.isCommitted()) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
+            } else {
+                logger.error("Response has already been committed. Unable to send error.", e);
+            }
         }
-
-        filterChain.doFilter(request, response);
     }
     private String extractJwtFromRequest(HttpServletRequest request) {
         // Extraer el token de la cabecera de autorización

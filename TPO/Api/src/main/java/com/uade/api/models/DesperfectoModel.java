@@ -22,6 +22,6 @@ public class DesperfectoModel {
     private Long idDesperfecto;
     private String descripcion;
     @ManyToOne
-    @JoinColumn(name="Rubro")
+    @JoinColumn(name="idRubro")
     private RubroModel rubro;
 }

@@ -8,7 +8,7 @@ function ListaServicios({navigation}) {
     
         async function showServicios(){
 
-            const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
+            const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
                 method: 'GET',
                 headers: {'Content-Type' : 'application/json'}
                 })
@@ -58,14 +58,13 @@ const styles = StyleSheet.create(
         },
         botonServicio:{
             height:70,
-            margin:10,
             backgroundColor: '#E6E6E6',
             alignItems: 'center',
             justifyContent:'center',
             borderWidth:1,
             borderColor:"#FFD600",
             borderRadius: 10,
-            marginTop:130
+            marginTop:20
         }
     }
 )

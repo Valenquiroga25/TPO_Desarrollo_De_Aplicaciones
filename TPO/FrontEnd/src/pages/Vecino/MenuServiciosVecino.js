@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import Navbar from '../../components/Navbar';
+import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 
 const MenuServicios = () => {
@@ -16,7 +16,7 @@ const MenuServicios = () => {
         <Text style={styles.plusSign}>+</Text>
       </TouchableOpacity>
 
-      <Navbar title='Navbar' />
+      <NavbarVecino navigation={navigation}/>
     </View>
   );
 };

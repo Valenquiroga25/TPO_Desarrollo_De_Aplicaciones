@@ -1,8 +1,8 @@
 package com.uade.api.services;
 
+import com.uade.api.models.ImagenModel;
 import com.uade.api.models.RubroModel;
 import com.uade.api.models.ServicioModel;
-import com.uade.api.repositories.RubrosRepository;
 import com.uade.api.repositories.ServicioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ public class ServicioService {
     RubrosService rubrosService;
     @Autowired
     VecinosService vecinosService;
+    @Autowired
+    ImagenService imagenService;
 
     public ServicioModel createServicio(ServicioModel newServicio) throws Exception {
         if(Objects.equals(newServicio.getTipoServicio(), "Profesional")){
@@ -45,7 +47,7 @@ public class ServicioService {
         }
         return this.servicioRepository.save(newServicio);
     }
-    public ServicioModel updateServicio(Long id, String descripcion) throws Exception{
+    public ServicioModel updateServicio(Long id, String descripcion, List<ImagenModel> imagenes) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
@@ -59,9 +61,22 @@ public class ServicioService {
         }
 
         ServicioModel servicioDb = servicioOp.get();
-        servicioDb.setDescripcion(descripcion);
 
-        log.info("Descripción actualizada del servicio " + servicioDb.getIdServicio());
+        if(descripcion != null)
+            servicioDb.setDescripcion(descripcion);
+
+        if(imagenes != null){
+            for(ImagenModel imagen : imagenes){
+                Optional<ImagenModel> imagenOp= Optional.ofNullable(this.imagenService.findImagenById(imagen.getIdImagen()));
+                if(imagenOp.isEmpty()){
+                    log.error("La imagen con el Id " + imagen.getIdImagen() + " no se encuentra registrada en la base de datos.");
+                    throw new Exception("La imagen con el Id " + imagen.getIdImagen() + " no se encuentra registrada en la base de datos.");
+                }
+            }
+            servicioDb.setImagenes(imagenes);
+        }
+
+        log.info("Servicio con id " + servicioDb.getIdServicio() + " actualizado con éxito ");
         return this.servicioRepository.save(servicioDb);
     }
 

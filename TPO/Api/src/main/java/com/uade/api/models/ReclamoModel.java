@@ -38,13 +38,24 @@ public class ReclamoModel {
     @JoinColumn(name="idImagen")
     private List<ImagenModel> imagenes;
     private Estado estado;
-    private int idReclamoUnificado;
+    private Long idReclamoUnificado;
 
-    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
+    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, Long idReclamoUnificado){
+        this.vecino = vecino;
+        this.sitio = sitio;
+        this.desperfecto = desperfecto;
+        this.descripcion = descripcion;
+        this.imagenes = imagenes;
+        this.idReclamoUnificado = idReclamoUnificado;
         this.estado = Estado.EN_PROCESO;
     }
 
-    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, int idReclamoUnificado){
-        this.estado = Estado.EN_PROCESO;
-    }
+    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, Long idReclamoUnificado){
+        this.personal = personal;
+        this.sitio = sitio;
+        this.desperfecto = desperfecto;
+        this.descripcion = descripcion;
+        this.imagenes = imagenes;
+        this.idReclamoUnificado = idReclamoUnificado;
+        this.estado = Estado.EN_PROCESO;    }
 }

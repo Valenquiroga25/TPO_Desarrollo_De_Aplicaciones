@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @CrossOrigin() // Para que un controlador externo (un front alojado en otro dominio) acceda a nuestro sistema.
 @RestController
 @RequestMapping(path ="/tpo-desarrollo-mobile/reclamos")
@@ -80,13 +82,13 @@ public class ReclamosController {
     }
 
     private ReclamoModel convertToEntity(ReclamoModelDTO reclamoDTO) throws Exception{
-        if(reclamoDTO.getDocumentoVecino() != null && reclamoDTO.getLegajoPersonal() != null)
+        if(!Objects.equals(reclamoDTO.getDocumentoVecino(), "") && !Objects.equals(reclamoDTO.getLegajoPersonal(), ""))
             throw new Exception("El reclamo no puede ser de un vecino y un inspector a la vez!");
 
         else if(reclamoDTO.getDocumentoVecino() != null){
             ReclamoModel reclamo = new ReclamoModel(
                     vecinosService.findVecinoByDocumento(reclamoDTO.getDocumentoVecino()),
-                    sitiosService.findSitioById(reclamoDTO.getIdSitio()),
+                    sitiosService.findSitioByDireccion(reclamoDTO.getCalleSitio(),reclamoDTO.getNumeroSitio()),
                     desperfectosService.findDesperfectoById(reclamoDTO.getIdDesperfecto()),
                     reclamoDTO.getDescripcion(),
                     reclamoDTO.getImagenes(),
@@ -97,7 +99,7 @@ public class ReclamosController {
         } else{
             ReclamoModel reclamo = new ReclamoModel(
                     personalService.findPersonalByLegajo(reclamoDTO.getLegajoPersonal()),
-                    sitiosService.findSitioById(reclamoDTO.getIdSitio()),
+                    sitiosService.findSitioByDireccion(reclamoDTO.getCalleSitio(),reclamoDTO.getNumeroSitio()),
                     desperfectosService.findDesperfectoById(reclamoDTO.getIdDesperfecto()),
                     reclamoDTO.getDescripcion(),
                     reclamoDTO.getImagenes(),
@@ -108,23 +110,15 @@ public class ReclamosController {
     }
 
     public ReclamoModelDTO convertToDTO(ReclamoModel reclamo){
-        if(reclamo.getPersonal() != null){
-            ReclamoModelDTO reclamoDTO =  new ReclamoModelDTO(reclamo.getPersonal(),
-                    reclamo.getSitio(),
-                    reclamo.getDesperfecto(),
-                    reclamo.getDescripcion(),
-                    reclamo.getImagenes(),
-                    reclamo.getIdReclamoUnificado());
-            return reclamoDTO;
-
-        }else{
-            ReclamoModelDTO reclamoDTO = new ReclamoModelDTO (reclamo.getVecino(),
-                    reclamo.getSitio(),
-                    reclamo.getDesperfecto(),
-                    reclamo.getDescripcion(),
-                    reclamo.getImagenes(),
-                    reclamo.getIdReclamoUnificado());
-            return reclamoDTO;
-        }
+        ReclamoModelDTO reclamoDTO =  new ReclamoModelDTO(
+                reclamo.getVecino().getDocumento(),
+                reclamo.getPersonal().getLegajo(),
+                reclamo.getSitio().getCalle(),
+                reclamo.getSitio().getNumero(),
+                reclamo.getDesperfecto().getIdDesperfecto(),
+                reclamo.getDescripcion(),
+                reclamo.getImagenes(),
+                reclamo.getIdReclamoUnificado());
+        return reclamoDTO;
     }
 }

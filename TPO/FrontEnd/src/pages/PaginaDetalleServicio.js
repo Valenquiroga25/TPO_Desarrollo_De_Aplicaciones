@@ -1,9 +1,10 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Image } from 'react-native'
 
 function PaginaDetalleServicio({ route }) {
     const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
-  
+
+
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{titulo}</Text>
@@ -11,8 +12,9 @@ function PaginaDetalleServicio({ route }) {
         <Text>{telefono}</Text>
         <Text>{rubro}</Text>
         <Text>{descripcion}</Text>
-        {imagenes.map(imagen)}
-        {/* Renderiza las imágenes aquí */}
+        {imagenes.map((imagen, indice) => (
+          <Image key={indice} source={{uri: imagen.datosImagen}}></Image>
+        ))}
       </View>
     );
   }
