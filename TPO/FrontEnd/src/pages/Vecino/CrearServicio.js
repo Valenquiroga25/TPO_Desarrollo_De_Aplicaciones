@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal} from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, FlatList} from "react-native";
 import NavbarVecino from '../../components/NavbarVecino';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import {launchImageLibrary} from 'react-native-image-picker'
+import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker'
 import { jwtDecode } from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AbrirGaleria from "../../components/AbrirGaleria";
 
 const CrearServicio = ({navigation}) => {
   const [titulo, setTitulo] = useState('');
@@ -17,7 +16,6 @@ const CrearServicio = ({navigation}) => {
   const [tipoServicio, setTipoServicio] = useState('');
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-  //cconst [selectImage, setSelectImage] = useState('')   
   const isFormComplete = titulo && direccion && telefono && descripcion && idRubro && tipoServicio;
 
   const handleSubmit = async (event) => {
@@ -29,10 +27,10 @@ const CrearServicio = ({navigation}) => {
     
     try {
       const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
-      const decodeToken = jwtDecode(token);
+      const decodeToken = jwtDecode(token)
       const documentoVecino = decodeToken.sub
-      
-      const data = {documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio, imagenes};
+
+      const data = {documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio};
       console.log(JSON.stringify(data))
 
       const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/', {
@@ -45,40 +43,53 @@ const CrearServicio = ({navigation}) => {
       if (!response.ok) {
         throw new Error(await response.text());
       }
-
-      const formData = new FormData();
-      imagenes.forEach((imagen, index) => {
-        formData.append('archivo', {
-          uri: imagen,
-          type: 'image/jpeg', // Asegúrate de que el tipo coincida con el tipo de imagen seleccionado
-          name: `image${index}.jpg`
-        });
-      });
-
-      //fetch de las imagenes
-      const imageResponse = await fetch("http://192.168.0.48:8080/tpo-desarrollo-mobile/imagenes", {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${token}` },
-        body: formData
-      });
-
-      if (!imageResponse.ok) {
-          throw new Error(await imageResponpse.text())
-      }
-      console.log("Reclamo Creado!");
-
+      
       const result = await response.json();
-      console.log(result);
+      const idServicio = result.idServicio 
+
+      console.log(idServicio)
+
+      for(const imagen of imagenes){
+        const formData = new FormData();
+
+        formData.append('archivo', imagen);
+        formData.append('idServicio', idServicio);
+        
+        console.log("FormData content:", formData);
+
+        //fetch de las imagenes
+        const imageResponse = await fetch("http://192.168.0.48:8080/tpo-desarrollo-mobile/imagenes", {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${token}`},
+          body: formData
+        });
+        
+        if (!imageResponse.ok) {
+          throw new Error(await imageResponse.text())
+        }
+      }
+      
+      console.log("Reclamo Creado!");
       openModal();
+
     } catch (error) {
       console.error(error);
       alert('Error al crear el servicio: ' + error.message);
     }
   };
+  
+  const abrirGaleria = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  const handleImageSelect = (uri) => {
-    setImagenes([...imagenes, uri]);
-  };
+    if (!result.canceled) 
+      setImagenes((imagenesPrevias) => [...imagenesPrevias, result.assets[0].uri]);
+  }
 
   function openModal(){
     setIsVisible(true);
@@ -90,9 +101,8 @@ const CrearServicio = ({navigation}) => {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.imagenLogo} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       <View style={styles.containerDatos}>
-        <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
-        
         <Text style={styles.enviarReclamo}>Crear Servicio</Text>
         <TextInput
           style={[styles.input, styles.textInput]}
@@ -135,7 +145,7 @@ const CrearServicio = ({navigation}) => {
           placeholder="Rubro"/>
 
         <TextInput
-          style={[styles.input, styles.textInput, styles.textArea]}
+          style={[styles.inputDescripcion, styles.textInput, styles.textArea]}
           placeholder="Descripción"
           onChangeText={setDescripcion}
           value={descripcion}
@@ -143,10 +153,30 @@ const CrearServicio = ({navigation}) => {
           numberOfLines={4} 
         />
 
-        <AbrirGaleria onImageSelect={handleImageSelect}/>
+        <FlatList 
+          data={imagenes}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          decelerationRate={0}
+          scrollEventThrottle={16}
+          keyExtractor={(item)=> item}
+          renderItem={({item,index})=> {
+            return(
+            <View style={''}>
+              <Image
+                key={index}
+                source={{ uri: item }}
+                style={styles.imagen}
+              />
+            </View>
+            )}}/>
+
+      <TouchableOpacity style={styles.crearReclamoChild2} onPress={abrirGaleria}>
+        <Text>Insertar imagen</Text>
+      </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
           onPress={handleSubmit}
           disabled={!isFormComplete}>
           <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
@@ -179,18 +209,30 @@ const CrearServicio = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container:{
-    flex:1
+    flex:1,
+    backgroundColor:'#FFFFFF',
   },
   containerDatos:{
     flex:1,
-    backgroundColor:'#FFFFFF',
     paddingHorizontal: 20,
     paddingTop: 30,
+    marginTop:80
   },
-  imagen: {
-    width: 140,
+  imagenesContainer:{
+    flexDirection:'row',
+  },
+  imagenLogo: {
+    position:'absolute',
+    top:50,
+    left:15,
+    width: 100,
     height: 45,
-    marginBottom: 20,
+  },
+  imagen:{
+    width:90,
+    height:90,
+    borderRadius:5,
+    marginLeft:10
   },
   enviarReclamo: {
     fontSize: 22,
@@ -202,7 +244,24 @@ const styles = StyleSheet.create({
     borderColor: "#ffd600",
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 30,
+    marginBottom: 27,
+    backgroundColor: "#fff",
+    shadowOpacity: 1,
+    elevation: 4,
+    shadowRadius: 4,
+    shadowOffset: {
+      width: 0,
+      height: 4
+    },
+    shadowColor: "rgba(0, 0, 0, 0.25)"
+  },
+  inputDescripcion:{
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ffd600",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 15,
     backgroundColor: "#fff",
     shadowOpacity: 1,
     elevation: 4,
@@ -226,21 +285,21 @@ const styles = StyleSheet.create({
     color: "#000",
   },
   crearReclamoChild2: {
-    top: 630,
+    top: 635,
     borderRadius: 50,
     width: 148,
-    left: 20,
+    left: 12,
     height: 37,
     borderWidth: 1,
     borderColor: "#000",
     backgroundColor: "rgba(255, 214, 0, 0.6)",
     position: "absolute",
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent:'center'
   },
   crearReclamoChild: {
-    top: 675,
-    left: 167,
+    top: 635,
+    left: 180,
     borderRadius: 5,
     width: 182,
     height: 38,
@@ -308,7 +367,7 @@ const styles = StyleSheet.create({
     bottom:0,
     left:0,
     right:0
-  }
+  },
 });
 
 export default CrearServicio;

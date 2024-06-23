@@ -13,7 +13,7 @@ function MenuNR({navigation}) {
           <Image style={styles.dengueImage} resizeMode="contain" source={require('../../assets/dengue.png')} />
         </View>
 
-        <View style={styles.containerDatos}>
+        <View style={styles.containerInput}>
             <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
         </View>
 
@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'#FFFFFF'
+    },
+    containerInput:{
+      paddingTop:20,
+      paddingLeft:20,
+      paddingRight:20
     },
     imagen:{
         position:'absolute',
@@ -49,7 +54,6 @@ const styles = StyleSheet.create({
     input:{
       padding:10,
       marginTop:7,
-      marginBottom:7,
       height: 40,
       borderWidth:1,
       borderColor: "black",
@@ -79,9 +83,6 @@ const styles = StyleSheet.create({
   text:{
       fontSize:17,
       marginTop:25
-  },
-    containerServicios:{
-    padding:10
 },
     botonServicio:{
         height:70,

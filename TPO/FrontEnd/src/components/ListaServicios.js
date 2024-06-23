@@ -46,7 +46,6 @@ function ListaServicios({navigation}) {
                 <Text>Contacto: {servicio.telefono}</Text>
             </TouchableOpacity>
         ))}
-        
     </ScrollView>
   )
 }
@@ -54,6 +53,7 @@ function ListaServicios({navigation}) {
 const styles = StyleSheet.create(
     {
         containerServicios:{
+            flex:1,
             padding:10
         },
         botonServicio:{
@@ -64,7 +64,7 @@ const styles = StyleSheet.create(
             borderWidth:1,
             borderColor:"#FFD600",
             borderRadius: 10,
-            marginTop:20
+            marginTop:10
         }
     }
 )
