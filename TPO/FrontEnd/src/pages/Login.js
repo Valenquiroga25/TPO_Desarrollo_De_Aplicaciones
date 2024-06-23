@@ -28,7 +28,6 @@ function Login({navigation}) {
 
       const token = await response.text(); 
       await AsyncStorage.setItem('token', token); 
-      await AsyncStorage.setItem('identificador', identificador);
       const decodeToken = jwtDecode(token); 
       console.log(token);
       const tipoUsuario = decodeToken.rol;
