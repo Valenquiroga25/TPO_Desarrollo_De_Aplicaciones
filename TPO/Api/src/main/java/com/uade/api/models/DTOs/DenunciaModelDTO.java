@@ -15,6 +15,5 @@ public class DenunciaModelDTO {
     private String calleSitio;
     private Long numeroSitio;
     private String descripcion;
-    private Estado estado;
     private int aceptaResponsabilidad;
 }
