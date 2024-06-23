@@ -33,7 +33,7 @@ const CrearServicio = ({navigation}) => {
       const data = {documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio};
       console.log(JSON.stringify(data))
 
-      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/', {
+      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
                    "Authorization": `Bearer ${token}`},

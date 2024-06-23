@@ -22,7 +22,7 @@ function Registro({navigation}) {
         const data = {identificador, mail}
         console.log(data);
   
-        const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/usuarios/signUp',{
+        const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/usuarios/signUp',{
           method: 'POST',
           headers: {'Content-Type' : 'application/json'},
           body: JSON.stringify(data)
