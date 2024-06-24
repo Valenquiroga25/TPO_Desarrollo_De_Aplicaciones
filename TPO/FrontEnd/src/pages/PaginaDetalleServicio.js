@@ -1,28 +1,26 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView} from 'react-native'
-import { ScrollView } from 'react-native-web';
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView,TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
 
 function PaginaDetalleServicio({ route }) {
-    //const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
-
-    const imagenes = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png','assets/ImagenServicioDefinitiva2.png']
-    
+    const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.title}>{'Servicio'}</Text>
-        <Text style={styles.detalle}>{'DIRECCION: '}</Text>
-        <Text style={styles.detalle}>{'TELEFONO: '}</Text>
+        <Text style={styles.title}>{titulo}</Text>
+        <Text style={styles.detalle}>{'DIRECCION: '+direccion}</Text>
+        <Text style={styles.detalle}>{'TELEFONO: '+telefono}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,}}>
-          <Text style={styles.textDescripcion}> {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus justo, ultricies vel tortor et, facilisis pulvinar justo. Pellentesque egestas metus id dolor venenatis, sit amet pellentesque dui pretium. Integer posuere dui ac massa rhoncus pretium. Nam ac diam ultricies, tempor neque et, dictum diam. '}</Text>
+          <Text style={styles.textDescripcion}> {descripcion}</Text>
         </View>
 
         <FlatList 
@@ -51,8 +49,7 @@ function PaginaDetalleServicio({ route }) {
             </View>
     )}}/>
         </ScrollView>
-        
-
+      
         <HideWithKeyboard style={styles.navbar}>
             <Navbar />
         </HideWithKeyboard>
@@ -118,6 +115,28 @@ function PaginaDetalleServicio({ route }) {
       resizeMode: "cover",
       borderRadius: 10,
       marginBottom:10,
+    },
+    floatingButton: {
+      position: 'absolute',
+      bottom: 70,
+      right: 10,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 50,
+      width: 60,
+      height: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: '#000',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 5,
+    },
+    plusSign: {
+      fontSize: 30,
+      color: '#000',
     },
   });
 export default PaginaDetalleServicio

@@ -13,6 +13,13 @@ const MenuServiciosVecino = () => {
       <View style={styles.containerDatos}>
           <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
+      
+
+      <View style={styles.containerDatos}>
+            <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
+        </View>
+
+      <ListaServicios navigation = {navigation}/>
       <View>
         <TouchableOpacity
           style={styles.floatingButton}
@@ -20,12 +27,6 @@ const MenuServiciosVecino = () => {
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
       </View>
-
-      <View style={styles.containerDatos}>
-            <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
-        </View>
-
-      <ListaServicios navigation = {navigation}/>
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino />
       </HideWithKeyboard>
@@ -102,7 +103,28 @@ const styles = StyleSheet.create({
     borderColor: "#FFD600",
     borderRadius: 10,
     marginTop: 20
-  }
+  },floatingButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#000',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5,
+  },
+  plusSign: {
+    fontSize: 30,
+    color: '#000',
+  },
 });
 
 export default MenuServiciosVecino;

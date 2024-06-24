@@ -13,6 +13,7 @@ const MenuDenuncias = () => {
       <View style={styles.containerDatos}>
         <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
+      <ListaDenuncias navigation = {navigation}/>
       <View>
         <TouchableOpacity 
           style={styles.floatingButton} 
@@ -20,8 +21,6 @@ const MenuDenuncias = () => {
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
       </View>
-
-      <ListaDenuncias navigation = {navigation}/>
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino />
       </HideWithKeyboard> 
@@ -46,8 +45,8 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 0,
-    right: 30,
+    bottom: 100,
+    right: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
     width: 60,

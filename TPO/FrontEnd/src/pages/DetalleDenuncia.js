@@ -1,26 +1,25 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView} from 'react-native'
-import { ScrollView } from 'react-native-web';
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView} from 'react-native';
+
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
 function DetalleDenuncia({ route }) {
-    //const { titulo, sitio, documento, estado, descripcion, imagenes } = route.params;
-    const imagenes = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png','assets/ImagenServicioDefinitiva2.png']
+    const { titulo, sitio, documento, estado, descripcion, imagenes } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.title}>{'Denuncia'}</Text>
-        <Text style={styles.detalle}>{'SITIO: '}</Text>
-        <Text style={styles.detalle}>{'DOCUMENTO: '}</Text>
-        <Text style={styles.detalle}>{'ESTADO: '}</Text>
+        <Text style={styles.title}>{titulo}</Text>
+        <Text style={styles.detalle}>{'SITIO: '+ sitio}</Text>
+        <Text style={styles.detalle}>{'DOCUMENTO: '+documento}</Text>
+        <Text style={styles.detalle}>{'ESTADO: '+estado}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,}}>
-          <Text style={styles.textDescripcion}> {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus justo, ultricies vel tortor et, facilisis pulvinar justo. Pellentesque egestas metus id dolor venenatis, sit amet pellentesque dui pretium. Integer posuere dui ac massa rhoncus pretium. Nam ac diam ultricies, tempor neque et, dictum diam. '}</Text>
+          <Text style={styles.textDescripcion}> {descripcion}</Text>
         </View>
 
         <FlatList 
@@ -50,13 +49,20 @@ function DetalleDenuncia({ route }) {
     )}}/>
         </ScrollView>
         
+        <View>
+          <TouchableOpacity 
+            style={styles.floatingButton} 
+            onPress={() => navigation.navigate('CrearDenuncia')}>
+              <Text style={styles.plusSign}>✎</Text>
+            </TouchableOpacity>
+        </View>
 
         <HideWithKeyboard style={styles.navbar}>
             <Navbar />
         </HideWithKeyboard>
       </View>
     );
-  }
+  } 
   
   const styles = StyleSheet.create({
     container: {
@@ -116,6 +122,28 @@ function DetalleDenuncia({ route }) {
       resizeMode: "cover",
       borderRadius: 10,
       marginBottom:10,
+    },
+    floatingButton: {
+      position: 'absolute',
+      bottom: 70,
+      right: 10,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 50,
+      width: 60,
+      height: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: '#000',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 5,
+    },
+    plusSign: {
+      fontSize: 30,
+      color: '#000',
     },
   });
 
