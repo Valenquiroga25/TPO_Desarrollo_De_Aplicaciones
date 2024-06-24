@@ -28,7 +28,7 @@ public class ReclamoModel {
     @JoinColumn(name="legajo")
     private PersonalModel personal;
     @ManyToOne
-    @JoinColumn(name="idSitio")
+    @JoinColumn(name="sitio")
     private SitioModel sitio;
     @ManyToOne
     @JoinColumn(name="idDesperfecto")
