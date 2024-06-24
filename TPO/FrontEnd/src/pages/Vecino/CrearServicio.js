@@ -6,6 +6,8 @@ import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker'
 import { jwtDecode } from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as FileSystem from "expo-file-system";
+import { ipLocal } from '../../global/ipLocal';
 
 const CrearServicio = ({navigation}) => {
   const [titulo, setTitulo] = useState('');
@@ -33,7 +35,7 @@ const CrearServicio = ({navigation}) => {
       const data = {documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio};
       console.log(JSON.stringify(data))
 
-      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/', {
+      const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/servicios/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
                    "Authorization": `Bearer ${token}`},
@@ -52,20 +54,29 @@ const CrearServicio = ({navigation}) => {
       for(const imagen of imagenes){
         const formData = new FormData();
 
-        formData.append('archivo', imagen);
-        formData.append('idServicio', idServicio);
+        const fileInfo = await FileSystem.getInfoAsync(imagen)
+        const fileUri = fileInfo.uri
+        const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
+        const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
+
+        formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
+        formData.append('idServicio', {"string": idServicio, type: "application/json"});
         
-        console.log("FormData content:", formData);
+        console.log("FormData content:", JSON.stringify(formData._parts[0]));
 
         //fetch de las imagenes
-        const imageResponse = await fetch("http://192.168.0.48:8080/tpo-desarrollo-mobile/imagenes", {
+        const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
           method: "POST",
-          headers: { "Authorization": `Bearer ${token}`},
+          headers: { 
+            headers: {'Content-Type' : 'multipart/form-data'},
+            "Authorization": `Bearer ${token}`
+          },
           body: formData
         });
         
         if (!imageResponse.ok) {
-          throw new Error(await imageResponse.text())
+          const message = await imageResponse.text()
+          throw new Error(message)
         }
       }
       

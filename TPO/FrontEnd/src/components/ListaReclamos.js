@@ -3,17 +3,16 @@ import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 
-function ListaDenuncias({ navigation }) {
-    const [listaDenuncias, setListaDenuncias] = useState([]);
-    const [documento, setDocumento] = useState('');
+function ListaReclamos({ navigation }) {
+    const [listaReclamos, setListaReclamos] = useState([]);
 
     useEffect(() => {
-        async function fetchDenuncias() {
+        async function fetchReclamos() {
           try {        
-            const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
-            const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
+            const token = await AsyncStorage.getItem('token'); 
+            const decodeToken = jwtDecode(token); 
             
-            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/denuncias/allDenunciasFromVecino/${decodeToken.id}`, {
+            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromVecino/${decodeToken.id}`, {
               method: 'GET',
               headers: 
               {'Content-Type' : 'application/json',
@@ -25,32 +24,33 @@ function ListaDenuncias({ navigation }) {
               throw new Error(`Error en la respuesta del servidor: ${errorText}`);
             }
     
-            const denuncias = await response.json();
-            setListaDenuncias(denuncias);
+            const reclamos = await response.json();
+            setListaReclamos(reclamos);
           } catch (error) {
             console.error(error);
           }
         }
     
-        fetchDenuncias();
+        fetchReclamos();
       }, []);
     
+    
 
-      function redireccion(denuncia) {
-        navigation.navigate('DetalleDenuncia', {
-          sitio: denuncia.sitio,
-          documento: denuncia.vecino.documento,
-          descripcion: denuncia.descripcion,
-          imagenes: denuncia.imagenes,
+      function redireccion(reclamo) {
+        navigation.navigate('DetalleReclamo', {
+          sitio: reclamo.sitio,
+          documento: reclamo.vecino.documento,
+          desperfecto: reclamo.desperfecto,
+          descripcion: reclamo.descripcion,
         });
       }
 
     return (
         <ScrollView style={styles.containerDenuncias}>
-            {listaDenuncias.map((denuncia, indice) => (
-                <TouchableOpacity key={indice} style={styles.botonDenuncia} onPress={() => redireccion(denuncia)}>
-                    <Text>{denuncia.descripcion}</Text>
-                    <Text>Estado: {denuncia.estado}</Text>
+            {listaReclamos.map((reclamo, indice) => (
+                <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
+                    <Text>{reclamo.descripcion}</Text>
+                    <Text>Estado: {reclamo.estado}</Text>
                 </TouchableOpacity>
             ))}
         </ScrollView>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     containerDenuncias: {
         padding: 10,
     },
-    botonDenuncia: {
+    botonReclamo: {
         height: 70,
         backgroundColor: '#E6E6E6',
         alignItems: 'center',
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ListaDenuncias;
+export default ListaReclamos;

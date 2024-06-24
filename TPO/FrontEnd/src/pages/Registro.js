@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Text, TextInput, View, Image, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 import Navbar from '../components/Navbar';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import { ipLocal } from '../global/ipLocal';
 
 function Registro({navigation}) {
 
@@ -22,7 +23,7 @@ function Registro({navigation}) {
         const data = {identificador, mail}
         console.log(data);
   
-        const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/usuarios/signUp',{
+        const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/usuarios/signUp`,{
           method: 'POST',
           headers: {'Content-Type' : 'application/json'},
           body: JSON.stringify(data)

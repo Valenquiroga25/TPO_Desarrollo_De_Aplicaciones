@@ -56,9 +56,9 @@ public class DenunciasController {
     @GetMapping(path ="/allDenunciasFromVecino/{documento}")
     public ResponseEntity<?> getAllDenuncias(@PathVariable String documento){
         try{
-            return new ResponseEntity<>(this.denunciasService.findAllDenunciasFromVecino(documento),HttpStatus.OK);
+            return new ResponseEntity<>(this.denunciasService.findAllDenunciasFromVecino(documento), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
 
@@ -67,7 +67,6 @@ public class DenunciasController {
                 this.vecinosService.findVecinoByDocumento(denunciaDTO.getDocumentoVecino()),
                 sitiosService.findSitioByDireccion(denunciaDTO.getCalleSitio(), denunciaDTO.getNumeroSitio()),
                 denunciaDTO.getDescripcion(),
-                denunciaDTO.getEstado(),
                 denunciaDTO.getAceptaResponsabilidad());
     }
 }

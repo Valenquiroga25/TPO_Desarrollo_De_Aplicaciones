@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDenuncias")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idDenuncia")
 
 public class DenunciaModel {
     @Id
@@ -30,11 +30,12 @@ public class DenunciaModel {
     private Estado estado;
     private int aceptaResponsabilidad;
 
-    public DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion, Estado estado, int aceptaResponsabilidad) {
+    public DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion, int aceptaResponsabilidad) {
+        this.vecino = vecino;
+        this.sitio = sitio;
+        this.descripcion = descripcion;
         this.estado = Estado.EN_PROCESO;
+        this.aceptaResponsabilidad = aceptaResponsabilidad;
     }
 
-    public void DenunciaModel(VecinoModel vecino, SitioModel sitio, String descripcion){
-        this.estado = Estado.EN_PROCESO;
-    }
 }

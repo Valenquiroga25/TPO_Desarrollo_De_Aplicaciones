@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Linking, Modal } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import Navbar from '../../components/Navbar';
 import CheckBox from 'react-native-check-box'
+import { ipLocal } from '../../global/ipLocal';
 
 function CrearDenuncia({navigation}){
   
@@ -30,7 +31,7 @@ function CrearDenuncia({navigation}){
         imagenes: imagen ? [imagen] : []
       };
 
-      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/reclamos/', {
+      const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

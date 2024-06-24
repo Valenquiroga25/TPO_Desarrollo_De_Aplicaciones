@@ -8,7 +8,7 @@ function ListaServicios({navigation}) {
     
         async function showServicios(){
 
-            const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
+            const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
                 method: 'GET',
                 headers: {'Content-Type' : 'application/json'}
                 })

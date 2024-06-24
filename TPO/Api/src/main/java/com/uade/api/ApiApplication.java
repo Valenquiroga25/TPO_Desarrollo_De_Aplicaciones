@@ -24,7 +24,7 @@ public class ApiApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://192.168.0.48:8081", "http://localhost:8081")
+						.allowedOrigins("http://192.168.0.34:8081", "http://localhost:8081")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("Authorization", "Content-Type")
 						.exposedHeaders("Authorization")

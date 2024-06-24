@@ -1,61 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import ListaServicios from '../../components/ListaServicios';
 
 const MenuServiciosVecino = () => {
   const navigation = useNavigation();
-  const [listaServicios, setListaServicios] = useState([]);
-
-  useEffect(() => {
-    async function showServicios() {
-      const response = await fetch('http://192.168.0.34:8080/tpo-desarrollo-mobile/servicios/getAllServicios', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      const servicios = await response.json();
-      console.log(servicios);
-      setListaServicios(servicios);
-    }
-
-    showServicios();
-  }, []);
-
-  function redireccion(servicio) {
-    navigation.navigate('PaginaDetalleServicio', {
-      titulo: servicio.titulo,
-      direccion: servicio.direccion,
-      telefono: servicio.telefono,
-      rubro: servicio.rubro.descripcion,
-      descripcion: servicio.descripcion,
-      imagenes: servicio.imagenes
-    });
-  }
 
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-        <Image style={styles.image} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
+          <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+      </View>
+      <View>
         <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => navigation.navigate('CrearServicio')}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
-        <ScrollView style={styles.containerServicios}>
-          {listaServicios.map((servicio, indice) => (
-            <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
-              <Text>{servicio.titulo}</Text>
-              <Text>Contacto: {servicio.telefono}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
       </View>
+
+      <View style={styles.containerDatos}>
+            <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
+        </View>
+
+      <ListaServicios navigation = {navigation}/>
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino />
       </HideWithKeyboard>
@@ -71,8 +41,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   containerDatos: {
-    flex: 1,
-    marginTop: 15,
     padding: 20
   },
   image: {
@@ -82,7 +50,7 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 120,
+    bottom: 0,
     right: 30,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
@@ -98,6 +66,15 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
+  input:{
+    padding:10,
+    marginTop:7,
+    marginBottom:7,
+    height: 40,
+    borderWidth:1,
+    borderColor: "black",
+    backgroundColor: '#FFFFFF'
+  },
   plusSign: {
     fontSize: 30,
     color: '#000',
@@ -108,6 +85,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
+  text:{
+    fontSize:17,
+    marginTop:25
+  },  
   containerServicios: {
     padding: 10,
     maxHeight:470

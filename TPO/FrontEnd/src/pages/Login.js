@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import { isExpired } from 'react-jwt';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
+import { ipLocal } from '../global/ipLocal';
 
 function Login({navigation}) {
   const [identificador, setIdentificador] = useState('');
@@ -16,7 +17,7 @@ function Login({navigation}) {
       const data = {identificador, contrasenia}
       console.log(data);
 
-      const response = await fetch('http://192.168.0.34:8080/auth/login',{
+      const response = await fetch(`http://${ipLocal}:8080/auth/login`,{
         method: 'POST',
         headers: {'Content-Type' : 'application/json'},
         body: JSON.stringify(data)
@@ -28,7 +29,6 @@ function Login({navigation}) {
 
       const token = await response.text(); 
       await AsyncStorage.setItem('token', token); 
-      await AsyncStorage.setItem('identificador', identificador);
       const decodeToken = jwtDecode(token); 
       console.log(token);
       const tipoUsuario = decodeToken.rol;
@@ -113,8 +113,9 @@ function Login({navigation}) {
         <View
             title='Botón Registrarse' 
             style={{    
-            marginTop:30,
+            marginTop:5,
             height:50,
+            width:300,
             backgroundColor: '#E6E6E6',
             alignItems: 'center',
             justifyContent:'center',
@@ -126,6 +127,9 @@ function Login({navigation}) {
             <Text>Registrarse</Text>
           </View>
         </TouchableOpacity>
+
+        <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:15}}onPress={() => navigation.navigate('RecuperarContraseña','')}>¿Olvidaste tu contraseña?</Text>
+               
       </View>
       
       <HideWithKeyboard style={styles.navbar}>
@@ -171,7 +175,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF'
   },
   containerBoton:{
-    marginTop:55
+    marginTop:30,
+    alignItems:'center',
   },
   navbar:{
     position:'absolute',

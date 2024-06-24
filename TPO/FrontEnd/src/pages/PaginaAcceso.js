@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {React, useState} from 'react'
 import {Text, TextInput, View, TouchableOpacity, StyleSheet, Modal} from 'react-native'
 import {jwtDecode} from 'jwt-decode';
+import { ipLocal } from '../global/ipLocal';
 
 function PaginaAcceso({route, navigation}){
     const {tipoDeUsuario} = route.params;
@@ -19,7 +20,7 @@ function PaginaAcceso({route, navigation}){
             const decodeToken = jwtDecode(token); // Decodificar el token usando jwtDecode
 
             console.log(JSON.stringify(tipoDeUsuario))
-            const response = await fetch(`http://192.168.0.34:8080/auth/generarContrasenia/${decodeToken.id}`,{
+            const response = await fetch(`http://${ipLocal}:8080/auth/generarContrasenia/${decodeToken.id}`,{
               method: 'PUT',
               headers: 
               {'Content-Type' : 'application/json',

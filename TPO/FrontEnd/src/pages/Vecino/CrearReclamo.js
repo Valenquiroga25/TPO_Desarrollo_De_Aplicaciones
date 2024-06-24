@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } fro
 import Navbar from '../../components/Navbar';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ipLocal } from '../../global/ipLocal';
 
 const CrearReclamo = () => {
   const [documentoVecino, setDocumentoVecino] = useState('');
@@ -29,7 +30,7 @@ const CrearReclamo = () => {
       const token = await AsyncStorage.getItem('token');
       console.log(data)
 
-      const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/reclamos/', {
+      const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json',
                    "Authorization": `Bearer ${token}`},
