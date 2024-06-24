@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView} from 'react-native';
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView, TouchableOpacity} from 'react-native';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
