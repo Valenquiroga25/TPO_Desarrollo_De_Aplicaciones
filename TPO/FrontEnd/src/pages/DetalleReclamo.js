@@ -1,15 +1,13 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView} from 'react-native'
-import { ScrollView } from 'react-native-web';
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView, TouchableOpacity} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
 function DetalleReclamo({ route }) {
-    //const { titulo,sitio, documento, estado,desperfecto, descripcion, imagenes } = route.params;
-    const imagenes = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png','assets/ImagenServicioDefinitiva2.png']
+    const { titulo,sitio, documento, estado,desperfecto, descripcion, imagenes } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView> 
@@ -53,6 +51,14 @@ function DetalleReclamo({ route }) {
     )}}/>
         </ScrollView>
         
+        <View>
+          <TouchableOpacity 
+            style={styles.floatingButton} 
+            onPress={() => navigation.navigate('CrearDenuncia')}>
+              <Text style={styles.plusSign}>✎</Text>
+            </TouchableOpacity>
+        </View>
+
         <HideWithKeyboard style={styles.navbar}>
             <Navbar />
         </HideWithKeyboard>
@@ -118,6 +124,28 @@ function DetalleReclamo({ route }) {
       resizeMode: "cover",
       borderRadius: 10,
       marginBottom:10,
+    },
+    floatingButton: {
+      position: 'absolute',
+      bottom: 70,
+      right: 10,
+      backgroundColor: '#FFFFFF',
+      borderRadius: 50,
+      width: 60,
+      height: 60,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: '#000',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 5,
+    },
+    plusSign: {
+      fontSize: 30,
+      color: '#000',
     },
   });
 
