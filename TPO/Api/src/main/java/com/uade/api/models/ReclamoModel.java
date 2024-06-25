@@ -28,7 +28,7 @@ public class ReclamoModel {
     @JoinColumn(name="legajo")
     private PersonalModel personal;
     @ManyToOne
-    @JoinColumn(name="sitio")
+    @JoinColumn(name="idSitio")
     private SitioModel sitio;
     @ManyToOne
     @JoinColumn(name="idDesperfecto")
@@ -37,6 +37,8 @@ public class ReclamoModel {
     @OneToMany
     @JoinColumn(name="idImagen")
     private List<ImagenModel> imagenes;
+
+    @Enumerated(EnumType.STRING)
     private Estado estado;
     private Long idReclamoUnificado;
 
@@ -46,8 +48,8 @@ public class ReclamoModel {
         this.desperfecto = desperfecto;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
-        this.idReclamoUnificado = idReclamoUnificado;
         this.estado = Estado.EN_PROCESO;
+        this.idReclamoUnificado = idReclamoUnificado;
     }
 
     public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, Long idReclamoUnificado){
@@ -56,6 +58,7 @@ public class ReclamoModel {
         this.desperfecto = desperfecto;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
+        this.estado = Estado.EN_PROCESO;
         this.idReclamoUnificado = idReclamoUnificado;
-        this.estado = Estado.EN_PROCESO;    }
+    }
 }
