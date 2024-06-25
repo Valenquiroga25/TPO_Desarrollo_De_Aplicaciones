@@ -19,6 +19,7 @@ import MenuReclamosVecino from './src/pages/Vecino/MenuReclamosVecino';
 import MenuServiciosVecino from './src/pages/Vecino/MenuServiciosVecino';
 import MenuDenuncias from './src/pages/Vecino/MenuDenuncias';
 import PaginaDetalleServicio from './src/pages/PaginaDetalleServicio';
+import RecuperarContrasenia from './src/pages/RecuperarContrasenia';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>
+        <Stack.Screen name='RecuperarContrasenia' component={RecuperarContrasenia}/>
         <Stack.Screen name='PaginaAcceso' component={PaginaAcceso}/>
         <Stack.Screen name='MenuVecino' component={MenuVecino}/>
         <Stack.Screen name='MenuPersonal' component={MenuPersonal}/>

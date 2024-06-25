@@ -128,7 +128,7 @@ function Login({navigation}) {
           </View>
         </TouchableOpacity>
 
-        <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:15}}onPress={() => navigation.navigate('RecuperarContraseña','')}>¿Olvidaste tu contraseña?</Text>
+        <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:15}}onPress={() => navigation.navigate('RecuperarContrasenia','')}>¿Olvidaste tu contraseña?</Text>
                
       </View>
       
