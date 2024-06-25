@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import buttonStyles from '../../styles/styleMenu';
 import NavbarVecino from '../../components/NavbarVecino';
 
 
@@ -76,5 +75,18 @@ navbar:{
     right:0
   }
 })
+
+const buttonStyles = StyleSheet.create({
+  buttonWrapper: {
+    padding: 10,
+  },
+  clickableImage: {
+    width: "100%", 
+    height: 110, 
+    borderRadius: 10,
+    borderColor: '#333333',
+    borderWidth: 1,
+  },
+});
 
 export default MenuVecino;

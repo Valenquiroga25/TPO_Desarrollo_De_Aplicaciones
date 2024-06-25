@@ -1,6 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import buttonStyles from '../../styles/styleMenu';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import NavbarPersonal from '../../components/NavbarPersonal';
 
 function MenuPersonal({navigation}) {
@@ -65,6 +64,19 @@ navbar:{
     left:0,
     right:0
   }
-})
+});
+
+const buttonStyles = StyleSheet.create({
+  buttonWrapper: {
+    padding: 10,
+  },
+  clickableImage: {
+    width: "100%", 
+    height: 110, 
+    borderRadius: 10,
+    borderColor: '#333333',
+    borderWidth: 1,
+  },
+});
 
 export default MenuPersonal
