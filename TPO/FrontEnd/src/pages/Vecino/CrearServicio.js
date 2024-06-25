@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, FlatList} from "react-native";
-import NavbarVecino from '../../components/NavbarVecino';
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker'
 import { jwtDecode } from "jwt-decode";
@@ -211,11 +209,7 @@ const CrearServicio = ({navigation}) => {
           </View>
         </Modal>
       </View>
-
-      <HideWithKeyboard style={styles.navbar}>
-        <NavbarVecino navigation={navigation}/>
-      </HideWithKeyboard>    
-      </View>
+    </View>
   );
 };
 

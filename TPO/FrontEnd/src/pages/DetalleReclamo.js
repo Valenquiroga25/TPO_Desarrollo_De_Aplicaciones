@@ -1,13 +1,11 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView, TouchableOpacity} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
 function DetalleReclamo({ route }) {
-    const { titulo,sitio, documento, estado,desperfecto, descripcion, imagenes } = route.params;
+    const { titulo, sitio, documento, estado, desperfecto, descripcion, imagenes } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView> 
@@ -18,8 +16,8 @@ function DetalleReclamo({ route }) {
         <Text style={styles.detalle}>{'ESTADO: '}</Text>
         <Text style={styles.detalle}>{'DESPERFECTO: '}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',marginBottom:20}}>
-          <Text style={styles.textDescripcion}> {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus justo, ultricies vel tortor et, facilisis pulvinar justo. Pellentesque egestas metus id dolor venenatis, sit amet pellentesque dui pretium. Integer posuere dui ac massa rhoncus pretium. Nam ac diam ultricies, tempor neque et, dictum diam. '}</Text>
+        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
+          <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
         <FlatList 
@@ -58,10 +56,6 @@ function DetalleReclamo({ route }) {
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>
-
-        <HideWithKeyboard style={styles.navbar}>
-            <Navbar />
-        </HideWithKeyboard>
       </View> 
     );
   }

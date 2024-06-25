@@ -69,6 +69,10 @@ function NavbarPersonal({navigation}){
 
 const styles = StyleSheet.create({
     containar:{
+        position:'absolute',
+        bottom:0,
+        left:0,
+        right:0,
         flexDirection:'row',
         justifyContent:'space-between',
         paddingRight:30,
@@ -89,7 +93,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo blanco con 50% de opacidad
     },
     modalContent:{
-        backgroundColor:'#FFD600',
+        backgroundColor:'lightgrey',
+        borderWidth:1.5,
+        borderColor:'#FFD600',
         height:300,
         marginLeft:20,
         marginRight:20,

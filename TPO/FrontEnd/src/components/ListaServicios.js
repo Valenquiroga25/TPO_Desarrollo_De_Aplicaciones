@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from 'react'
 import { Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
+import { ipLocal } from '../global/ipLocal';
 
 function ListaServicios({navigation}) {
     const [listaServicios, setListaServicios] = useState([])
@@ -8,7 +9,7 @@ function ListaServicios({navigation}) {
     
         async function showServicios(){
 
-            const response = await fetch('http://192.168.0.48:8080/tpo-desarrollo-mobile/servicios/getAllServicios',{
+            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/servicios/getAllServicios`,{
                 method: 'GET',
                 headers: {'Content-Type' : 'application/json'}
                 })
@@ -18,7 +19,6 @@ function ListaServicios({navigation}) {
             }
         
             const servicios = await response.json();
-            console.log(servicios)
             setListaServicios(servicios)
         }
 
@@ -28,7 +28,7 @@ function ListaServicios({navigation}) {
 
     function redireccion(servicio){
 
-        navigation.navigate('PaginaDetalleServicio', {
+        navigation.navigate('DetalleServicio', {
             titulo: servicio.titulo,
             direccion: servicio.direccion,
             telefono: servicio.telefono,

@@ -1,36 +1,35 @@
 import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import Navbar from '../../components/Navbar'
 import buttonStyles from '../../styles/styleMenu';
-import style from '../../styles/style';
+import NavbarPersonal from '../../components/NavbarPersonal';
 
-function MenuPersonal() {
+function MenuPersonal({navigation}) {
   return (
-    <View style={style.container}>
-      <View>
-        <View style={style.imageContainer}>
-          <Image style={style.image} source={require('../../../assets/BuenosAires.png')} />
+    <View style={styles.container}>
+      <View style={styles.datosContainer}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.imagenLogo}  source={require('../../../assets/BuenosAires.png')} />
         </View>
-        <View style={style.imageContainer}>
-          <Image style={style.dengueImage} source={require('../../../assets/dengue.png')} />
+        <View style={styles.imageContainer}>
+          <Image style={styles.dengueImage} resizeMode='contain' source={require('../../../assets/dengue.png')} />
         </View>
       </View>
 
-      <View title='Botones'>
+      <View style={styles.botonesContainer}>
 
             <View style={buttonStyles.buttonWrapper}>
-                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosVecino')}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamos')}>
                     <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
                 </TouchableOpacity>
             </View>
             <View style={buttonStyles.buttonWrapper}>
-                <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosVecino')}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
                     <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
                 </TouchableOpacity>
             </View>
-            </View>
+          </View>
 
-        <Navbar title='Navbar' />
+        <NavbarPersonal title='Navbar' />
     </View>
   )
 }

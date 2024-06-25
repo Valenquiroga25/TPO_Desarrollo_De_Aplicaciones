@@ -1,10 +1,8 @@
 import {React, useState} from 'react'
 import { Text, View, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native'
-import Navbar from '../components/Navbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import { isExpired } from 'react-jwt';
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ipLocal } from '../global/ipLocal';
 
 function Login({navigation}) {
@@ -131,10 +129,6 @@ function Login({navigation}) {
         <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:15}}onPress={() => navigation.navigate('RecuperarContraseña','')}>¿Olvidaste tu contraseña?</Text>
                
       </View>
-      
-      <HideWithKeyboard style={styles.navbar}>
-        <Navbar />
-      </HideWithKeyboard>
     </View>
   );
 }

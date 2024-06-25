@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView, TouchableOpacity} from 'react-native';
 
@@ -18,8 +17,8 @@ function DetalleDenuncia({ route }) {
         <Text style={styles.detalle}>{'DOCUMENTO: '+documento}</Text>
         <Text style={styles.detalle}>{'ESTADO: '+estado}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,}}>
-          <Text style={styles.textDescripcion}> {descripcion}</Text>
+        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
+          <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
         <FlatList 
@@ -56,10 +55,6 @@ function DetalleDenuncia({ route }) {
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>
-
-        <HideWithKeyboard style={styles.navbar}>
-            <Navbar />
-        </HideWithKeyboard>
       </View>
     );
   } 

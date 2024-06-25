@@ -1,32 +1,29 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView} from 'react-native'
-import { ScrollView } from 'react-native-web';
+import { Text, View, StyleSheet,Image,FlatList,Dimensions, ScrollView} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
 
-function PaginaDetalleServicio({ route }) {
-    //const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
+function DetalleServicio({ route }) {
+    const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
 
-    const imagenes = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png','assets/ImagenServicioDefinitiva2.png']
+    const imageness = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png']
     
     return (
       <View style={styles.container}>
         <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{'Servicio'}</Text>
-        <Text style={styles.detalle}>{'DIRECCION: '}</Text>
-        <Text style={styles.detalle}>{'TELEFONO: '}</Text>
+        <Text style={styles.detalle}>{`DIRECCION: ${direccion}`}</Text>
+        <Text style={styles.detalle}>{`TELEFONO: ${telefono}`}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,}}>
-          <Text style={styles.textDescripcion}> {'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla risus justo, ultricies vel tortor et, facilisis pulvinar justo. Pellentesque egestas metus id dolor venenatis, sit amet pellentesque dui pretium. Integer posuere dui ac massa rhoncus pretium. Nam ac diam ultricies, tempor neque et, dictum diam. '}</Text>
+        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
+          <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
         <FlatList 
-        data={imagenes}
+        data={imageness}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
@@ -51,11 +48,6 @@ function PaginaDetalleServicio({ route }) {
             </View>
     )}}/>
         </ScrollView>
-        
-
-        <HideWithKeyboard style={styles.navbar}>
-            <Navbar />
-        </HideWithKeyboard>
     </View>
   )
 }
@@ -120,4 +112,4 @@ function PaginaDetalleServicio({ route }) {
       marginBottom:10,
     },
   });
-export default PaginaDetalleServicio
+export default DetalleServicio

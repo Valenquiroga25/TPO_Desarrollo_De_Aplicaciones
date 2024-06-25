@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
-import Navbar from '../../components/Navbar';
 import CheckBox from 'react-native-check-box'
 import { ipLocal } from '../../global/ipLocal';
 
@@ -114,7 +113,7 @@ function CrearDenuncia({navigation}){
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
           onPress={handleSubmit}
           disabled={!isFormComplete}>
           <Text style={styles.enviarReclamoButtonText}>Enviar Denuncia</Text>
@@ -137,8 +136,6 @@ function CrearDenuncia({navigation}){
           </View>
         </Modal>
       </View>
-
-      <Navbar />
     </View>
   );
 };

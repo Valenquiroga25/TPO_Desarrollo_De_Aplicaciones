@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { Text, TextInput, View, Image, StyleSheet, TouchableOpacity, Modal} from 'react-native'
-import Navbar from '../components/Navbar';
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import { ipLocal } from '../global/ipLocal';
 
 function Registro({navigation}) {
@@ -134,11 +132,7 @@ function Registro({navigation}) {
             </View>
         </TouchableOpacity>
       </View>
-
-      <HideWithKeyboard style={styles.navbar}>
-        <Navbar />
-      </HideWithKeyboard>
-      </View>
+    </View>
   );
 }
 

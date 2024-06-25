@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
-import Navbar from '../../components/Navbar';
-import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ipLocal } from '../../global/ipLocal';
+import { ipLocal } from '../global/ipLocal';
 
 const CrearReclamo = () => {
   const [documentoVecino, setDocumentoVecino] = useState('');
@@ -148,12 +146,7 @@ const CrearReclamo = () => {
           </View>
         </Modal>
       </View>
-
-      <HideWithKeyboard style={styles.navbar}>
-        <Navbar />
-      </HideWithKeyboard>    
-      
-      </View>
+    </View>
   );
 };
 

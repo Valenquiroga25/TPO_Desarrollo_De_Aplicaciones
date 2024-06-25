@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';

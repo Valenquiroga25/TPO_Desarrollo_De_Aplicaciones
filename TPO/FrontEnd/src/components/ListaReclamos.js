@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
+import { ipLocal } from '../global/ipLocal';
 
 function ListaReclamos({ navigation }) {
     const [listaReclamos, setListaReclamos] = useState([]);

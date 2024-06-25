@@ -1,17 +1,17 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import NavbarVecino from '../../components/NavbarVecino';
+import NavbarVecino from '../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import ListaReclamos from '../../components/ListaReclamos';
+import ListaReclamos from '../components/ListaReclamos';
 
-const MenuReclamosVecino = () => {
+const MenuReclamos = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-        <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+        <Image style={styles.image} resizeMode="contain" source={require('../../assets/BuenosAiresCiudad.png')} />
       </View>
       
       <ListaReclamos navigation = {navigation}/>
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default MenuReclamosVecino;
+export default MenuReclamos;
