@@ -51,32 +51,33 @@ const CrearServicio = ({navigation}) => {
 
       console.log(idServicio)
 
-      for(const imagen of imagenes){
-        const formData = new FormData();
+      if(imagenes){
+        for(const imagen of imagenes){
+          const formData = new FormData();
 
-        const fileInfo = await FileSystem.getInfoAsync(imagen)
-        const fileUri = fileInfo.uri
-        const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
-        const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
+          const fileInfo = await FileSystem.getInfoAsync(imagen)
+          const fileUri = fileInfo.uri
+          const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
+          const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
 
-        formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
-        formData.append('idServicio', {"string": idServicio, type: "application/json"});
-        
-        console.log("FormData content:", JSON.stringify(formData._parts[0]));
+          formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
+          formData.append('idServicio', {"string": idServicio, type: "application/json"});
+          
+          console.log("FormData content:", JSON.stringify(formData._parts[0]));
 
-        //fetch de las imagenes
-        const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
-          method: "POST",
-          headers: { 
-            headers: {'Content-Type' : 'multipart/form-data'},
-            "Authorization": `Bearer ${token}`
-          },
-          body: formData
-        });
-        
-        if (!imageResponse.ok) {
-          const message = await imageResponse.text()
-          throw new Error(message)
+          //fetch de las imagenes
+          const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
+            method: "POST",
+            headers: { 
+              "Authorization": `Bearer ${token}`
+            },
+            body: formData
+          });
+          
+          if (!imageResponse.ok) {
+            const message = await imageResponse.text()
+            throw new Error(message)
+          }
         }
       }
       

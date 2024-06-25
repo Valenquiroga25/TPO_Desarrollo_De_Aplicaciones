@@ -39,12 +39,6 @@ public class ServicioService {
             }
         }
 
-        if(newServicio.getImagenes() != null){
-            if(newServicio.getImagenes().size() > 5){
-                log.error("La publicación del servicio no puede tener más de 5 imágenes.");
-                throw new Exception("La publicación del servicio no puede tener más de 5 imágenes.");
-            }
-        }
         return this.servicioRepository.save(newServicio);
     }
     public ServicioModel updateServicio(Long id, String descripcion, List<ImagenModel> imagenes) throws Exception{
@@ -73,7 +67,6 @@ public class ServicioService {
                     throw new Exception("La imagen con el Id " + imagen.getIdImagen() + " no se encuentra registrada en la base de datos.");
                 }
             }
-            servicioDb.setImagenes(imagenes);
         }
 
         log.info("Servicio con id " + servicioDb.getIdServicio() + " actualizado con éxito ");

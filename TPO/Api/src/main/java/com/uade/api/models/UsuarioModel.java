@@ -16,11 +16,4 @@ public class UsuarioModel {
     private String mail;
     private String clave_acceso;
     private String tipoUsuario;
-
-    public UsuarioModel(String identificador, String contrasenia, String mail, String tipoUsuario){
-        this.identificador=identificador;
-        this.contrasenia=contrasenia;
-        this.mail=mail;
-        this.tipoUsuario=tipoUsuario;
-    }
 }

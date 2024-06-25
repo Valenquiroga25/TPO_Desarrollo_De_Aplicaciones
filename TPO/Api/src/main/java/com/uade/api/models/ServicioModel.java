@@ -27,19 +27,15 @@ public class ServicioModel {
     @ManyToOne
     @JoinColumn(name="rubro")
     private RubroModel rubro;
-    @OneToMany
-    @JoinColumn(name="idImagen")
-    private List<ImagenModel> imagenes;
     private String tipoServicio;
 
-    public ServicioModel(VecinoModel vecino, String titulo, String direccion, String telefono, String descripcion, RubroModel rubro, List<ImagenModel> imagenes, String tipoServicio) {
+    public ServicioModel(VecinoModel vecino, String titulo, String direccion, String telefono, String descripcion, RubroModel rubro, String tipoServicio) {
         this.vecino = vecino;
         this.titulo = titulo;
         this.direccion = direccion;
         this.telefono = telefono;
         this.descripcion = descripcion;
         this.rubro = rubro;
-        this.imagenes = imagenes;
         this.tipoServicio = tipoServicio;
     }
 }

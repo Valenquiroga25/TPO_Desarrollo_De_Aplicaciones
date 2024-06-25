@@ -1,13 +1,17 @@
 package com.uade.api.models.DTOs;
 
-import com.uade.api.models.ServicioModel;
-import com.uade.api.models.UsuarioModel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
+
 public class ImagenDTO {
-    private Long idImagen;
-    private String datosImagen;
-    private UsuarioModel usuario;
-    private ServicioModel servicio;
+    private MultipartFile archivo;
+    private String idServicio;
 }

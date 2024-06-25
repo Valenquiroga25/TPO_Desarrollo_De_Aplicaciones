@@ -86,12 +86,12 @@ public class DenunciasService {
         return denunciaOp.get();
     }
     public List<DenunciaModel> findAllDenunciasFromVecino(String documento){
-        List<DenunciaModel> allDenuncias= this.denunciasRepository.findAll();
+        List<DenunciaModel> allDenuncias = this.denunciasRepository.findAll();
         List<DenunciaModel> allDenunciasFromVecinos = new ArrayList<>();
 
-        for(DenunciaModel r : allDenuncias){
-            if (Objects.equals(r.getVecino().getDocumento(), documento))
-                allDenunciasFromVecinos.add(r);
+        for(DenunciaModel denuncia : allDenuncias){
+            if (Objects.equals(denuncia.getVecino().getDocumento(), documento))
+                allDenunciasFromVecinos.add(denuncia);
         }
         return allDenunciasFromVecinos;
     }

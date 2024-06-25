@@ -19,6 +19,5 @@ public class ServicioModelDTO {
     private String telefono;
     private String descripcion;
     private Long idRubro;
-    private List<ImagenModel> imagenes;
     private String tipoServicio;
 }

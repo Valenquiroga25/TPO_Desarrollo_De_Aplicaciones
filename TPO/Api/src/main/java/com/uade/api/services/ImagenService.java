@@ -24,7 +24,14 @@ public class ImagenService{
         return this.imagenRepository.findImagenByIdImagen(id);
     }
 
-    public ImagenModel findImagenesById(Long id) {
-        return this.imagenRepository.findImagenByIdImagen(id);
+    public List<ImagenModel> findImagenesByIdServicio(Long idServicio) {
+        List<ImagenModel> imagenes = this.imagenRepository.findAll();
+        List<ImagenModel> imagenesBuscadas = new ArrayList<>();
+
+        for(ImagenModel imagen : imagenes){
+            if(imagen.getServicio().getIdServicio() == idServicio)
+                imagenesBuscadas.add(imagen);
+        }
+        return imagenesBuscadas;
     }
 }

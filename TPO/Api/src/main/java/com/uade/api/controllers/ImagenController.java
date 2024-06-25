@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tpo-desarrollo-mobile/imagenes")
@@ -22,14 +23,14 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
     @Autowired
-    private UsuarioService usuarioService;
-    
+    private ServicioService servicioService;
+
     @PostMapping("/")
-    public ResponseEntity<String> uploadImagen(@RequestParam("archivo") MultipartFile archivo, @RequestParam("identificador") String identificador) {
+    public ResponseEntity<String> uploadImagen(@RequestParam("archivo") MultipartFile archivo, @RequestParam("idServicio") Long idServicio) {
         try {
-            UsuarioModel usuario = this.usuarioService.findUsuarioByIdentificador(identificador);
-            ImagenModel imagen = new ImagenModel(archivo.getBytes(), usuario);
-            imagenService.createImagen(imagen);
+            ServicioModel servicio = this.servicioService.findServicioById(idServicio);
+            ImagenModel imagenAux = new ImagenModel(archivo.getBytes(), servicio);
+            imagenService.createImagen(imagenAux);
             return ResponseEntity.ok("Imagen subida exitosamente.");
         } catch (IOException e) {
             e.printStackTrace();
@@ -39,14 +40,24 @@ public class ImagenController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<byte[]> download(@PathVariable Long id) {
-        ImagenModel imagen = imagenService.findImagenById(id);
+    @GetMapping("/{idServicio}")
+    public ResponseEntity<byte[]> download(@PathVariable Long idServicio) {
+        ImagenModel imagen = imagenService.findImagenById(idServicio);
         if (imagen != null) {
             return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen.getDatosImagen());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+/*
+    @GetMapping("/{idServicio}")
+    public ResponseEntity<?> downloadAll(@PathVariable Long idServicio) {
+        try{
+        return new ResponseEntity<>(imagenService.findImagenesByIdServicio(idServicio), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+ */
 }
 

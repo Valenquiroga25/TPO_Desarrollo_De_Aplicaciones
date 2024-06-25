@@ -18,13 +18,14 @@ public class ApiApplication {
 		ApplicationContext context = SpringApplication.run(ApiApplication.class, args);
 	}
 
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://192.168.0.34:8081", "http://localhost:8081")
+						.allowedOrigins("http://192.168.0.48:8081", "http://localhost:8081")
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowedHeaders("Authorization", "Content-Type")
 						.exposedHeaders("Authorization")
@@ -32,4 +33,4 @@ public class ApiApplication {
 			}
 		};
 	}
-}
+};

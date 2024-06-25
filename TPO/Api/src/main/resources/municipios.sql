@@ -93,15 +93,15 @@ create table movimientosReclamo(
 );
 
 create table denuncias(
-    idDenuncias BIGINT not null AUTO_INCREMENT,
-    documentoVecino varchar(20) not null,
-    idSitio BIGINT not null,
+    idDenuncia BIGINT not null AUTO_INCREMENT,
+    vecino varchar(20) not null,
+    sitio BIGINT not null,
     descripcion varchar(1000) not null,
     estado varchar(150),
     aceptaResponsabilidad int,
-    constraint pk_denuncias primary key (idDenuncias),
-    constraint fk_denuncias_vecinos foreign key (documentoVecino) references vecinos(documento),
-    constraint fk_denuncias_sitios foreign key (idSitio) references sitios(idSitio)
+    constraint pk_denuncias primary key (idDenuncia),
+    constraint fk_denuncias_vecinos foreign key (vecino) references vecinos(documento),
+    constraint fk_denuncias_sitios foreign key (sitio) references sitios(idSitio)
 );
 
 create table movimientosDenuncia(
@@ -132,13 +132,11 @@ create table servicios(
 create table imagenes(
      idImagen BIGINT not null AUTO_INCREMENT,
      datosImagen blob not null,
-     identificador varchar(20) not null, 
      idServicio BIGINT not null,
      constraint pk_imagen primary key(idImagen),
-     constraint fk_imagen_usuario foreign key (identificador) references usuarios(identificador)
+     constraint fk_imagen_servicio foreign key (idServicio) references servicios(idServicio)
 )
 
-drop table imagenes
 
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 
@@ -154,23 +152,19 @@ INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIn
 
 INSERT vecinos (documento, nombre, apellido, direccion, codigoBarrio) VALUES ('44367389', 'Valentin',  'Quiroga' , 'Las Heras 3744', 1);
 
-INSERT usuarios (identificador, contrasenia, mail, clave_acceso, tipoUsuario) VALUES ('10', null, 'pepito@gmail.com','SLK-457', 'Inspector');
-
-insert barrios(nombre) values ("Palermo")
-
-insert into rubros(descripcion) values ("Encomienda")
-
 select * from vecinos;
 select * from personal;
 select * from usuarios;
 select * from reclamos
-select * from servicios;
+select * from servicios; 
 select * from rubros
-select * from imagenes
+select * from imagenes 
 select * from sitios
 select * from desperfectos
 
-truncate table imagenes
+insert into reclamos(documentoVecino, legajo, idSitio, idDesperfecto, descripcion, estado, idReclamoUnificado)
+values ('44367389', null, 1, 1, 'La concha de Bauti', null, null)
+delete from servicios where idServicio = 9
 
 use municipios
 

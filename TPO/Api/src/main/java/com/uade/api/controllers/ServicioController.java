@@ -94,7 +94,6 @@ public class ServicioController {
                 servicioDTO.getTelefono(),
                 servicioDTO.getDescripcion(),
                 this.rubrosService.findRubroById(servicioDTO.getIdRubro()),
-                servicioDTO.getImagenes(),
                 servicioDTO.getTipoServicio());
         return servicio;
     }

@@ -1,11 +1,14 @@
 package com.uade.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Base64;
 
 @Entity
 @Table(name = "imagenes")
@@ -22,12 +25,15 @@ public class ImagenModel {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] datosImagen;
     @ManyToOne
-    @JoinColumn(name="identificador")
-    private UsuarioModel usuario;
+    @JoinColumn(name="idServicio")
+    private ServicioModel servicio;
 
-    public ImagenModel(byte[] datosImagen, UsuarioModel usuario){
+    public ImagenModel(byte[] datosImagen, ServicioModel servicio) {
         this.datosImagen = datosImagen;
-        this.usuario = usuario;
+        this.servicio = servicio;
     }
+
+    @JsonProperty("datosImagen")
+    public String getDatosImagenBase64() {return Base64.getEncoder().encodeToString(this.datosImagen);}
 }
 

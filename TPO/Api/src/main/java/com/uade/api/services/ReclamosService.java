@@ -154,9 +154,9 @@ public class ReclamosService {
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromVecinos = new ArrayList<>();
 
-        for(ReclamoModel r : allReclamos){
-            if (Objects.equals(r.getVecino().getDocumento(), documento))
-                allReclamosFromVecinos.add(r);
+        for(ReclamoModel reclamo : allReclamos){
+            if (Objects.equals(reclamo.getVecino().getDocumento(), documento))
+                allReclamosFromVecinos.add(reclamo);
         }
         return allReclamosFromVecinos;
     }
@@ -165,9 +165,9 @@ public class ReclamosService {
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromPersonal = new ArrayList<>();
 
-        for(ReclamoModel r : allReclamos){
-            if (Objects.equals(r.getPersonal().getLegajo(), legajo))
-                allReclamosFromPersonal.add(r);
+        for(ReclamoModel reclamo : allReclamos){
+            if (Objects.equals(reclamo.getPersonal().getLegajo(), legajo))
+                allReclamosFromPersonal.add(reclamo);
         }
         return allReclamosFromPersonal;
     }
