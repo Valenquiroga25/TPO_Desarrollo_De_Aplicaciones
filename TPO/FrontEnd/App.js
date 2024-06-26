@@ -41,7 +41,7 @@ function App() {
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>
-        <Stack.Screen name='RecuperarContrasenia' component={RecuperarContrasenia}/>
+        {/* <Stack.Screen name='RecuperarContrasenia' component={RecuperarContrasenia}/> */}
         <Stack.Screen name='PaginaAcceso' component={PaginaAcceso}/>
         <Stack.Screen name='MenuVecino' component={MenuVecino}/>
         <Stack.Screen name='MenuPersonal' component={MenuPersonal}/>
