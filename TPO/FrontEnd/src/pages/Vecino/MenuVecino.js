@@ -1,9 +1,17 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet, FlatList, Dimensions } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 
+const width = Dimensions.get('window').width;
 
 const MenuVecino = ({ navigation }) => {
+  const imagenes = [
+    { id: 1, source: require('../../../assets/menu1.png') },
+    { id: 2, source: require('../../../assets/menu2.png') },
+    { id: 3, source: require('../../../assets/menu3.png') },
+    
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.datosContainer}>
@@ -11,7 +19,16 @@ const MenuVecino = ({ navigation }) => {
           <Image style={styles.imagenLogo} source={require('../../../assets/BuenosAires.png')} />
         </View>
         <View style={styles.imageContainer}>
-          <Image style={styles.dengueImage} resizeMode='contain' source={require('../../../assets/dengue.png')} />
+          <FlatList
+            data={imagenes}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Image style={styles.dengueImage} resizeMode='contain' source={item.source} />
+            )}
+            getItemLayout={(data, index) => ({ length: width, offset: width * index, index })}
+          />
         </View>
       </View>
 
@@ -59,11 +76,11 @@ imagenLogo:{
     marginRight:25,
   },
   dengueImage: {
-    width: '70%',
+    width: width * 0.7, 
     height: 200,
     marginTop: 140,
-    marginLeft:60,
-    borderRadius:15
+    marginLeft: 60,
+    borderRadius: 15,
 },
 botonesContainer:{
     marginTop:30
