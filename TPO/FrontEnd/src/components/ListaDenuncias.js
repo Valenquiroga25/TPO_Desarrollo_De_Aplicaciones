@@ -37,11 +37,14 @@ function ListaDenuncias({ navigation }) {
     
 
       function redireccion(denuncia) {
-        navigation.navigate('DetalleDenuncia', {
-          sitio: denuncia.sitio,
-          documento: denuncia.vecino.documento,
-          descripcion: denuncia.descripcion,
-          imagenes: denuncia.imagenes,
+        console.log(denuncia)
+          navigation.navigate('DetalleDenuncia', {
+            idDenuncia:denuncia.idDenuncia,
+            documento: denuncia.documentoVecino,
+            calleSitio: denuncia.calleSitio,
+            numeroSitio:denuncia.numeroSitio,
+            descripcion: denuncia.descripcion,
+            estado: denuncia.estado,
         });
       }
 

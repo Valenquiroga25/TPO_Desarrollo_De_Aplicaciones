@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarVecino from '../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import ListaReclamos from '../components/ListaReclamos';
+import ListaReclamosVecino from '../components/ListaReclamosVecino';
 
 const MenuReclamos = () => {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ const MenuReclamos = () => {
         <Image style={styles.image} resizeMode="contain" source={require('../../assets/BuenosAiresCiudad.png')} />
       </View>
       
-      <ListaReclamos navigation = {navigation}/>
+      <ListaReclamosVecino navigation = {navigation}/>
       <View>
         <TouchableOpacity 
           style={styles.floatingButton} 

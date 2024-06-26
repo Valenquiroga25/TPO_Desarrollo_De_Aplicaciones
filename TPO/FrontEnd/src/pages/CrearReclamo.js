@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ipLocal } from '../global/ipLocal';
+import {jwtDecode} from 'jwt-decode';
 
 const CrearReclamo = () => {
   const [documentoVecino, setDocumentoVecino] = useState('');
@@ -26,6 +27,20 @@ const CrearReclamo = () => {
       const data = {documentoVecino, legajoPersonal, calleSitio, numeroSitio, idDesperfecto, descripcion, imagenes, idReclamoUnificado};
 
       const token = await AsyncStorage.getItem('token');
+      const decodeToken = jwtDecode(token); 
+
+      if(decodeToken.rol === 'Inspector'){
+        if(documentoVecino){
+          alert('El inspector no puede indicar un documento de vecino!');
+          return;
+        }
+      }else{
+        if(legajoPersonal){
+          alert('El vecino no puede indicar un legajo de personal!');
+          return;
+        }
+      }
+
       console.log(data)
 
       const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/`, {
@@ -123,7 +138,7 @@ const CrearReclamo = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'grey' }]}
+          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
           onPress={handleSubmit}
           disabled={!isFormComplete}>
           <Text style={styles.enviarReclamoButtonText}>Enviar Reclamo</Text>

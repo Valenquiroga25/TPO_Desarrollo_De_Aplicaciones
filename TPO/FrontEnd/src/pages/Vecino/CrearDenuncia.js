@@ -2,37 +2,35 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import CheckBox from 'react-native-check-box'
 import { ipLocal } from '../../global/ipLocal';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function CrearDenuncia({navigation}){
-  
-  const [nombreSitio, setNombreSitio] = useState('');
-  const [documento, setDocumento] = useState('');
-  const [textoExplicativo, setTextoExplicativo] = useState('');
-  const [Estado, setEstado] = useState('');
-  const [imagen, setImagen] = useState(null);
+  const [documentoVecino, setDocumento] = useState('');
+  const [calleSitio, setCalleSitio] = useState('');
+  const [numeroSitio, setNumeroSitio] = useState('');
+  const [descripcion, setDescripcion] = useState('');
+  const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [aceptoDeclaracion, setAceptoDeclaracion] = useState(false);
-
-  const isFormComplete = nombreSitio && documento && Estado && textoExplicativo && aceptoDeclaracion;
+  const [aceptoResponsabilidad, setAceptoResponsabilidad] = useState(0);
+  const [checked, setChecked] = useState(true);
+  const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion && aceptoResponsabilidad;
 
   const handleSubmit = async () => {
     if (!isFormComplete) {
       alert('Todos los campos son obligatorios y debes aceptar la declaración jurada');
       return;
     }
-
     try {
-      const data = {
-        documentoVecino: documento, 
-        idSitio: nombreSitio,
-        descripcion: textoExplicativo,
-        idReclamoUnificado: Estado,
-        imagenes: imagen ? [imagen] : []
-      };
+      const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
 
-      const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/`, {
+      const data = {documentoVecino, calleSitio, numeroSitio, descripcion, aceptoResponsabilidad};
+
+      console.log(JSON.stringify(data))
+      
+      const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/denuncias/`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+                   "Authorization": `Bearer ${token}`},
         body: JSON.stringify(data)
       });
 
@@ -61,6 +59,19 @@ function CrearDenuncia({navigation}){
     navigation.navigate('LeerPdf')
   }
 
+  function handleResponsabilidad(){
+    if(aceptoResponsabilidad === 0){
+      setAceptoResponsabilidad(1);
+      setChecked(true)
+      console.log(aceptoResponsabilidad);
+  }
+    else{
+      setAceptoResponsabilidad(0);
+      setChecked(false);
+      console.log(aceptoResponsabilidad);
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
@@ -71,37 +82,46 @@ function CrearDenuncia({navigation}){
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setDocumento}
-          value={documento}
+          inputMode='numeric'
+          value={documentoVecino}
           placeholder="Documento"
         />
         <TextInput
           style={[styles.input, styles.textInput]}
-          onChangeText={setNombreSitio}
-          value={nombreSitio}
-          placeholder="Nombre Sitio"
+          onChangeText={setCalleSitio}
+          value={calleSitio}
+          placeholder="Calle del Sitio"
         />
         <TextInput
           style={[styles.input, styles.textInput]}
-          onChangeText={setEstado}
-          value={Estado}
-          placeholder="Estado"
+          onChangeText={setNumeroSitio}
+          value={numeroSitio}
+          placeholder="Número del Sitio"
         />
         <TextInput
           style={[styles.input, styles.textInput, styles.textArea]}
-          placeholder="Texto explicativo"
-          onChangeText={setTextoExplicativo}
-          value={textoExplicativo}
+          placeholder="Descripción"
+          onChangeText={setDescripcion}
+          value={descripcion}
           multiline={true}
           numberOfLines={4} 
         />
 
         {/* Declaración jurada */}
         <View style={styles.declaracionContainer}>
-          <CheckBox
-            value={aceptoDeclaracion}
-            onValueChange={setAceptoDeclaracion}
-            style={styles.checkbox}
-          />
+          {checked ? 
+          (<CheckBox
+            value={aceptoResponsabilidad}
+            onClick={handleResponsabilidad}
+            style={styles.checkboxFalse}
+          />)
+        :
+          (<CheckBox
+          value={aceptoResponsabilidad}
+          onClick={handleResponsabilidad}
+          style={styles.checkboxTrue}
+        />)}
+
           <Text style={styles.declaracionText}>
             Acepto en carácter de declaración jurada que lo indicado en el objeto de la denuncia y pruebas aportadas, en caso de falsedad, puede dar lugar a una acción judicial por parte del municipio y/o los denunciados.
           </Text>
@@ -267,8 +287,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
-  checkbox: {
+  checkboxFalse: {
     alignSelf: 'center',
+  },
+  checkboxTrue:{
+    backgroundColor:'#FFD600',
   },
   declaracionText: {
     flex: 1,

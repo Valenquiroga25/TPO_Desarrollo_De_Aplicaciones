@@ -1,5 +1,7 @@
 package com.uade.api.controllers;
 
+import com.uade.api.models.DTOs.ReclamoPersonalDevueltoDTO;
+import com.uade.api.models.DTOs.ReclamoVecinoDevueltoDTO;
 import com.uade.api.models.DTOs.ReclamoModelDTO;
 import com.uade.api.models.*;
 import com.uade.api.services.*;
@@ -8,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @CrossOrigin() // Para que un controlador externo (un front alojado en otro dominio) acceda a nuestro sistema.
@@ -66,7 +70,11 @@ public class ReclamosController {
     @GetMapping(path = "/allFromVecino/{documento}")
     public ResponseEntity<?> getAllReclamosByDocumento(@PathVariable String documento){
         try{
-            return new ResponseEntity<>(reclamosService.findAllReclamosFromVecino(documento),HttpStatus.OK);
+            List<ReclamoModel> allReclamos = this.reclamosService.findAllReclamosFromVecino(documento);
+            List<ReclamoVecinoDevueltoDTO> allReclamosDevueltos = new ArrayList<>();
+            for(ReclamoModel reclamo : allReclamos)
+                allReclamosDevueltos.add(convertToVecinoDTO(reclamo));
+            return new ResponseEntity<>(allReclamosDevueltos,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -75,7 +83,11 @@ public class ReclamosController {
     @GetMapping(path = "allFromPersonal/{legajo}")
     public ResponseEntity<?> getAllReclamosByLegajo(@PathVariable String legajo){
         try{
-            return new ResponseEntity<>(reclamosService.findAllReclamosFromPersonal(legajo),HttpStatus.OK);
+            List<ReclamoModel> allReclamos = this.reclamosService.findAllReclamosFromPersonal(legajo);
+            List<ReclamoPersonalDevueltoDTO> allReclamosDevueltos = new ArrayList<>();
+            for(ReclamoModel reclamo : allReclamos)
+                allReclamosDevueltos.add(convertToPersonalDTO(reclamo));
+            return new ResponseEntity<>(allReclamosDevueltos,HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -85,7 +97,7 @@ public class ReclamosController {
         if(!Objects.equals(reclamoDTO.getDocumentoVecino(), "") && !Objects.equals(reclamoDTO.getLegajoPersonal(), ""))
             throw new Exception("El reclamo no puede ser de un vecino y un inspector a la vez!");
 
-        else if(reclamoDTO.getDocumentoVecino() != null){
+        else if(!Objects.equals(reclamoDTO.getDocumentoVecino(), "")){
             ReclamoModel reclamo = new ReclamoModel(
                     vecinosService.findVecinoByDocumento(reclamoDTO.getDocumentoVecino()),
                     sitiosService.findSitioByDireccion(reclamoDTO.getCalleSitio(),reclamoDTO.getNumeroSitio()),
@@ -109,16 +121,27 @@ public class ReclamosController {
         }
     }
 
-    public ReclamoModelDTO convertToDTO(ReclamoModel reclamo){
-        ReclamoModelDTO reclamoDTO =  new ReclamoModelDTO(
+    public ReclamoVecinoDevueltoDTO convertToVecinoDTO(ReclamoModel reclamo){
+        ReclamoVecinoDevueltoDTO reclamoDTO = new ReclamoVecinoDevueltoDTO(
+                reclamo.getIdReclamo(),
                 reclamo.getVecino().getDocumento(),
+                reclamo.getSitio().getCalle(),
+                reclamo.getSitio().getNumero(),
+                reclamo.getEstado(),
+                reclamo.getDesperfecto().getDescripcion(),
+                reclamo.getDescripcion());
+        return reclamoDTO;
+    }
+
+    public ReclamoPersonalDevueltoDTO convertToPersonalDTO(ReclamoModel reclamo){
+        ReclamoPersonalDevueltoDTO reclamoDTO = new ReclamoPersonalDevueltoDTO(
+                reclamo.getIdReclamo(),
                 reclamo.getPersonal().getLegajo(),
                 reclamo.getSitio().getCalle(),
                 reclamo.getSitio().getNumero(),
-                reclamo.getDesperfecto().getIdDesperfecto(),
-                reclamo.getDescripcion(),
-                reclamo.getImagenes(),
-                reclamo.getIdReclamoUnificado());
+                reclamo.getEstado(),
+                reclamo.getDesperfecto().getDescripcion(),
+                reclamo.getDescripcion());
         return reclamoDTO;
     }
 }

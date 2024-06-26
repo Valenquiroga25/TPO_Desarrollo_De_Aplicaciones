@@ -1,11 +1,16 @@
 package com.uade.api.controllers;
 
+import com.uade.api.models.DTOs.DenunciaDevueltaDTO;
 import com.uade.api.models.DTOs.DenunciaModelDTO;
 import com.uade.api.models.DenunciaModel;
+import com.uade.api.models.ReclamoModel;
 import com.uade.api.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/tpo-desarrollo-mobile/denuncias")
@@ -56,7 +61,12 @@ public class DenunciasController {
     @GetMapping(path ="/allDenunciasFromVecino/{documento}")
     public ResponseEntity<?> getAllDenuncias(@PathVariable String documento){
         try{
-            return new ResponseEntity<>(this.denunciasService.findAllDenunciasFromVecino(documento), HttpStatus.OK);
+            List<DenunciaModel> denunciasFromVecino = denunciasService.findAllDenunciasFromVecino(documento);
+            List<DenunciaDevueltaDTO> denunciasFromVecinoDTO = new ArrayList<>();
+            for (DenunciaModel denuncia : denunciasFromVecino) {
+                denunciasFromVecinoDTO.add(converToDTO(denuncia));
+            }
+            return new ResponseEntity<>(denunciasFromVecinoDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
@@ -68,5 +78,16 @@ public class DenunciasController {
                 sitiosService.findSitioByDireccion(denunciaDTO.getCalleSitio(), denunciaDTO.getNumeroSitio()),
                 denunciaDTO.getDescripcion(),
                 denunciaDTO.getAceptaResponsabilidad());
+    }
+
+    private DenunciaDevueltaDTO converToDTO(DenunciaModel denuncia) {
+        DenunciaDevueltaDTO denunciaDevuelta = new DenunciaDevueltaDTO(
+                denuncia.getIdDenuncia(),
+                denuncia.getVecino().getDocumento(),
+                denuncia.getSitio().getCalle(),
+                denuncia.getSitio().getNumero(),
+                denuncia.getDescripcion(),
+                denuncia.getEstado());
+        return denunciaDevuelta;
     }
 }
