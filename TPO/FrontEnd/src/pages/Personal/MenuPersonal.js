@@ -32,6 +32,11 @@ function MenuPersonal({ navigation }) {
 
         <View style={buttonStyles.buttonWrapper}>
             <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
+                <Image style={buttonStyles.clickableImage} source={require('../../../assets/MisReclamoDefinitiva2.png')}></Image>
+            </TouchableOpacity>
+        </View>
+        <View style={buttonStyles.buttonWrapper}>
+            <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosVecinosPersonal')}>
                 <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
             </TouchableOpacity>
         </View>

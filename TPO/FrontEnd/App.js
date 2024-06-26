@@ -25,7 +25,9 @@ import DetalleDenuncia from './src/pages/DetalleDenuncia';
 import CrearReclamo from './src/pages/CrearReclamo';
 import CrearServicio from './src/pages/Vecino/CrearServicio';
 import CrearDenuncia from './src/pages/Vecino/CrearDenuncia';
-
+import MenuReclamosPersonal from './src/pages/Personal/MenuReclamosPersonal';
+import ListaReclamosAllVecinos from './src/components/ListaReclamosAllVecinos';
+import MenuReclamosVecinosPersonal from './src/pages/Personal/MenuReclamosVecinosPersonal';
 
 function App() {
 
@@ -54,11 +56,14 @@ function App() {
         <Stack.Screen name='DetalleReclamoVecino' component={DetalleReclamoVecino}/>
 
         <Stack.Screen name='ListaReclamosPersonal' component={ListaReclamosPersonal}/>
+        <Stack.Screen name='ListaReclamosAllVecinos' component={ListaReclamosAllVecinos}/>
         <Stack.Screen name='DetalleReclamoPersonal' component={DetalleReclamoPersonal}/>
 
         <Stack.Screen name='ListaDenuncias' component={ListaDenuncias}/>
         <Stack.Screen name='DetalleDenuncia' component={DetalleDenuncia}/>
 
+        <Stack.Screen name='MenuReclamosPersonal' component={MenuReclamosPersonal}/>
+        <Stack.Screen name='MenuReclamosVecinosPersonal' component={MenuReclamosVecinosPersonal}/>
         <Stack.Screen name='MenuReclamos' component={MenuReclamos}/>
         <Stack.Screen name='MenuServiciosVecino' component={MenuServiciosVecino}/>
         <Stack.Screen name='MenuDenuncias' component={MenuDenuncias}/>

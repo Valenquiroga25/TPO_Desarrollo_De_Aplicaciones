@@ -1,61 +1,57 @@
 import { React, useState, useEffect } from 'react';
-import { Text, StyleSheet, TouchableOpacity, ScrollView, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import { ipLocal } from '../global/ipLocal';
 
-
-function ListaReclamosPersonal({ navigation }) {
-    const [listaReclamosPersonal, setListaReclamosPersonal] = useState([]);
+function ListaReclamosAllVecinos({ navigation }) {
+    const [listaReclamos, setListaReclamos] = useState([]);
 
     useEffect(() => {
-        async function fetchReclamosPersonal() {
+        async function fetchReclamosVecinos() {
           try {        
             const token = await AsyncStorage.getItem('token'); 
             const decodeToken = jwtDecode(token); 
 
-
-            const responsePersonal = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromPersonal/${decodeToken.id}`, {
+            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromVecinos`, {
                 method: 'GET',
                 headers: 
-                {'Content-Type': 'application/json',
+                {'Content-Type' : 'application/json',
                 "Authorization": `Bearer ${token}`},
             });
-            
-    
-            if (!responsePersonal.ok) {
-                const errorTextPersonal = await responsePersonal.text();
-                throw new Error(`Error en la respuesta del servidor: Personal: ${errorTextPersonal}`);
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`Error en la respuesta del servidor: ${errorText}`);
             }
-    
-            const reclamosPersonal = await responsePersonal.json();
-            setListaReclamosPersonal(reclamosPersonal)
-            
+            const reclamos = await response.json();
+              setListaReclamos(reclamos);
+              
           } catch (error) {
             console.error(error);
           }
         }
     
-        fetchReclamosPersonal();
+        fetchReclamosVecinos();
       }, []);
     
     
 
       function redireccion(reclamo) {
-        navigation.navigate('DetalleReclamoPersonal', {
-            idReclamo: reclamo.idReclamo,
-            legajo: reclamo.legajoPersonal,
-            calleSitio: reclamo.calleSitio,
-            numeroSitio: reclamo.numeroSitio,
-            estado: reclamo.estado,
-            desperfecto: reclamo.desperfecto,
-            descripcion: reclamo.descripcion,
+        navigation.navigate('DetalleReclamoVecino', {
+          idReclamo:reclamo.idReclamo,
+          documento: reclamo.documentoVecino,
+          calleSitio: reclamo.calleSitio,
+          numeroSitio: reclamo.numeroSitio,
+          estado: reclamo.estado,
+          desperfecto: reclamo.desperfecto,
+          descripcion: reclamo.descripcion,
         });
-    }
+      }
 
     return (
         <ScrollView style={styles.containerReclamos}>
-            {listaReclamosPersonal.map((reclamo, indice) => (
+            {listaReclamos.map((reclamo, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
                     <Text>{reclamo.descripcion}</Text>
                     <Text>Estado: {reclamo.estado}</Text>
@@ -81,4 +77,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ListaReclamosPersonal;
+export default ListaReclamosAllVecinos;
