@@ -93,6 +93,15 @@ public class ReclamosController {
         }
     }
 
+    @GetMapping(path = "/allFromVecinos")
+    public ResponseEntity<?> getAllReclamosFromVecinos() {
+        try {
+            return new ResponseEntity<>(reclamosService.findAllReclamosFromVecinos(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
+
     private ReclamoModel convertToEntity(ReclamoModelDTO reclamoDTO) throws Exception{
         if(!Objects.equals(reclamoDTO.getDocumentoVecino(), "") && !Objects.equals(reclamoDTO.getLegajoPersonal(), ""))
             throw new Exception("El reclamo no puede ser de un vecino y un inspector a la vez!");

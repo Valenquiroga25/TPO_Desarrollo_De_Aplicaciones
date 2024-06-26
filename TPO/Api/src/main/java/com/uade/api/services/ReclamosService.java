@@ -176,6 +176,18 @@ public class ReclamosService {
         return allReclamosFromPersonal;
     }
 
+    public List<ReclamoModel> findAllReclamosFromVecinos() {
+        List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
+        List<ReclamoModel> allReclamosFromVecinos = new ArrayList<>();
+
+        for (ReclamoModel reclamo : allReclamos) {
+            if (reclamo.getVecino() != null) {
+                allReclamosFromVecinos.add(reclamo);
+            }
+        }
+        return allReclamosFromVecinos;
+    }
+
     private void CambiarEstadoReclamo(ReclamoModel reclamo, Estado estado){
         reclamo.setEstado(estado);
     }
