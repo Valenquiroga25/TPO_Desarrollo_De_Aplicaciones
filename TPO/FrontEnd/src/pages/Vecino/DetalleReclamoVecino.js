@@ -1,35 +1,38 @@
 import React from 'react'
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native';
-
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
-function DetalleDenuncia({ route }) {
-    const { calleSitio, numeroSitio, documento, estado, descripcion, imagenes } = route.params;
-
+function DetalleReclamoVecino({ route }) {
+    const { idReclamo, documento, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView> 
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
+        <Text style={styles.title}>{'Reclamo'}</Text>
+        <Text style={styles.detalle}>{`ID RECLAMO: ${idReclamo}`}</Text>
         <Text style={styles.detalle}>{`DOCUMENTO: ${documento}`}</Text>
-        <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
+        <Text style={styles.detalle}>{`CALLE DEL SITIO: ${calleSitio}`}</Text>
+        <Text style={styles.detalle}>{`NÚMERO DEL SITIO: ${numeroSitio}`}</Text>
         <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
-        <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+        <Text style={styles.detalle}>{`DESPERFECTO: ${desperfecto}`}</Text>
+        <Text style={styles.detalle}>{`DESCRIPCIÓN ${descripcion}`}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
-        <FlatList 
-        data={imagenes}
+        {/* <FlatList 
+        data={'imagenes'}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
         scrollEventThrottle={16}
-        keyExtractor={(item)=> item}
+        keyExtractor={(item) => item}
+        contentContainerStyle={{ paddingHorizontal: espacio }}
         renderItem={({item,index})=> {
           return(
-          <View style={{width:espacio_contendor}}>
+          <View style={{width:espacio_contendor,}}>
             <View style={{
               marginHorizontal:espacio,
               padding:espacio,
@@ -38,13 +41,14 @@ function DetalleDenuncia({ route }) {
               alignItems:'center',
             }}>
               <Image
+                key={index}
                 source={{ uri: item }}
                 style={styles.posterImage}
               />
             </View>
           
             </View>
-    )}}/>
+    )}}/> */}
         </ScrollView>
         
         <View>
@@ -54,9 +58,9 @@ function DetalleDenuncia({ route }) {
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>
-      </View>
+      </View> 
     );
-  } 
+  }
   
   const styles = StyleSheet.create({
     container: {
@@ -141,4 +145,4 @@ function DetalleDenuncia({ route }) {
     },
   });
 
-export default DetalleDenuncia
+export default DetalleReclamoVecino

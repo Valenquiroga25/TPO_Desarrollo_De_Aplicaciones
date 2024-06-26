@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {jwtDecode} from 'jwt-decode';
 import { ipLocal } from '../global/ipLocal';
 
-function ListaReclamos({ navigation }) {
+function ListaReclamosVecino({ navigation }) {
     const [listaReclamos, setListaReclamos] = useState([]);
 
     useEffect(() => {
@@ -12,21 +12,21 @@ function ListaReclamos({ navigation }) {
           try {        
             const token = await AsyncStorage.getItem('token'); 
             const decodeToken = jwtDecode(token); 
-            
+
             const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromVecino/${decodeToken.id}`, {
               method: 'GET',
               headers: 
               {'Content-Type' : 'application/json',
               "Authorization": `Bearer ${token}`},
             });
-    
+
             if (!response.ok) {
               const errorText = await response.text();
               throw new Error(`Error en la respuesta del servidor: ${errorText}`);
             }
-    
             const reclamos = await response.json();
-            setListaReclamos(reclamos);
+              setListaReclamos(reclamos);
+              
           } catch (error) {
             console.error(error);
           }
@@ -38,16 +38,19 @@ function ListaReclamos({ navigation }) {
     
 
       function redireccion(reclamo) {
-        navigation.navigate('DetalleReclamo', {
-          sitio: reclamo.sitio,
-          documento: reclamo.vecino.documento,
+        navigation.navigate('DetalleReclamoVecino', {
+          idReclamo:reclamo.idReclamo,
+          documento: reclamo.documentoVecino,
+          calleSitio: reclamo.calleSitio,
+          numeroSitio: reclamo.numeroSitio,
+          estado: reclamo.estado,
           desperfecto: reclamo.desperfecto,
           descripcion: reclamo.descripcion,
         });
       }
 
     return (
-        <ScrollView style={styles.containerDenuncias}>
+        <ScrollView style={styles.containerReclamos}>
             {listaReclamos.map((reclamo, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
                     <Text>{reclamo.descripcion}</Text>
@@ -59,7 +62,7 @@ function ListaReclamos({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    containerDenuncias: {
+    containerReclamos: {
         padding: 10,
     },
     botonReclamo: {
@@ -74,4 +77,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ListaReclamos;
+export default ListaReclamosVecino;

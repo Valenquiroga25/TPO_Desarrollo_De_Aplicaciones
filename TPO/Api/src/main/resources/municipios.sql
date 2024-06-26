@@ -103,7 +103,6 @@ create table denuncias(
     constraint fk_denuncias_vecinos foreign key (vecino) references vecinos(documento),
     constraint fk_denuncias_sitios foreign key (sitio) references sitios(idSitio)
 );
-
 create table movimientosDenuncia(
     idMovimiento BIGINT not null AUTO_INCREMENT,
     idDenuncia BIGINT not null,
@@ -137,7 +136,6 @@ create table imagenes(
      constraint fk_imagen_servicio foreign key (idServicio) references servicios(idServicio)
 )
 
-
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
 
 SET SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO';
@@ -156,20 +154,23 @@ select * from vecinos;
 select * from personal;
 select * from usuarios;
 select * from reclamos
+select * from denuncias
 select * from servicios; 
 select * from rubros
 select * from imagenes 
 select * from sitios
 select * from desperfectos
+truncate table reclamos
 
-insert into reclamos(documentoVecino, legajo, idSitio, idDesperfecto, descripcion, estado, idReclamoUnificado)
-values ('44367389', null, 1, 1, 'La concha de Bauti', null, null)
+insert into usuarios(identificador, contrasenia, mail, clave_acceso, tipoUsuario) 
+values ("2", "$2a$12$7IfyW0OGtJo7O2WQnBNi7.euDsXAc.Ng207kkAwMwLgZHDRjKtvD2", "valenquiroga67@gmail.com", "-", "Inspector")
+
 delete from servicios where idServicio = 9
 
 use municipios
 
 delete from usuarios where identificador = '10'
-drop table imagenes 
+drop table servicios 
 delete from usuarios where identificador='44367389'
 
 

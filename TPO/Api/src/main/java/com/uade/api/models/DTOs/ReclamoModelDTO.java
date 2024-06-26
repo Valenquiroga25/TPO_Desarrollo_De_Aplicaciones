@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class ReclamoModelDTO {
     private String documentoVecino;
     private String legajoPersonal;
@@ -16,15 +17,4 @@ public class ReclamoModelDTO {
     private String descripcion;
     private List<ImagenModel> imagenes;
     private Long idReclamoUnificado;
-
-    public ReclamoModelDTO(String documentoVecino, String legajoPersonal, String calleSitio, Long numeroSitio, Long idDesperfecto, String descripcion,List<ImagenModel> imagenes, Long idReclamoUnificado){
-        this.documentoVecino = documentoVecino;
-        this.legajoPersonal = legajoPersonal;
-        this.calleSitio = calleSitio;
-        this.numeroSitio = numeroSitio;
-        this.idDesperfecto = idDesperfecto;
-        this.descripcion = descripcion;
-        this.imagenes = imagenes;
-        this.idReclamoUnificado = idReclamoUnificado;
-    }
 }

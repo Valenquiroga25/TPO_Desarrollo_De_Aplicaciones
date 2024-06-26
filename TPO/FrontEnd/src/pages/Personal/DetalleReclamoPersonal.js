@@ -1,27 +1,30 @@
 import React from 'react'
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,SafeAreaView,ScrollView, TouchableOpacity} from 'react-native'
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 const espacio = 10;
-function DetalleReclamo({ route }) {
-    const { titulo, sitio, documento, estado, desperfecto, descripcion, imagenes } = route.params;
+
+function DetalleReclamoPersonal({ route }) {
+    const { idReclamo, legajo, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView> 
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{'Reclamo'}</Text>
-        <Text style={styles.detalle}>{'SITIO: '}</Text>
-        <Text style={styles.detalle}>{'DOCUMENTO: '}</Text>
-        <Text style={styles.detalle}>{'ESTADO: '}</Text>
-        <Text style={styles.detalle}>{'DESPERFECTO: '}</Text>
-        <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+        <Text style={styles.detalle}>{`ID RECLAMO: ${idReclamo}`}</Text>
+        <Text style={styles.detalle}>{`LEGAJO: ${legajo}`}</Text>
+        <Text style={styles.detalle}>{`CALLE DEL SITIO: ${calleSitio}`}</Text>
+        <Text style={styles.detalle}>{`NÚMERO DEL SITIO: ${numeroSitio}`}</Text>
+        <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
+        <Text style={styles.detalle}>{`DESPERFECTO: ${desperfecto}`}</Text>
+        <Text style={styles.detalle}>{`DESCRIPCIÓN ${descripcion}`}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
-        <FlatList 
-        data={imagenes}
+        {/* <FlatList 
+        data={'imagenes'}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
@@ -46,7 +49,7 @@ function DetalleReclamo({ route }) {
             </View>
           
             </View>
-    )}}/>
+    )}}/> */}
         </ScrollView>
         
         <View>
@@ -143,4 +146,4 @@ function DetalleReclamo({ route }) {
     },
   });
 
-export default DetalleReclamo
+export default DetalleReclamoPersonal

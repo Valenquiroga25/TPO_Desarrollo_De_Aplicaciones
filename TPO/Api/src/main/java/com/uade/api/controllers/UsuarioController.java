@@ -24,6 +24,15 @@ public class UsuarioController {
         }
     }
 
+
+    @PutMapping(path = "/recuperarContrasenia/{identificador}")
+    public ResponseEntity<?> recuperarContraseña(@PathVariable String identificador){
+        try{
+            return new ResponseEntity<>(this.usuarioService.restablecerContraseña(identificador),HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
     @PutMapping(path = "/{identificador}")
     public ResponseEntity<?> updateUsuario(@PathVariable String identificador, @RequestBody UsuarioModel usuario) {
         try {

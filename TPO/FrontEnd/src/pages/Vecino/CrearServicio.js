@@ -66,9 +66,7 @@ const CrearServicio = ({navigation}) => {
           //fetch de las imagenes
           const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
             method: "POST",
-            headers: { 
-              "Authorization": `Bearer ${token}`
-            },
+            headers: { "Authorization": `Bearer ${token}`},
             body: formData
           });
           

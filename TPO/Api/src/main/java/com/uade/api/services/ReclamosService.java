@@ -155,8 +155,10 @@ public class ReclamosService {
         List<ReclamoModel> allReclamosFromVecinos = new ArrayList<>();
 
         for(ReclamoModel reclamo : allReclamos){
-            if (Objects.equals(reclamo.getVecino().getDocumento(), documento))
-                allReclamosFromVecinos.add(reclamo);
+            if(reclamo.getVecino() != null) {
+                if (Objects.equals(reclamo.getVecino().getDocumento(), documento))
+                    allReclamosFromVecinos.add(reclamo);
+            }
         }
         return allReclamosFromVecinos;
     }
@@ -166,10 +168,24 @@ public class ReclamosService {
         List<ReclamoModel> allReclamosFromPersonal = new ArrayList<>();
 
         for(ReclamoModel reclamo : allReclamos){
-            if (Objects.equals(reclamo.getPersonal().getLegajo(), legajo))
-                allReclamosFromPersonal.add(reclamo);
+            if(reclamo.getPersonal() != null) {
+                if (Objects.equals(reclamo.getPersonal().getLegajo(), legajo))
+                    allReclamosFromPersonal.add(reclamo);
+            }
         }
         return allReclamosFromPersonal;
+    }
+
+    public List<ReclamoModel> findAllReclamosFromVecinos() {
+        List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
+        List<ReclamoModel> allReclamosFromVecinos = new ArrayList<>();
+
+        for (ReclamoModel reclamo : allReclamos) {
+            if (reclamo.getVecino() != null) {
+                allReclamosFromVecinos.add(reclamo);
+            }
+        }
+        return allReclamosFromVecinos;
     }
 
     private void CambiarEstadoReclamo(ReclamoModel reclamo, Estado estado){
