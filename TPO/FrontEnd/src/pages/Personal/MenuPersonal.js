@@ -17,7 +17,7 @@ function MenuPersonal({navigation}) {
       <View style={styles.botonesContainer}>
 
             <View style={buttonStyles.buttonWrapper}>
-                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamos')}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
                     <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
                 </TouchableOpacity>
             </View>
