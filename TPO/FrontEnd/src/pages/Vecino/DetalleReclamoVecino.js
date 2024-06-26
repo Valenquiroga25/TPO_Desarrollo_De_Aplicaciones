@@ -13,8 +13,7 @@ function DetalleReclamoVecino({ route }) {
         <Text style={styles.title}>{'Reclamo'}</Text>
         <Text style={styles.detalle}>{`ID RECLAMO: ${idReclamo}`}</Text>
         <Text style={styles.detalle}>{`DOCUMENTO: ${documento}`}</Text>
-        <Text style={styles.detalle}>{`CALLE DEL SITIO: ${calleSitio}`}</Text>
-        <Text style={styles.detalle}>{`NÚMERO DEL SITIO: ${numeroSitio}`}</Text>
+        <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
         <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
         <Text style={styles.detalle}>{`DESPERFECTO: ${desperfecto}`}</Text>
         <Text style={styles.detalle}>{`DESCRIPCIÓN ${descripcion}`}</Text>

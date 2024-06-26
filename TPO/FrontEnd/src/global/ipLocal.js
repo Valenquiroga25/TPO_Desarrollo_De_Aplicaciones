@@ -1,1 +1,1 @@
-export const ipLocal = '192.168.0.34'
+export const ipLocal = '192.168.0.48'

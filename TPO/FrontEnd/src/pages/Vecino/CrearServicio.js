@@ -14,7 +14,7 @@ const CrearServicio = ({navigation}) => {
   const [telefono, setTelefono] = useState('');
   const [idRubro, setIdRubro] = useState('');
   const [tipoServicio, setTipoServicio] = useState('');
-  const [imagenes, setImagenes] = useState([]);
+  const [imagen, setImagen] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const isFormComplete = titulo && direccion && telefono && descripcion && idRubro && tipoServicio;
 
@@ -49,32 +49,30 @@ const CrearServicio = ({navigation}) => {
 
       console.log(idServicio)
 
-      if(imagenes){
-        for(const imagen of imagenes){
-          const formData = new FormData();
+      const formData = new FormData();
 
-          const fileInfo = await FileSystem.getInfoAsync(imagen)
-          const fileUri = fileInfo.uri
-          const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
-          const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
+      const fileInfo = await FileSystem.getInfoAsync(imagen)
+      const fileUri = fileInfo.uri
+      const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
+      const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
 
-          formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
-          formData.append('idServicio', {"string": idServicio, type: "application/json"});
-          
-          console.log("FormData content:", JSON.stringify(formData._parts[0]));
+      formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
+      formData.append('idServicio', idServicio);
+      
+      console.log("FormData content:", JSON.stringify(formData._parts[0]));
 
-          //fetch de las imagenes
-          const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${token}`},
-            body: formData
-          });
-          
-          if (!imageResponse.ok) {
-            const message = await imageResponse.text()
-            throw new Error(message)
-          }
-        }
+      //fetch de las imagenes
+      const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      },
+        body: formData
+      });
+      
+      if (!imageResponse.ok) {
+        const message = await imageResponse.text()
+        throw new Error(message)
       }
       
       console.log("Reclamo Creado!");
@@ -93,10 +91,13 @@ const CrearServicio = ({navigation}) => {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64:true
     });
 
-    if (!result.canceled) 
-      setImagenes((imagenesPrevias) => [...imagenesPrevias, result.assets[0].uri]);
+    if (!result.canceled){
+      setImagen(result.assets[0].uri);
+      console.log(imagen)
+    }
   }
 
   function openModal(){
@@ -161,53 +162,42 @@ const CrearServicio = ({navigation}) => {
           numberOfLines={4} 
         />
 
-        <FlatList 
-          data={imagenes}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          decelerationRate={0}
-          scrollEventThrottle={16}
-          keyExtractor={(item)=> item}
-          renderItem={({item,index})=> {
-            return(
-            <View style={''}>
-              <Image
-                key={index}
-                source={{ uri: item }}
-                style={styles.imagen}
-              />
-            </View>
-            )}}/>
-
+      {imagen ? 
+      <TouchableOpacity style={styles.imagenesContainer} onPress={abrirGaleria}>
+        <Image source={{ uri: imagen }} style={styles.imagen}/>
+      </TouchableOpacity>
+      :
       <TouchableOpacity style={styles.crearReclamoChild2} onPress={abrirGaleria}>
         <Text>Insertar imagen</Text>
       </TouchableOpacity>
+      }
+      
 
-        <TouchableOpacity
-          style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
-          onPress={handleSubmit}
-          disabled={!isFormComplete}>
-          <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
+        onPress={handleSubmit}
+        disabled={!isFormComplete}>
+        <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
+      </TouchableOpacity>
 
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={isVisible}
-          onRequestClose={closeModal}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Servicio creado con éxito!</Text>
-              <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
-            </View>
-            <TouchableOpacity style={styles.modalButton} onPress={() => navigation.goBack()}>
-              <Text>Continuar</Text>
-            </TouchableOpacity>
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={isVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Servicio creado con éxito!</Text>
+            <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
           </View>
-        </Modal>
-      </View>
+          <TouchableOpacity style={styles.modalButton} onPress={() => navigation.goBack()}>
+            <Text>Continuar</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </View>
+  </View>
   );
 };
 
@@ -223,7 +213,8 @@ const styles = StyleSheet.create({
     marginTop:80
   },
   imagenesContainer:{
-    flexDirection:'row',
+    marginTop:60,
+    marginLeft:10
   },
   imagenLogo: {
     position:'absolute',
@@ -233,10 +224,9 @@ const styles = StyleSheet.create({
     height: 45,
   },
   imagen:{
-    width:90,
-    height:90,
+    width:130,
+    height:130,
     borderRadius:5,
-    marginLeft:10
   },
   enviarReclamo: {
     fontSize: 22,
@@ -302,7 +292,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   crearReclamoChild: {
-    top: 635,
+    top: 630,
     left: 180,
     borderRadius: 5,
     width: 182,

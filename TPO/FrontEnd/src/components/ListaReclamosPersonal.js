@@ -7,7 +7,7 @@ import { ipLocal } from '../global/ipLocal';
 
 function ListaReclamosPersonal({ navigation }) {
     const [listaReclamosPersonal, setListaReclamosPersonal] = useState([]);
-    const [ListaReclamosPersonalVecinos, setListaReclamosPersonalVecinos] = useState([]);
+    const [listaReclamosPersonalVecinos, setListaReclamosPersonalVecinos] = useState([]);
 
     useEffect(() => {
         async function fetchReclamosPersonal() {
@@ -50,30 +50,46 @@ function ListaReclamosPersonal({ navigation }) {
         fetchReclamosPersonal();
       }, []);
     
-    
 
-      function redireccion(reclamo) {
-        navigation.navigate('DetalleReclamo', {
-            sitio: reclamo.sitio,
-            documento: reclamo.vecino ? reclamo.vecino.documento : reclamo.personal.legajo,
+    function redireccionPersonal(reclamo) {
+        navigation.navigate('DetalleReclamoPersonal', {
+            idReclamo: reclamo.idReclamo,
+            legajo: reclamo.legajoPersonal,
+            calleSitio: reclamo.calleSitio,
+            numeroSitio: reclamo.numeroSitio,
+            estado: reclamo.estado,
             desperfecto: reclamo.desperfecto,
             descripcion: reclamo.descripcion,
         });
     }
+        
+    function redireccionVecino(reclamo) {
+        navigation.navigate('DetalleReclamoVecino', {
+            idReclamo: reclamo.idReclamo,
+            documento: reclamo.documentoVecino,
+            calleSitio: reclamo.calleSitio,
+            numeroSitio: reclamo.numeroSitio,
+            estado: reclamo.estado,
+            desperfecto: reclamo.desperfecto,
+            descripcion: reclamo.descripcion,
+        });
+    }
+    
+
 
     return (
         <View>
         <ScrollView style={styles.containerReclamos}>
             {listaReclamosPersonal.map((reclamo, indice) => (
-                <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
+                <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccionPersonal(reclamo)}>
                     <Text>{reclamo.descripcion}</Text>
                     <Text>Estado: {reclamo.estado}</Text>
                 </TouchableOpacity>
             ))}
         </ScrollView>
         <ScrollView style={styles.containerReclamos}>
-            {ListaReclamosPersonalVecinos.map((reclamo, indice) => (
-                <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
+            {listaReclamosPersonalVecinos.map((reclamo, indice) => (
+                <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccionVecino(reclamo)}>
                     <Text>{reclamo.descripcion}</Text>
                     <Text>Estado: {reclamo.estado}</Text>
                 </TouchableOpacity>
@@ -82,7 +98,6 @@ function ListaReclamosPersonal({ navigation }) {
         </View>
     );
 }
-
 const styles = StyleSheet.create({
     containerReclamos: {
         padding: 10,

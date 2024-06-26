@@ -9,6 +9,7 @@ import PaginaAcceso from './src/pages/PaginaAcceso';
 import NavbarVecino from './src/components/NavbarVecino';
 import NavbarPersonal from './src/components/NavbarPersonal';
 import MenuPersonal from './src/pages/Personal/MenuPersonal';
+import MenuReclamosPersonal from './src/pages/Personal/MenuReclamosPersonal';
 import MenuServiciosPersonal from './src/pages/Personal/MenuServiciosPersonal';
 import MenuVecino from './src/pages/Vecino/MenuVecino';
 import MenuReclamos from './src/pages/MenuReclamos';
@@ -45,6 +46,7 @@ function App() {
         <Stack.Screen name='PaginaAcceso' component={PaginaAcceso}/>
         <Stack.Screen name='MenuVecino' component={MenuVecino}/>
         <Stack.Screen name='MenuPersonal' component={MenuPersonal}/>
+        <Stack.Screen name='MenuReclamosPersonal' component={MenuReclamosPersonal}/>
         <Stack.Screen name='MenuServiciosPersonal' component={MenuServiciosPersonal}/>
 
         <Stack.Screen name='ListaServicios' component={ListaServicios}/>
