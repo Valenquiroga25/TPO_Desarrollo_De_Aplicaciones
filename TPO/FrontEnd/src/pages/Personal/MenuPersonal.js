@@ -29,38 +29,20 @@ function MenuPersonal({ navigation }) {
             )}
           />
         </View>
-      </View>
 
-      <View style={styles.botonesContainer}>
         <View style={buttonStyles.buttonWrapper}>
-          <TouchableOpacity onPress={() => navigation.navigate('MenuReclamos')}>
-            <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')} />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
+                <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
+            </TouchableOpacity>
         </View>
         <View style={buttonStyles.buttonWrapper}>
-          <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
-            <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')} />
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
+                <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
+            </TouchableOpacity>
         </View>
       </View>
 
-<<<<<<< HEAD
-            <View style={buttonStyles.buttonWrapper}>
-                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
-                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
-                </TouchableOpacity>
-            </View>
-            <View style={buttonStyles.buttonWrapper}>
-                <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
-                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
-                </TouchableOpacity>
-            </View>
-          </View>
-
-        <NavbarPersonal title='Navbar' />
-=======
-      <NavbarPersonal title='Navbar' />
->>>>>>> cd024971e234a02d5c7a55f831ae33ceee09735c
+      <NavbarPersonal navigation={navigation} />
     </View>
   );
 }
