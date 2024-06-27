@@ -14,9 +14,10 @@ function DetalleServicio({ route }) {
       <View style={styles.container}>
         <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.title}>{'Servicio'}</Text>
+        <Text style={styles.title}>{`${titulo}`}</Text>
         <Text style={styles.detalle}>{`DIRECCION: ${direccion}`}</Text>
         <Text style={styles.detalle}>{`TELEFONO: ${telefono}`}</Text>
+        <Text style={styles.detalle}>{`RUBRO: ${rubro}`}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>

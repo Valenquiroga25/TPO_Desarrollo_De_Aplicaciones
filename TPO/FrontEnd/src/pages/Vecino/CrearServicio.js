@@ -47,26 +47,24 @@ const CrearServicio = ({navigation}) => {
       const result = await response.json();
       const idServicio = result.idServicio 
 
-      console.log(idServicio)
-
       const formData = new FormData();
 
       const fileInfo = await FileSystem.getInfoAsync(imagen)
       const fileUri = fileInfo.uri
-      const fileName = fileUri.substring(imagen.lastIndexOf("/" + 1, fileUri.length))
+      const fileName = fileUri.substring(fileUri.lastIndexOf("/") + 1);
       const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
 
+
+
       formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
-      formData.append('idServicio', idServicio);
+      formData.append('idServicio', idServicio.toString());
       
-      console.log("FormData content:", JSON.stringify(formData._parts[0]));
+      console.log("FormData content:", JSON.stringify(formData._parts));
 
       //fetch de las imagenes
       const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/`, {
         method: "POST",
-        headers: { "Authorization": `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
-      },
+        headers: { "Authorization": `Bearer ${token}`},
         body: formData
       });
       
@@ -96,7 +94,6 @@ const CrearServicio = ({navigation}) => {
 
     if (!result.canceled){
       setImagen(result.assets[0].uri);
-      console.log(imagen)
     }
   }
 
@@ -167,8 +164,8 @@ const CrearServicio = ({navigation}) => {
         <Image source={{ uri: imagen }} style={styles.imagen}/>
       </TouchableOpacity>
       :
-      <TouchableOpacity style={styles.crearReclamoChild2} onPress={abrirGaleria}>
-        <Text>Insertar imagen</Text>
+      <TouchableOpacity style={styles.containerAddImage} onPress={abrirGaleria}>
+        <Image style={styles.addImagen} resizeMode="contain" source={require('../../../assets/addImage.jpg')}></Image>
       </TouchableOpacity>
       }
       
@@ -191,7 +188,7 @@ const CrearServicio = ({navigation}) => {
             <Text style={styles.modalTitle}>Servicio creado con éxito!</Text>
             <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
           </View>
-          <TouchableOpacity style={styles.modalButton} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={styles.modalButton} onPress={() => navigation.navigate('MenuVecino')}>
             <Text>Continuar</Text>
           </TouchableOpacity>
         </View>
@@ -227,6 +224,10 @@ const styles = StyleSheet.create({
     width:130,
     height:130,
     borderRadius:5,
+  },
+  addImagen:{
+    width:100,
+    height:100
   },
   enviarReclamo: {
     fontSize: 22,
@@ -278,18 +279,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
   },
-  crearReclamoChild2: {
-    top: 635,
-    borderRadius: 50,
-    width: 148,
-    left: 12,
-    height: 37,
-    borderWidth: 1,
-    borderColor: "#000",
-    backgroundColor: "rgba(255, 214, 0, 0.6)",
+  containerAddImage: {
     position: "absolute",
-    alignItems: 'center',
-    justifyContent:'center'
+    top: 597,
+    left: 20,
   },
   crearReclamoChild: {
     top: 630,

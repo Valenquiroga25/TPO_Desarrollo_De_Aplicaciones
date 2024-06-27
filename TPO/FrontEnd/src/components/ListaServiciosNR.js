@@ -32,9 +32,9 @@ function ListaServiciosNR({navigation}) {
             titulo: servicio.titulo,
             direccion: servicio.direccion,
             telefono: servicio.telefono,
-            rubro: servicio.rubro.descripcion,
+            tipoServicio: servicio.tipoServicio,
+            rubro: servicio.rubro,
             descripcion: servicio.descripcion,
-            imagenes: servicio.imagenes
         });   
      }
 

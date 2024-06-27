@@ -29,12 +29,12 @@ create table personal(
 );
 
 create table usuarios(
-    identificador varchar(20) not null,
-    contrasenia varchar(100) null,
-    mail varchar(50),
-    clave_acceso varchar(20),
-    tipoUsuario varchar(20),
-    constraint pk_usuario primary key (identificador)
+     identificador varchar(20) not null,
+     contrasenia varchar(100) null,
+     mail varchar(50),
+     clave_acceso varchar(20),
+     tipoUsuario varchar(20),
+     constraint pk_usuario primary key (identificador)
 )
 
 create table sitios(
@@ -54,16 +54,16 @@ create table sitios(
 );
 
 create table rubros(
-    idRubro BIGINT not null AUTO_INCREMENT,
-    descripcion varchar(200) not null,
-    constraint pk_rubros primary key (idRubro)
+   idRubro BIGINT not null AUTO_INCREMENT,
+   descripcion varchar(200) not null,
+   constraint pk_rubros primary key (idRubro)
 );
 
 create table desperfectos(
-     idDesperfecto BIGINT not null AUTO_INCREMENT,
-     descripcion varchar(200) not null,
-     idRubro int null,
-     constraint pk_desperfectos primary key (idDesperfecto)
+    idDesperfecto BIGINT not null AUTO_INCREMENT,
+    descripcion varchar(200) not null,
+    idRubro int null,
+    constraint pk_desperfectos primary key (idDesperfecto)
 );
 
 create table reclamos(
@@ -103,6 +103,7 @@ create table denuncias(
     constraint fk_denuncias_vecinos foreign key (vecino) references vecinos(documento),
     constraint fk_denuncias_sitios foreign key (sitio) references sitios(idSitio)
 );
+
 create table movimientosDenuncia(
     idMovimiento BIGINT not null AUTO_INCREMENT,
     idDenuncia BIGINT not null,
@@ -129,11 +130,11 @@ create table servicios(
 
 
 create table imagenes(
-     idImagen BIGINT not null AUTO_INCREMENT,
-     datosImagen blob not null,
-     idServicio BIGINT not null,
-     constraint pk_imagen primary key(idImagen),
-     constraint fk_imagen_servicio foreign key (idServicio) references servicios(idServicio)
+    idImagen BIGINT not null AUTO_INCREMENT,
+    datosImagen blob not null,
+    idServicio BIGINT not null,
+    constraint pk_imagen primary key(idImagen),
+    constraint fk_imagen_servicio foreign key (idServicio) references servicios(idServicio)
 )
 
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
@@ -155,14 +156,16 @@ select * from personal;
 select * from usuarios;
 select * from reclamos
 select * from denuncias
-select * from servicios; 
+select * from servicios;
 select * from rubros
-select * from imagenes 
+select * from imagenes
 select * from sitios
 select * from desperfectos
-truncate table reclamos
 
-insert into usuarios(identificador, contrasenia, mail, clave_acceso, tipoUsuario) 
+truncate table servicios
+drop table imagenes
+
+insert into usuarios(identificador, contrasenia, mail, clave_acceso, tipoUsuario)
 values ("2", "$2a$12$7IfyW0OGtJo7O2WQnBNi7.euDsXAc.Ng207kkAwMwLgZHDRjKtvD2", "valenquiroga67@gmail.com", "-", "Inspector")
 
 delete from servicios where idServicio = 9
@@ -170,9 +173,5 @@ delete from servicios where idServicio = 9
 use municipios
 
 delete from usuarios where identificador = '10'
-drop table servicios 
+drop table servicios
 delete from usuarios where identificador='44367389'
-
-
-
-

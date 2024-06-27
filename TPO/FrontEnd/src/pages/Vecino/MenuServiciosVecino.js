@@ -15,7 +15,7 @@ const MenuServiciosVecino = ({navigation}) => {
 
       <View style={styles.containerDatos}>
             <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
-        </View>
+      </View>
 
       <ListaServicios navigation = {navigation}/>
 
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   containerDatos: {
-    padding: 20
+    paddingTop: 20,
+    paddingBottom:20,
   },
   image: {
     width: 140,
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
   input:{
     padding:10,
     marginTop:7,
-    marginBottom:7,
     height: 40,
     borderWidth:1,
     borderColor: "black",

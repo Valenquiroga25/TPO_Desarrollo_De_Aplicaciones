@@ -1,5 +1,6 @@
 package com.uade.api.controllers;
 
+import com.uade.api.models.DTOs.ServicioDevueltoDTO;
 import com.uade.api.models.DTOs.ServicioModelDTO;
 import com.uade.api.models.ImagenModel;
 import com.uade.api.models.ServicioModel;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -63,7 +65,12 @@ public class ServicioController {
     @GetMapping("/getAllServicios")
     public ResponseEntity<?> getAllServicios(){
         try{
-            return new ResponseEntity<>(this.servicioService.getAllServicios(),HttpStatus.OK);
+            List<ServicioModel> allServicios = this.servicioService.getAllServicios();
+            List<ServicioDevueltoDTO> allServiciosDevueltos = new ArrayList<>();
+            for(ServicioModel servicio : allServicios)
+                allServiciosDevueltos.add(this.convertToDTO(servicio));
+
+            return new ResponseEntity<>(allServiciosDevueltos,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -96,5 +103,16 @@ public class ServicioController {
                 this.rubrosService.findRubroById(servicioDTO.getIdRubro()),
                 servicioDTO.getTipoServicio());
         return servicio;
+    }
+
+    private ServicioDevueltoDTO convertToDTO (ServicioModel servicio){
+        ServicioDevueltoDTO servicioDevuelto = new ServicioDevueltoDTO(
+                servicio.getTitulo(),
+                servicio.getDireccion(),
+                servicio.getTelefono(),
+                servicio.getTipoServicio(),
+                servicio.getRubro().getDescripcion(),
+                servicio.getDescripcion());
+        return servicioDevuelto;
     }
 }

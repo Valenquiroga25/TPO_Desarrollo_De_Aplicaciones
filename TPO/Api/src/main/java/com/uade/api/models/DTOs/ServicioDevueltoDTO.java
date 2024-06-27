@@ -9,12 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ServicioModelDTO {
-    private String documentoVecino;
+public class ServicioDevueltoDTO {
     private String titulo;
     private String direccion;
     private String telefono;
-    private String descripcion;
-    private Long idRubro;
     private String tipoServicio;
+    private String rubro;
+    private String descripcion;
 }
