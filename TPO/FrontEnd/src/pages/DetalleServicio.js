@@ -14,7 +14,7 @@ function DetalleServicio({ route }) {
       <View style={styles.container}>
         <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.title}>{`${titulo}`}</Text>
+        <Text style={styles.title}>{titulo}</Text>
         <Text style={styles.detalle}>{`DIRECCION: ${direccion}`}</Text>
         <Text style={styles.detalle}>{`TELEFONO: ${telefono}`}</Text>
         <Text style={styles.detalle}>{`RUBRO: ${rubro}`}</Text>
@@ -24,7 +24,7 @@ function DetalleServicio({ route }) {
         </View>
 
         <FlatList 
-        data={imageness}
+        data={imageness}//cambiar parametro
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
