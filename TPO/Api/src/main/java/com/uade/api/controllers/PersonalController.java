@@ -26,7 +26,6 @@ public class PersonalController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
-
     public PersonalDevueltoDTO convertoToPersonalDTO(PersonalModel personal){
         PersonalDevueltoDTO personalDevueltoDTO = new PersonalDevueltoDTO();
         personalDevueltoDTO.setLegajo(personal.getLegajo());
