@@ -1,5 +1,7 @@
 package com.uade.api.controllers;
 
+import com.uade.api.models.DTOs.PersonalDevueltoDTO;
+import com.uade.api.models.PersonalModel;
 import com.uade.api.services.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +20,21 @@ public class PersonalController {
     @GetMapping(path = "/{legajo}")
     public ResponseEntity<?> getPersonalByLegajo(@PathVariable String legajo){
         try {
-            return new ResponseEntity<>(personalService.findPersonalByLegajo(legajo), HttpStatus.OK);
+            PersonalDevueltoDTO personal = convertoToPersonalDTO(personalService.findPersonalByLegajo(legajo));
+            return new ResponseEntity<>(personal, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
+    }
+
+    public PersonalDevueltoDTO convertoToPersonalDTO(PersonalModel personal){
+        PersonalDevueltoDTO personalDevueltoDTO = new PersonalDevueltoDTO();
+        personalDevueltoDTO.setLegajo(personal.getLegajo());
+        personalDevueltoDTO.setNombre(personal.getNombre());
+        personalDevueltoDTO.setApellido(personal.getApellido());
+        personalDevueltoDTO.setDocumento(personal.getDocumento());
+        personalDevueltoDTO.setSector(personal.getSector());
+        personalDevueltoDTO.setCategoria(personal.getCategoria());
+        return personalDevueltoDTO;
     }
 }
