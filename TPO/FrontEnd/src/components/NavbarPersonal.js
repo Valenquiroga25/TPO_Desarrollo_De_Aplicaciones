@@ -16,7 +16,9 @@ function NavbarPersonal({navigation}){
     function redireccionar(){
         navigation.navigate('MenuPersonal')
     }
-
+    function detallePersonal(){
+        navigation.navigate('DetallePersonal');
+    }
     return(
     <View style={styles.container}>
         <TouchableOpacity onPress={openModal}>
@@ -62,7 +64,7 @@ function NavbarPersonal({navigation}){
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { }}>
+            <TouchableOpacity onPress={detallePersonal}>
                 <View>
                     <Image style={styles.images} source={require('../../assets/Perfil1.png')} />
                 </View>

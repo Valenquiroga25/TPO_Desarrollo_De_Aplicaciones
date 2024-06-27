@@ -16,7 +16,9 @@ function NavbarVecino({ navigation }) {
     function redireccionar() {
         navigation.navigate('MenuVecino');
     }
-
+    function detalleVecino(){
+        navigation.navigate('DetalleVecino');
+    }
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={openModal}>
@@ -62,7 +64,7 @@ function NavbarVecino({ navigation }) {
                 </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => { }}>
+            <TouchableOpacity onPress={detalleVecino}>
                 <View>
                     <Image style={styles.images} source={require('../../assets/Perfil1.png')} />
                 </View>
