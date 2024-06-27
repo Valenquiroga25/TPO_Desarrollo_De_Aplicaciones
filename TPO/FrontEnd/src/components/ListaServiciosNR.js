@@ -1,8 +1,8 @@
 import {React, useState, useEffect} from 'react'
-import { Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 import { ipLocal } from '../global/ipLocal';
 
-function ListaServicios({navigation}) {
+function ListaServiciosNR({navigation}) {
     const [listaServicios, setListaServicios] = useState([])
 
     useEffect(() => { // Se utiliza el useEffect con la lista de dependencias vacía ([]) para asegurar que la función se ejecuta cuando se monta el componente.
@@ -40,12 +40,14 @@ function ListaServicios({navigation}) {
 
      return (
     <ScrollView style={styles.containerServicios}>
-        {listaServicios.map((servicio, indice) => (
-            <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
-                <Text>{servicio.titulo}</Text>
-                <Text>Contacto: {servicio.telefono}</Text>
-            </TouchableOpacity>
-        ))}
+        <View style={styles.container}>
+            {listaServicios.map((servicio, indice) => (
+                <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
+                    <Text>{servicio.titulo}</Text>
+                    <Text>Contacto: {servicio.telefono}</Text>
+                </TouchableOpacity>
+            ))}
+        </View>
     </ScrollView>
   )
 }
@@ -54,6 +56,9 @@ const styles = StyleSheet.create(
     {
         containerServicios:{
             flex:1,
+        },
+        container:{
+            padding:20
         },
         botonServicio:{
             height:70,
@@ -68,4 +73,4 @@ const styles = StyleSheet.create(
     }
 )
 
-export default ListaServicios
+export default ListaServiciosNR

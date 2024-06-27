@@ -25,23 +25,29 @@ function MenuPersonal({ navigation }) {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <Image style={styles.dengueImage} resizeMode='contain' source={item.source} />
+              <Image style={styles.imagenesMenu} resizeMode='contain' source={item.source} />
             )}
           />
         </View>
 
-        <View style={buttonStyles.buttonWrapper}>
-            <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
-                <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
-            </TouchableOpacity>
+        <View style={styles.botonesContainer}>
+            <View style={buttonStyles.buttonWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosPersonal')}>
+                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/MisReclamoDefinitiva2.png')}></Image>
+                </TouchableOpacity>
+            </View>
+            <View style={buttonStyles.buttonWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuReclamosVecinosPersonal')}>
+                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenReclamoDefinitiva.jpg')}></Image>
+                </TouchableOpacity>
+            </View>
+            <View style={buttonStyles.buttonWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
+                    <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
+                </TouchableOpacity>
+            </View>
+          </View>
         </View>
-        <View style={buttonStyles.buttonWrapper}>
-            <TouchableOpacity onPress={() => navigation.navigate('MenuServiciosPersonal')}>
-                <Image style={buttonStyles.clickableImage} source={require('../../../assets/ImagenServicioDefinitiva2.png')}></Image>
-            </TouchableOpacity>
-        </View>
-      </View>
-
       <NavbarPersonal navigation={navigation} />
     </View>
   );
@@ -57,20 +63,21 @@ const styles = StyleSheet.create({
   },
   imagenLogo: {
     position: 'absolute',
-    top: 50,
+    top: 30,
     right: 107,
     width: 150,
     height: 65,
     marginRight: 25,
     marginTop: 15,
   },
-  dengueImage: {
+  imagenesMenu: {
     width: width * 0.9, 
     height: 200,
-    marginTop: 170,
+    marginTop: 130,
+    marginLeft:18,
   },
   botonesContainer: {
-    marginTop: 30,
+    marginTop: 10,
   },
   navbar: {
     position: 'absolute',

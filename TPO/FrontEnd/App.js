@@ -12,9 +12,10 @@ import MenuPersonal from './src/pages/Personal/MenuPersonal';
 import MenuReclamosPersonal from './src/pages/Personal/MenuReclamosPersonal';
 import MenuServiciosPersonal from './src/pages/Personal/MenuServiciosPersonal';
 import MenuVecino from './src/pages/Vecino/MenuVecino';
-import MenuReclamos from './src/pages/MenuReclamos';
+import MenuReclamos from './src/pages/Vecino/MenuReclamos';
 import MenuServiciosVecino from './src/pages/Vecino/MenuServiciosVecino';
 import MenuDenuncias from './src/pages/Vecino/MenuDenuncias';
+import ListaServiciosNR from './src/components/ListaServiciosNR';
 import ListaServicios from './src/components/ListaServicios';
 import ListaReclamosVecino from './src/components/ListaReclamosVecino'
 import ListaDenuncias from './src/components/ListaDenuncias';
@@ -26,7 +27,9 @@ import DetalleDenuncia from './src/pages/DetalleDenuncia';
 import CrearReclamo from './src/pages/CrearReclamo';
 import CrearServicio from './src/pages/Vecino/CrearServicio';
 import CrearDenuncia from './src/pages/Vecino/CrearDenuncia';
-
+import ListaReclamosAllVecinos from './src/components/ListaReclamosAllVecinos';
+import MenuReclamosVecinosPersonal from './src/pages/Personal/MenuReclamosVecinosPersonal';
+import RecuperarContrasenia from './src/pages/RecuperarContrasenia';
 
 function App() {
 
@@ -42,25 +45,29 @@ function App() {
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>
-        {/* <Stack.Screen name='RecuperarContrasenia' component={RecuperarContrasenia}/> */}
+        <Stack.Screen name='RecuperarContrasenia' component={RecuperarContrasenia}/>
         <Stack.Screen name='PaginaAcceso' component={PaginaAcceso}/>
         <Stack.Screen name='MenuVecino' component={MenuVecino}/>
         <Stack.Screen name='MenuPersonal' component={MenuPersonal}/>
         <Stack.Screen name='MenuReclamosPersonal' component={MenuReclamosPersonal}/>
         <Stack.Screen name='MenuServiciosPersonal' component={MenuServiciosPersonal}/>
 
+        <Stack.Screen name='ListaServiciosNR' component={ListaServiciosNR}/>
         <Stack.Screen name='ListaServicios' component={ListaServicios}/>
+
         <Stack.Screen name='DetalleServicio' component={DetalleServicio}/>
 
         <Stack.Screen name='ListaReclamosVecino' component={ListaReclamosVecino}/>
         <Stack.Screen name='DetalleReclamoVecino' component={DetalleReclamoVecino}/>
 
         <Stack.Screen name='ListaReclamosPersonal' component={ListaReclamosPersonal}/>
+        <Stack.Screen name='ListaReclamosAllVecinos' component={ListaReclamosAllVecinos}/>
         <Stack.Screen name='DetalleReclamoPersonal' component={DetalleReclamoPersonal}/>
 
         <Stack.Screen name='ListaDenuncias' component={ListaDenuncias}/>
         <Stack.Screen name='DetalleDenuncia' component={DetalleDenuncia}/>
 
+        <Stack.Screen name='MenuReclamosVecinosPersonal' component={MenuReclamosVecinosPersonal}/>
         <Stack.Screen name='MenuReclamos' component={MenuReclamos}/>
         <Stack.Screen name='MenuServiciosVecino' component={MenuServiciosVecino}/>
         <Stack.Screen name='MenuDenuncias' component={MenuDenuncias}/>

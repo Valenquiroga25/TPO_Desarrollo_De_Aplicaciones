@@ -41,21 +41,23 @@ public class UsuarioService {
         return this.usuarioRepository.save(usuario);
     }
 
-    public UsuarioModel restablecerContraseña(String identificador)throws Exception{
+    public UsuarioModel restablecerContrasenia(String identificador)throws Exception{
         Optional<UsuarioModel> usuarioOp = this.usuarioRepository.findUsuarioByIdentificador(identificador);
 
         if (usuarioOp.isEmpty()) {
             log.error("El usuario que intenta actualizar no se encuentra en la base de datos");
             throw new Exception("El usuario que intenta actualizar no se encuentra en la base de datos");
         }
+
         UsuarioModel usuarioDb = usuarioOp.get();
         usuarioDb.setContrasenia(null);//Se elimina la contraseña anterior
         String claveDeAcceso = RandomStringUtils.randomAlphanumeric(5);
         usuarioDb.setClave_acceso(claveDeAcceso.toUpperCase());//Se establece una clave de acceso
 
-        mailService.sendMail(usuarioDb.getMail(), "Restablecer Contraseña","Su clave de acceso es: "+usuarioDb.getClave_acceso());
+        mailService.sendMail(usuarioDb.getMail(), "Restablecer Contraseña","Su clave de acceso es: " + usuarioDb.getClave_acceso());
         return this.usuarioRepository.save(usuarioDb);
     }
+
     public UsuarioModel updateUsuario(String identificador, UsuarioModel usuario) throws Exception {
         log.info("Id ingresado: " + identificador);
         if (Long.parseLong(identificador) <= 0){

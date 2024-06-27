@@ -1,34 +1,30 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, TextInput } from 'react-native';
-import NavbarVecino from '../../components/NavbarVecino';
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import NavbarPersonal from '../../components/NavbarPersonal';
+import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import ListaServicios from '../../components/ListaServicios';
+import ListaReclamosAllVecinos from '../../components/ListaReclamosAllVecinos';
 
-const MenuServiciosVecino = ({navigation}) => {
+const MenuReclamosVecinosPersonal = () => {
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-          <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+      <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
       
-
-      <View style={styles.containerDatos}>
-            <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
-        </View>
-
-      <ListaServicios navigation = {navigation}/>
-
+      <ListaReclamosAllVecinos navigation = {navigation}/>
       <View>
-        <TouchableOpacity
-          style={styles.floatingButton}
-          onPress={() => navigation.navigate('CrearServicio')}>
+        <TouchableOpacity 
+          style={styles.floatingButton} 
+          onPress={() => navigation.navigate('CrearReclamo')}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
       </View>
       <HideWithKeyboard style={styles.navbar}>
-        <NavbarVecino navigation={navigation}/>
-      </HideWithKeyboard>
+        <NavbarPersonal navigation={navigation}/>
+      </HideWithKeyboard>    
     </View>
   );
 };
@@ -50,8 +46,8 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 0,
-    right: 30,
+    bottom: 100,
+    right: 10,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
     width: 60,
@@ -102,28 +98,7 @@ const styles = StyleSheet.create({
     borderColor: "#FFD600",
     borderRadius: 10,
     marginTop: 20
-  },floatingButton: {
-    position: 'absolute',
-    bottom: 100,
-    right: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 50,
-    width: 60,
-    height: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: '#000',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-  },
-  plusSign: {
-    fontSize: 30,
-    color: '#000',
-  },
+  }
 });
 
-export default MenuServiciosVecino;
+export default MenuReclamosVecinosPersonal;

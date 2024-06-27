@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TextInput, Image, FlatList, Dimensions } from 'react-native';
-import ListaServicios from '../components/ListaServicios';
+import ListaServiciosNR from '../components/ListaServiciosNR';
 
 const width = Dimensions.get('window').width;
 
@@ -24,7 +24,7 @@ function MenuNR({ navigation }) {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <Image style={styles.dengueImage} resizeMode="contain" source={item.source} />
+            <Image style={styles.imagenesMenu} resizeMode="contain" source={item.source} />
           )}
           getItemLayout={(data, index) => ({ length: width, offset: width * index, index })}
         />
@@ -34,7 +34,7 @@ function MenuNR({ navigation }) {
         <TextInput style={styles.input} placeholder='Buscar...' />
       </View>
 
-      <ListaServicios navigation={navigation} />
+      <ListaServiciosNR navigation={navigation} />
     </View>
   );
 }
@@ -59,9 +59,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 110,
   },
-  dengueImage: {
-    width: width * 0.9, // Ajusta el ancho de la imagen según necesites
+  imagenesMenu: {
+    width: width * 0.9, 
     height: 200,
+    marginLeft:18,
   },
   containerInput: {
     paddingTop: 20,

@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Image, StyleSheet, TextInput } from 'react-native';
 import ListaServicios from '../../components/ListaServicios';
+import NavbarPersonal from '../../components/NavbarPersonal';
 
 function MenuServiciosPersonal({navigation}) {
   return (
@@ -14,6 +15,8 @@ function MenuServiciosPersonal({navigation}) {
         </View>
 
         <ListaServicios navigation={navigation}/>
+
+    <NavbarPersonal navigation={navigation}/>
     </View>
   )
 }
@@ -23,20 +26,18 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#FFFFFF',
       paddingHorizontal: 20,
-      paddingTop: 30,
-    },
-    containerDatos: {
-      padding: 20
+      paddingTop: 40,
     },
     image: {
       width: 140,
       height: 45,
       marginBottom: 20,
+      marginTop: 20,
     },
     input:{
+      marginBottom:10,
       padding:10,
       marginTop:7,
-      marginBottom:7,
       height: 40,
       borderWidth:1,
       borderColor: "black",

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
-import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaDenuncias from '../../components/ListaDenuncias';
 
-const MenuDenuncias = () => {
-  const navigation = useNavigation();
-
+const MenuDenuncias = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
@@ -22,7 +19,7 @@ const MenuDenuncias = () => {
         </TouchableOpacity>
       </View>
       <HideWithKeyboard style={styles.navbar}>
-        <NavbarVecino />
+        <NavbarVecino navigation={navigation}/>
       </HideWithKeyboard> 
     </View>
   );

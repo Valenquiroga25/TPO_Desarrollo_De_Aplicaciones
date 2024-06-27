@@ -96,7 +96,11 @@ public class ReclamosController {
     @GetMapping(path = "/allFromVecinos")
     public ResponseEntity<?> getAllReclamosFromVecinos() {
         try {
-            return new ResponseEntity<>(reclamosService.findAllReclamosFromVecinos(), HttpStatus.OK);
+            List<ReclamoModel> allReclamos = this.reclamosService.findAllReclamosFromVecinos();
+            List<ReclamoVecinoDevueltoDTO> allReclamosDevueltos = new ArrayList<>();
+            for(ReclamoModel reclamo : allReclamos)
+                allReclamosDevueltos.add(convertToVecinoDTO(reclamo));
+            return new ResponseEntity<>(allReclamosDevueltos,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }

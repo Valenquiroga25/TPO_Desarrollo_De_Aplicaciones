@@ -40,8 +40,18 @@ function NavbarPersonal({navigation}){
                             <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
                         </ScrollView>
                     </View>
-                    <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                                <Text style={styles.closeButtonText}>Volver</Text>
+                    <TouchableOpacity style={{
+                                width:300,
+                                height:60,
+                                margin:10,
+                                backgroundColor: '#FFD600',
+                                alignItems: 'center',
+                                justifyContent:'center',
+                                borderWidth:1,
+                                borderRadius: 10,
+                                marginTop:30
+                                }} onPress={closeModal}>
+                                <Text>Volver</Text>
                             </TouchableOpacity>
                 </View>
             </Modal>
@@ -80,45 +90,30 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40
     },
-    modalContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    modalContainer:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo blanco con 50% de opacidad
     },
     modalContent: {
-        backgroundColor: 'white',
+        padding:20,
+        backgroundColor: '#FFFF',
         borderWidth: 1.5,
         borderColor: '#FFD600',
         width: '90%',
         borderRadius: 5,
         maxHeight: '80%',
     },
-    scrollContent: {
-        padding: 15,
+    modalTitle:{
+        fontSize:20,
+        textAlign:'center',
+        marginTop:20
     },
-    modalTitle: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginBottom: 15,
-    },
-    text: {
-        fontSize: 16,
-        marginBottom: 10,
-    },
-    closeButton: {
-        height: 60, 
-        marginVertical: 20,
-        backgroundColor: '#FFD600',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingHorizontal: 20, 
-    },
-    closeButtonText: {
-        fontSize: 20, 
-        fontWeight: 'bold',
+    text:{
+        fontSize:17,
+        marginTop:40,
+        marginLeft:5
     },
 });
 

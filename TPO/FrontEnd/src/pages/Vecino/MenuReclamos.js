@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import NavbarVecino from '../components/NavbarVecino';
+import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import ListaReclamosVecino from '../components/ListaReclamosVecino';
+import ListaReclamosVecino from '../../components/ListaReclamosVecino';
 
 const MenuReclamos = () => {
   const navigation = useNavigation();
@@ -11,7 +11,7 @@ const MenuReclamos = () => {
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-        <Image style={styles.image} resizeMode="contain" source={require('../../assets/BuenosAiresCiudad.png')} />
+        <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
       
       <ListaReclamosVecino navigation = {navigation}/>
@@ -23,7 +23,7 @@ const MenuReclamos = () => {
         </TouchableOpacity>
       </View>
       <HideWithKeyboard style={styles.navbar}>
-        <NavbarVecino />
+        <NavbarVecino navigation={navigation}/>
       </HideWithKeyboard>    
     </View>
   );

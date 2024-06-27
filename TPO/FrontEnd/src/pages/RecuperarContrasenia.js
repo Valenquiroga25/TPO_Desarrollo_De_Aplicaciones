@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, Modal} from 'react-native';
 import { ipLocal } from '../global/ipLocal';
 
-const RecuperarContrasenia = () => {
+const RecuperarContrasenia = ({navigation}) => {
     const [identificador, setIdentificador] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
 
     const handleSubmit = async () => {
         try {
@@ -13,13 +14,15 @@ const RecuperarContrasenia = () => {
 
             const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/usuarios/recuperarContrasenia/${identificador}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json'},
+                body:identificador
             });
 
             if (!response.ok) {
                 throw new Error(await response.text());
             }
-            console.log("Contraseña restablecida");
+            openModal()
+            console.log("Contraseña eliminada, a reestablecer");
 
         } catch (error) {
             alert(error);
@@ -31,12 +34,24 @@ const RecuperarContrasenia = () => {
         setIdentificador(text);
     }
 
+    
+    function openModal(){
+        setIsVisible(true);
+    }
+
+    function closeModal(){
+        setIsVisible(false);
+    }
+
+
     return (
         <SafeAreaView>
             <View style={styles.containerDatos}>
                 <View style={styles.containerTitulo}>
-                    <Text style={styles.titulo}>Recuperar Contraseña</Text>
+                    <Text style={styles.titulo}>Recupere su Contraseña!</Text>
                 </View>
+                <Text style={styles.descripcion}>Bienvenido!! Ingrese su identificador para poder hacer el cambio de contraseña. En caso de no ser un vecino del 
+                      municipio puede acercarse al municipio del barrio y hacer los trámites necesarios.</Text>
                 <View style={{ backgroundColor: '#FFD600', marginTop: 50 }}>
                     <TextInput
                         inputMode='numeric'
@@ -55,6 +70,34 @@ const RecuperarContrasenia = () => {
                     </View>
                 </TouchableOpacity>
             </View>
+
+            <Modal
+            animationType='slide'
+            transparent={true}
+            visible={isVisible}
+            onRequestClose={closeModal}
+            >
+            <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                    <Text style={styles.modalTitle}>Usted se encuentra registrado en el sistema!</Text>
+                    <Text style={styles.text}>Revise su mail para obtener la nueva clave de acceso y haga el log con ella.</Text>
+                </View>
+                <View style={styles}>
+                  <TouchableOpacity style={{
+                          width:300,
+                          height:60,
+                          margin:10,
+                          backgroundColor: '#FFD600',
+                          alignItems: 'center',
+                          justifyContent:'center',
+                          borderWidth:1,
+                          borderRadius: 10,
+                          marginTop:80}} onPress={() => navigation.goBack()}>
+                          <Text>Continuar</Text>
+                  </TouchableOpacity>
+                </View>
+            </View>
+        </Modal>
         </SafeAreaView>
     );
 }
@@ -63,15 +106,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#FFFFFF',
-    },
-    imagen: {
-        position: 'absolute',
-        top: 50,
-        right: 107,
-        width: 150,
-        height: 65,
-        marginRight: 25,
-        marginTop: 15
     },
     containerDatos: {
         marginTop: 140,
@@ -84,6 +118,13 @@ const styles = StyleSheet.create({
         marginTop: 35,
         fontSize: 30,
         fontWeight: 'bold'
+    },
+    descripcion:{
+        marginTop:20,
+        fontSize: 16,
+        color: '#666',
+        textAlign: 'left', // Using left align as a fallback
+        paddingHorizontal: 10,
     },
     input: {
         padding: 10,
@@ -110,6 +151,31 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 10,
         marginTop: 50
+    },
+    modalContainer:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo blanco con 50% de opacidad
+    },
+    modalContent:{
+        backgroundColor:'#FFD600',
+        height:150,
+        marginLeft:20,
+        marginRight:20,
+        borderRadius:5,
+        padding:15,
+        height:230
+    },
+    modalTitle:{
+        fontSize:20,
+        textAlign:'center',
+        marginTop:20
+    },
+    text:{
+        fontSize:17,
+        marginTop:40,
+        marginLeft:5
     }
 });
 

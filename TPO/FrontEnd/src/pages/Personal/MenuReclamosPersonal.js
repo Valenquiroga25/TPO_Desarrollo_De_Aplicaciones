@@ -15,15 +15,15 @@ const MenuReclamosPersonal = () => {
       </View>
       
       <ListaReclamosPersonal navigation = {navigation}/>
-      <View>
-        <TouchableOpacity 
-          style={styles.floatingButton} 
-          onPress={() => navigation.navigate('CrearReclamo')}>
-          <Text style={styles.plusSign}>+</Text>
-        </TouchableOpacity>
-      </View>
+
+      <TouchableOpacity 
+        style={styles.floatingButton} 
+        onPress={() => navigation.navigate('CrearReclamo')}>
+        <Text style={styles.plusSign}>+</Text>
+      </TouchableOpacity>
+
       <HideWithKeyboard style={styles.navbar}>
-        <NavbarPersonal />
+        <NavbarPersonal navigation={navigation}/>
       </HideWithKeyboard>    
     </View>
   );
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     bottom: 100,
-    right: 10,
+    right: 30,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
     width: 60,

@@ -25,7 +25,7 @@ function MenuInicio({ navigation }) {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <Image style={styles.dengueImage} resizeMode='contain' source={item.source} />
+              <Image style={styles.imagenesMenu} resizeMode='contain' source={item.source} />
             )}
             getItemLayout={(data, index) => ({ length: width, offset: width * index, index })}
           />
@@ -96,9 +96,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
   },
-  dengueImage: {
+  imagenesMenu: {
     width: width * 0.9, 
-    height: '100%', 
+    height: 200,
+    marginLeft:18,
   },
   botonesContainer: {
     marginTop: 30,
