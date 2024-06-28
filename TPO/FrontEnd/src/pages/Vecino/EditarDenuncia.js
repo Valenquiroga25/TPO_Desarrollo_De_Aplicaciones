@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } fro
 import { ipLocal } from "../../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function CrearDenuncia({ route }) {
+function EditarDenuncia({ route }) {
     const {idDenuncia,documento,calleSitioDenuncia, numeroSitioDenuncia, descripcionDenuncia, estado} = route.params;
 
     const [documentoVecino, setDocumento] = useState(documento);
@@ -266,4 +266,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CrearDenuncia;
+export default EditarDenuncia;
