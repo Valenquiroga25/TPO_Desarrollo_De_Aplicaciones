@@ -53,7 +53,13 @@ function DetalleReclamoVecino({ route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('CrearDenuncia')}>
+            onPress={() => navigation.navigate('CrearDenuncia', {idReclamo:idReclamo,
+              documento: documentoVecino,
+              calleSitio: calleSitio,
+              numeroSitio: numeroSitio,
+              estado: estado,
+              desperfecto: desperfecto,
+              descripcion: descripcion,})}>
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>
