@@ -9,12 +9,10 @@ function DetalleServicio({ route }) {
     const { idServicio, titulo, direccion, telefono, rubro, descripcion } = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
     
-    const imageness = [require('../../assets/menu1.png'), require('../../assets/menu2.png')]
-
     useEffect(() => {
       async function getImagenes() {
         try {
-          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/${idServicio}`, {
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/servicio/${idServicio}`, {
             method: 'GET',
           });
       

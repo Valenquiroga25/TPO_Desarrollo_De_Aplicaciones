@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal,FlatList } from "react-native";
 import CheckBox from 'react-native-check-box'
 import { ipLocal } from '../../global/ipLocal';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from "expo-file-system";
 
-function CrearDenuncia({navigation}){
+function CrearDenuncia(){
   const [documentoVecino, setDocumento] = useState('');
   const [calleSitio, setCalleSitio] = useState('');
   const [numeroSitio, setNumeroSitio] = useState('');
@@ -12,8 +14,9 @@ function CrearDenuncia({navigation}){
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [aceptoResponsabilidad, setAceptoResponsabilidad] = useState(0);
-  const [checked, setChecked] = useState(true);
-  const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion && aceptoResponsabilidad;
+  const [checked, setChecked] = useState(false);
+
+  const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion && !aceptoResponsabilidad;
 
   const handleSubmit = async () => {
     if (!isFormComplete) {
@@ -39,7 +42,34 @@ function CrearDenuncia({navigation}){
       }
 
       const result = await response.json();
-      console.log(result);
+      const idDenuncia = result.idDenuncia 
+
+      for(const imagen of imagenes){
+        const formData = new FormData();
+
+        const fileInfo = await FileSystem.getInfoAsync(imagen)
+        const fileUri = fileInfo.uri
+        const fileName = fileUri.substring(fileUri.lastIndexOf("/") + 1);
+        const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
+  
+        formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
+        formData.append('idDenuncia', idDenuncia.toString());
+        
+        console.log("FormData content:", JSON.stringify(formData._parts));
+  
+        //fetch de las imagenes
+        const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/denuncia/`, {
+          method: "POST",
+          headers: { "Authorization": `Bearer ${token}`},
+          body: formData
+        });
+        
+        if (!imageResponse.ok) {
+          const message = await imageResponse.text()
+          throw new Error(message)
+        }
+      }
+
       openModal();
     } catch (error) {
       console.error(error);
@@ -55,10 +85,6 @@ function CrearDenuncia({navigation}){
     setIsVisible(false);
   }
 
-  function openPDF() {
-    navigation.navigate('LeerPdf')
-  }
-
   function handleResponsabilidad(){
     if(aceptoResponsabilidad === 0){
       setAceptoResponsabilidad(1);
@@ -72,12 +98,46 @@ function CrearDenuncia({navigation}){
     }
   }
 
+    
+  const abrirGaleria = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64:true
+    });
+
+    if (!result.canceled){
+      const newImage = result.assets[0].uri;
+      console.log("Nueva imagen seleccionada:", newImage);
+      setImagenes((imagenesPrevias) => [...imagenesPrevias, newImage]);
+    }
+  }
+
+  const abrirGaleria2 = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+      base64:true
+    });
+
+    if (!result.canceled){
+      const newImage = result.assets[0].uri;
+      imagenes.pop()
+      setImagenes((imagenesPrevias) => [...imagenesPrevias, newImage]);
+    }
+  }
+
   return (
     <View style={styles.container}>
+      <Image style={styles.imagenLogo} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       <View style={styles.containerDatos}>
-        <Image style={styles.imagen} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
-        
-        <Text style={styles.enviarDenuncia}>Crear Denuncia</Text>
+        <Text style={styles.titulo}>Crear Denuncia</Text>
         
         <TextInput
           style={[styles.input, styles.textInput]}
@@ -96,6 +156,7 @@ function CrearDenuncia({navigation}){
           style={[styles.input, styles.textInput]}
           onChangeText={setNumeroSitio}
           value={numeroSitio}
+          inputMode='numeric'
           placeholder="Número del Sitio"
         />
         <TextInput
@@ -127,16 +188,37 @@ function CrearDenuncia({navigation}){
           </Text>
         </View>
 
-        {/* Enlace al PDF */}
-        <TouchableOpacity onPress={openPDF}>
-          <Text>Leer declaración jurada</Text>
+        <FlatList
+        style={{marginTop:25}}
+        data={imagenes}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0}
+        scrollEventThrottle={16}
+        keyExtractor={(item) => item}
+        renderItem={({ item, index }) => {
+          return (
+            <View>
+              <TouchableOpacity onPress={abrirGaleria2}>
+                <Image
+                  key={index}
+                  source={{ uri: item }}
+                  style={styles.imagen}
+                />
+              </TouchableOpacity>
+            </View>
+          )
+        }} />
+
+        <TouchableOpacity style={styles.containerAddImage} onPress={abrirGaleria}>
+          <Image style={styles.addImagen} resizeMode="contain" source={require('../../../assets/addImage.jpg')}></Image>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
           onPress={handleSubmit}
           disabled={!isFormComplete}>
-          <Text style={styles.enviarReclamoButtonText}>Enviar Denuncia</Text>
+          <Text style={styles.enviarDenunciaButtonText}>Enviar Denuncia</Text>
         </TouchableOpacity>
 
         <Modal
@@ -165,15 +247,38 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor:'#FFFFFF',
   },
+  titulo:{
+    fontSize: 22,
+    marginBottom: 10,
+  },
   containerDatos:{
     flex:1,
     padding:20,
-    marginTop:50
+    marginTop:80
+  },
+  containerAddImage:{
+    width:100,
+    height:100
+  },
+  addImagen:{
+    position:'absolute',
+    left:10,
+    bottom:1,
+    width:92,
+    height:92,
+  },
+  imagenLogo: {
+    position:'absolute',
+    top:50,
+    left:15,
+    width: 100,
+    height: 45,
   },
   imagen: {
-    width: 140,
-    height: 45,
-    marginBottom: 20,
+    width: 100,
+    height: 100,
+    borderRadius: 5,
+    marginLeft: 10
   },
   enviarDenuncia: {
     fontSize: 18,
@@ -202,7 +307,8 @@ const styles = StyleSheet.create({
   },
   textArea: {
     height: 100,
-    textAlignVertical: 'top',
+    justifyContent:'center',
+    textAlign:'center'
   },
   archivo: {
     fontSize: 17,
@@ -224,7 +330,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   crearReclamoChild: {
-    top: 675,
+    top: 676,
     left: 167,
     borderRadius: 5,
     width: 182,
@@ -244,7 +350,7 @@ const styles = StyleSheet.create({
     },
     shadowColor: "rgba(0, 0, 0, 0.25)"
   },
-  enviarReclamoButtonText: {
+  enviarDenunciaButtonText: {
     fontSize: 18,
     color: "#000",
     fontFamily: "Gotham Rounded"

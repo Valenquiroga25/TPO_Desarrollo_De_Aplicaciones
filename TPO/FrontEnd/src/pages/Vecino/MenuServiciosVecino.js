@@ -17,11 +17,12 @@ const MenuServiciosVecino = ({navigation}) => {
             <TextInput style={styles.input} placeholder='Buscar...'></TextInput>
       </View>
 
-      <ListaServicios navigation = {navigation}/>
+      <View style={styles.listaServicios}>
+        <ListaServicios navigation = {navigation}/>
+      </View>
 
-      <View>
+      <View style={styles.floatingButton}>
         <TouchableOpacity
-          style={styles.floatingButton}
           onPress={() => navigation.navigate('CrearServicio')}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
@@ -41,17 +42,22 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   containerDatos: {
-    paddingTop: 20,
+    paddingTop: 50,
     paddingBottom:20,
   },
   image: {
+    position:'absolute',
+    top:30,
     width: 140,
     height: 45,
     marginBottom: 20,
   },
+  listaDenuncias:{
+    marginTop:60
+  },
   floatingButton: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 100,
     right: 30,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,

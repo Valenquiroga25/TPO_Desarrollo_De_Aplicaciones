@@ -10,10 +10,11 @@ const MenuDenuncias = ({navigation}) => {
       <View style={styles.containerDatos}>
         <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
-      <ListaDenuncias navigation = {navigation}/>
-      <View>
+      <View style={styles.listaDenuncias}>
+        <ListaDenuncias navigation = {navigation}/>
+      </View> 
+      <View style={styles.floatingButton}>
         <TouchableOpacity 
-          style={styles.floatingButton} 
           onPress={() => navigation.navigate('CrearDenuncia')}>
           <Text style={styles.plusSign}>+</Text>
         </TouchableOpacity>
@@ -36,14 +37,19 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
+    position:'absolute',
+    top:30,
     width: 140,
     height: 45,
     marginBottom: 20,
   },
+  listaDenuncias:{
+    marginTop:60
+  },
   floatingButton: {
     position: 'absolute',
     bottom: 100,
-    right: 10,
+    right: 30,
     backgroundColor: '#FFFFFF',
     borderRadius: 50,
     width: 60,

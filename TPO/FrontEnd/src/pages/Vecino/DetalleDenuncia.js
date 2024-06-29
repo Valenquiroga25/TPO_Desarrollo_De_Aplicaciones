@@ -1,51 +1,66 @@
-import React from 'react'
-import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet,Image,FlatList,Dimensions,TouchableOpacity} from 'react-native';
+import { ipLocal } from '../../global/ipLocal';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
-const espacio = 10;
 function DetalleDenuncia({ route }) {
     const { idDenuncia,documento,calleSitio, numeroSitio, descripcion, estado} = route.params;
+    const [listaImagenes, setListaImagenes] = useState([])
+
+    useEffect(() => {
+      async function getImagenes() {
+        try {
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/denuncia/${idDenuncia}`, {
+            method: 'GET',
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Error al obtener las imágenes: ${response.status} ${response.statusText}`);
+          }
+      
+          const imagenes = await response.json();
+          setListaImagenes(imagenes);
+      
+        } catch (error) {
+          console.error('Error al obtener las imágenes:', error);
+          alert('Error al obtener las imágenes: ' + error.message);
+        }
+      }
+
+      getImagenes()
+    }, [])
 
     return (
       <View style={styles.container}>
-        <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.detalle}>{`DOCUMENTO: ${documento}`}</Text>
         <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
         <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
+        <View style={{borderWidth:2,borderColor:'black',height:160}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
         <FlatList 
-        data={imagenes}
+        data={listaImagenes}//cambiar parametro
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
         scrollEventThrottle={16}
-        keyExtractor={(item)=> item}
-        renderItem={({item,index})=> {
-          return(
-          <View style={{width:espacio_contendor}}>
-            <View style={{
-              marginHorizontal:espacio,
-              padding:espacio,
-              borderRadius:34,
-              backgroundColor: "#fff",
-              alignItems:'center',
-            }}>
-              <Image
-                source={{ uri: item }}
-                style={styles.posterImage}
-              />
-            </View>
-          
+        keyExtractor={(item, index)=> index.toString()}
+        renderItem={({ item }) => {
+          return (
+            <View style={{ width: espacio_contendor }}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
+                  style={styles.posterImage}
+                />
+              </View>
             </View>
     )}}/>
-        </ScrollView>
         
         <View>
           <TouchableOpacity 
@@ -99,8 +114,7 @@ function DetalleDenuncia({ route }) {
     },
     imageContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginTop:25,
         position: 'relative',
     },
     image: {
@@ -116,11 +130,12 @@ function DetalleDenuncia({ route }) {
       right:0,
     },
     posterImage: {
-      width: width * 0.6, 
-      height: height * 0.4,
+      width:200,
+      height:200,
       resizeMode: "cover",
-      borderRadius: 10,
-      marginBottom:10,
+      borderRadius:20,
+      borderWidth:1,
+      borderColor:'black'
     },
     floatingButton: {
       position: 'absolute',

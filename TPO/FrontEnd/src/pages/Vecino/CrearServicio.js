@@ -127,7 +127,7 @@ const CrearServicio = ({navigation}) => {
     <View style={styles.container}>
       <Image style={styles.imagenLogo} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       <View style={styles.containerDatos}>
-        <Text style={styles.enviarReclamo}>Crear Servicio</Text>
+        <Text style={styles.titulo}>Crear Servicio</Text>
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setTitulo}
@@ -214,7 +214,7 @@ const CrearServicio = ({navigation}) => {
           style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
           onPress={handleSubmit}
           disabled={!isFormComplete}>
-          <Text style={styles.enviarReclamoButtonText}>Publicar Servicio</Text>
+          <Text style={styles.enviarServicioButtonText}>Publicar Servicio</Text>
         </TouchableOpacity>
 
         <Modal
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     width:92,
     height:92,
   },
-  enviarReclamo: {
+  titulo: {
     fontSize: 22,
     marginBottom: 10,
   },
@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     },
     shadowColor: "rgba(0, 0, 0, 0.25)"
   },
-  enviarReclamoButtonText: {
+  enviarServicioButtonText: {
     fontSize: 18,
     color: "#000",
   },

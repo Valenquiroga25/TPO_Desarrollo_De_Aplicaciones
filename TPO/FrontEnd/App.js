@@ -23,7 +23,7 @@ import DetalleServicio from './src/pages/DetalleServicio';
 import DetalleReclamoVecino from './src/pages/Vecino/DetalleReclamoVecino';
 import ListaReclamosPersonal from './src/components/ListaReclamosPersonal'
 import DetalleReclamoPersonal from './src/pages/Personal/DetalleReclamoPersonal';
-import DetalleDenuncia from './src/pages/DetalleDenuncia';
+import DetalleDenuncia from './src/pages/Vecino/DetalleDenuncia';
 import CrearReclamo from './src/pages/CrearReclamo';
 import CrearServicio from './src/pages/Vecino/CrearServicio';
 import CrearDenuncia from './src/pages/Vecino/CrearDenuncia';
