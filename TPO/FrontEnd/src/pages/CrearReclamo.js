@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
+import {Picker} from '@react-native-picker/picker'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ipLocal } from '../global/ipLocal';
 import {jwtDecode} from 'jwt-decode';
@@ -108,13 +109,28 @@ const CrearReclamo = () => {
           placeholder="Numeración sitio"
         />
 
-        <TextInput
-          style={[styles.input, styles.textInput]}
-          onChangeText={setIdDesperfecto}
-          value={idDesperfecto}
-          inputMode='numeric'
-          placeholder="Desperfecto"
-        />
+
+        <View style={[styles.input, styles.pickerContainer]}>
+          <Picker
+              selectedValue={idDesperfecto}
+              onValueChange={(itemValue) => setIdDesperfecto(itemValue)}
+              style={styles.picker}
+          >
+          <Picker.Item label="Desperfecto" value="" />
+          <Picker.Item label="Fuga de agua en la tuberia principal" value="1" />
+          <Picker.Item label="Corte de energia en zona norte" value="2" />
+          <Picker.Item label="Obstrucción en el sistema de alcantarillado" value="3" />
+          <Picker.Item label="Pérdida de señal en el servicio de internet" value="4" />
+          <Picker.Item label="Desperfecto en el semáforo de la avenida principal" value="5" />
+          <Picker.Item label="Baches en la carretera" value="6" />
+          <Picker.Item label="Mal funcionamiento del sistema de calefacción" value="7" />
+          <Picker.Item label="Ruidos extraños provenientes del transformador eléctrico" value="8" />
+          <Picker.Item label="Rotura de vidrios en la entrada del edificio" value="9" />
+          <Picker.Item label="Problemas con la presión del agua en el piso superior" value="10" />
+          </Picker>
+        </View>
+
+
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setIdReclamoUnificado}

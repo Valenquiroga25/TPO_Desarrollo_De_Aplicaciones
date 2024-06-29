@@ -161,12 +161,19 @@ const CrearServicio = ({navigation}) => {
           placeholder="Teléfono"
         />
 
-        <TextInput 
-          style={[styles.input, styles.textInput]}
-          onChangeText={setIdRubro}
-          value={idRubro}
-          inputMode='numeric'
-          placeholder="Rubro"/>
+          <View style={[styles.input, styles.pickerContainer]}>
+          <Picker
+              selectedValue={idRubro}
+              onValueChange={(itemValue) => setIdRubro(itemValue)}
+              style={styles.picker}
+          >
+          <Picker.Item label="Rubro" value="" />
+          <Picker.Item label="Jardinería" value="1" />
+          <Picker.Item label="Plomería" value="2" />
+          <Picker.Item label="Informática" value="3" />
+          <Picker.Item label="Encomienda" value="4" />
+          </Picker>
+        </View>
 
         <TextInput
           style={[styles.inputDescripcion, styles.textInput, styles.textArea]}
