@@ -29,7 +29,7 @@ public class ImagenService{
     }
 
     public ImagenServicioModel findImagenServicioById(Long id) {
-        return this.imagenServicioRepository.findImagenServicioById(id);
+        return this.imagenServicioRepository.findImagenServicioByIdImagen(id);
     }
 
     public List<ImagenServicioModel> findImagenesByIdServicio(Long idServicio) {
@@ -53,7 +53,7 @@ public class ImagenService{
     }
 
     public ImagenReclamoModel findImagenReclamoById(Long id) {
-        return this.imagenReclamoRepository.findImagenReclamoById(id);
+        return this.imagenReclamoRepository.findImagenReclamoByIdImagen(id);
     }
 
     public List<ImagenReclamoModel> findImagenesByIdReclamos(Long idReclamo) {
@@ -77,7 +77,7 @@ public class ImagenService{
     }
 
     public ImagenDenunciaModel findImagenDenunciaById(Long id) {
-        return this.imagenDenunciaRepository.findDenunciaById(id);
+        return this.imagenDenunciaRepository.findDenunciaByIdImagen(id);
     }
 
     public List<ImagenDenunciaModel> findImagenesByIdDenuncias(Long idDenuncia) {

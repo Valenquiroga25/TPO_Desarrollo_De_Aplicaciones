@@ -24,7 +24,7 @@ public class ImagenController {
     private ServicioService servicioService;
 
     @PostMapping("/servicio")
-    public ResponseEntity<String> uploadImagen(@RequestParam("archivo") MultipartFile archivo, @RequestParam("idServicio") Long idServicio) {
+    public ResponseEntity<String> uploadImagenServicio(@RequestParam("archivo") MultipartFile archivo, @RequestParam("idServicio") Long idServicio) {
         try {
             ServicioModel servicio = this.servicioService.findServicioById(idServicio);
             ImagenServicioModel imagenAux = new ImagenServicioModel(archivo.getBytes(), servicio);
@@ -39,7 +39,7 @@ public class ImagenController {
     }
 
     @GetMapping("/servicio/{idServicio}")
-    public ResponseEntity<?> downloadAll(@PathVariable Long idServicio) {
+    public ResponseEntity<?> downloadAllServicio(@PathVariable Long idServicio) {
         try{
             List<ImagenServicioModel> imagenes = this.imagenService.findImagenesByIdServicio(idServicio);
             List<ImagenDevueltaDTO> imagenesDevuetas = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ImagenController {
     }
 
     @DeleteMapping("/servicio/{idServicio}")
-    public ResponseEntity<?> deleteAll(@PathVariable Long idServicio) {
+    public ResponseEntity<?> deleteAllServicio(@PathVariable Long idServicio) {
         try{
             List<ImagenServicioModel> imagenes = this.imagenService.findImagenesByIdServicio(idServicio);
             for(ImagenServicioModel imagen : imagenes)
