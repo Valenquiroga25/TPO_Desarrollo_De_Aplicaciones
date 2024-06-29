@@ -78,7 +78,7 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public ReclamoModel updateReclamo(Long id, Long idDesperfecto, String descripcion, List<ImagenModel> imagenes) throws Exception{
+    public String updateReclamo(Long id, Long idDesperfecto, String descripcion, List<ImagenServicioModel> imagenes) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
@@ -99,31 +99,9 @@ public class ReclamosService {
         if(imagenes != null)
             reclamoDb.setImagenes(imagenes);
 
+        this.reclamosRepository.save(reclamoDb);
         log.info("Reclamo " + reclamoDb.getIdReclamo() + " actualizado correctamente!");
-        return this.reclamosRepository.save(reclamoDb);
-    }
-
-    // Estas dos funciones hay que ver si se usan más adelante.
-    public List<ImagenModel> agregarImagen(List<ImagenModel> imagenes, ImagenModel imagen) throws Exception{
-        if(imagenes.size() > 7)
-            throw new Exception("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
-        imagenes.add(imagen);
-
-        return imagenes;
-    }
-
-    // Estas dos funciones hay que ver si se usan más adelante.
-    public List<ImagenModel> eliminarImagen(List<ImagenModel> imagenes, ImagenModel imagen) throws Exception{
-        Optional<ImagenModel> imagenOp = Optional.ofNullable(imagenService.findImagenById(imagen.getIdImagen()));
-        if(imagenOp.isEmpty()) {
-            log.error("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
-            throw new Exception("La lista de imágenes se encuenta llena, elimine una imágen para poder agregarla");
-        }
-
-        ImagenModel imagenDb = imagenOp.get();
-        imagenes.remove(imagenDb);
-
-        return imagenes;
+        return "Reclamo actualizado con éxito!";
     }
 
     public String deleteReclamo(Long id) throws Exception{

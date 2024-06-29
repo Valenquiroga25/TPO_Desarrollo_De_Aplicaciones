@@ -16,7 +16,7 @@ import java.util.List;
 public class ServicioModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idServicio;
+    private Long idServicio;
     @ManyToOne
     @JoinColumn(name="documentoVecino")
     private VecinoModel vecino;

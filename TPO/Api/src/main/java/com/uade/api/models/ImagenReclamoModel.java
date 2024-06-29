@@ -11,13 +11,13 @@ import lombok.Setter;
 import java.util.Base64;
 
 @Entity
-@Table(name = "imagenes")
+@Table(name = "imagenesReclamos")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class ImagenModel {
+public class ImagenReclamoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idImagen;
@@ -25,12 +25,12 @@ public class ImagenModel {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] datosImagen;
     @ManyToOne
-    @JoinColumn(name="idServicio")
-    private ServicioModel servicio;
+    @JoinColumn(name="idReclamo")
+    private ReclamoModel reclamo;
 
-    public ImagenModel(byte[] datosImagen, ServicioModel servicio) {
+    public ImagenReclamoModel(byte[] datosImagen, ReclamoModel reclamo) {
         this.datosImagen = datosImagen;
-        this.servicio = servicio;
+        this.reclamo = reclamo;
     }
 
     @JsonProperty("datosImagen")

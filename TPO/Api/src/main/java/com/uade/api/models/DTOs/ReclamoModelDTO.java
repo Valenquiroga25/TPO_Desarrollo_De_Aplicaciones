@@ -15,6 +15,6 @@ public class ReclamoModelDTO {
     private Long numeroSitio;
     private Long idDesperfecto;
     private String descripcion;
-    private List<ImagenModel> imagenes;
+    private List<ImagenServicioModel> imagenes;
     private Long idReclamoUnificado;
 }

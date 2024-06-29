@@ -36,13 +36,13 @@ public class ReclamoModel {
     private String descripcion;
     @OneToMany
     @JoinColumn(name="idImagen")
-    private List<ImagenModel> imagenes;
+    private List<ImagenServicioModel> imagenes;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
     private Long idReclamoUnificado;
 
-    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, Long idReclamoUnificado){
+    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenServicioModel> imagenes, Long idReclamoUnificado){
         this.vecino = vecino;
         this.sitio = sitio;
         this.desperfecto = desperfecto;
@@ -52,7 +52,7 @@ public class ReclamoModel {
         this.idReclamoUnificado = idReclamoUnificado;
     }
 
-    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenModel> imagenes, Long idReclamoUnificado){
+    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenServicioModel> imagenes, Long idReclamoUnificado){
         this.personal = personal;
         this.sitio = sitio;
         this.desperfecto = desperfecto;

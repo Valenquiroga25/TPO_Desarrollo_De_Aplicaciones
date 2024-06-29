@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServicioDevueltoDTO {
+    private Long idServicio;
     private String titulo;
     private String direccion;
     private String telefono;

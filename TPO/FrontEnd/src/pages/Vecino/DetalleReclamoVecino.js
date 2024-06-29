@@ -2,17 +2,16 @@ import React from 'react'
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native'
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-const espacio_contendor = width * 0.7;
-const espacio = 10;
-function DetalleReclamoVecino({ route }) {
-    const { idReclamo, documento, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
+
+function DetalleReclamoVecino({ navigation, route }) {
+    const { idReclamo, documentoVecino, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
     return (
       <View style={styles.container}>
         <ScrollView> 
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{'Reclamo'}</Text>
         <Text style={styles.detalle}>{`ID RECLAMO: ${idReclamo}`}</Text>
-        <Text style={styles.detalle}>{`DOCUMENTO: ${documento}`}</Text>
+        <Text style={styles.detalle}>{`DOCUMENTO: ${documentoVecino}`}</Text>
         <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
         <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
         <Text style={styles.detalle}>{`DESPERFECTO: ${desperfecto}`}</Text>
@@ -53,13 +52,14 @@ function DetalleReclamoVecino({ route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('CrearDenuncia', {idReclamo:idReclamo,
-              documento: documentoVecino,
+            onPress={() => navigation.navigate('EditarReclamo', {
+              idReclamo: idReclamo,
+              documentoVecino: documentoVecino,
               calleSitio: calleSitio,
               numeroSitio: numeroSitio,
               estado: estado,
               desperfecto: desperfecto,
-              descripcion: descripcion,})}>
+              descripcion: descripcion})}>
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>

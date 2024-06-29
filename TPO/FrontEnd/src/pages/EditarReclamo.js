@@ -1,19 +1,20 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
-import { ipLocal } from "../../global/ipLocal";
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, FlatList } from "react-native";
+import { ipLocal } from "../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function EditarReclamo({ route }) {
-    const { idReclamo, documento, calleSitioReclamo, numeroSitioReclamo, estado, desperfectoReclamo, descripcionReclamo } = route.params;
-    const [documentoVecino, setDocumento] = useState(documento);
+    const { idReclamo, documentoVecino, calleSitioReclamo, numeroSitioReclamo, estado, desperfectoReclamo, descripcionReclamo } = route.params;
+    const [documento, setDocumento] = useState(documento);
     const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
     const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
     const [idDesperfecto, setIdDesperfecto] = useState(desperfectoReclamo);
     const [descripcion, setDescripcion] = useState(descripcionReclamo);
+    const [imagenes, setImagenes] = useState([]);
     const [idReclamoUnificado, setIdReclamoUnificado] = useState('')
     const [isVisible, setIsVisible] = useState(false);
 
-    const isFormComplete = (documentoVecino || legajoPersonal) && calleSitio && numeroSitio && idDesperfecto && descripcion;
+    const isFormComplete = documentoVecino && calleSitio && numeroSitio && idDesperfecto && descripcion;
 
     const handleSubmit = async () => {
         if (!isFormComplete) {
@@ -23,7 +24,7 @@ function EditarReclamo({ route }) {
         try {
             const token = await AsyncStorage.getItem('token'); // Guardar el token en AsyncStorage como una cadena de texto
 
-            const data = {documentoVecino, legajoPersonal, calleSitio, numeroSitio, idDesperfecto, descripcion, imagenes, idReclamoUnificado};
+            const data = {documento, calleSitio, numeroSitio, idDesperfecto, descripcion, imagenes, idReclamoUnificado};
 
             console.log(JSON.stringify(data))
 
@@ -38,6 +39,32 @@ function EditarReclamo({ route }) {
 
             if (!response.ok) {
                 throw new Error(await response.text());
+            }
+
+            for(const imagen of imagenes){
+                const formData = new FormData();
+        
+                const fileInfo = await FileSystem.getInfoAsync(imagen)
+                const fileUri = fileInfo.uri
+                const fileName = fileUri.substring(fileUri.lastIndexOf("/") + 1);
+                const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1)
+          
+                formData.append('archivo', {uri: fileUri, name: fileName, type: `image/${fileType}`});
+                formData.append('idServicio', idServicio.toString());
+                
+                console.log("FormData content:", JSON.stringify(formData._parts));
+          
+                //fetch de las imagenes
+                const imageResponse = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/${idReclamo}`, {
+                  method: "DELETE",
+                  headers: { "Authorization": `Bearer ${token}`},
+                  body: formData
+                });
+                
+                if (!imageResponse.ok) {
+                  const message = await imageResponse.text()
+                  throw new Error(message)
+                }
             }
 
             const result = await response.json();
@@ -60,24 +87,16 @@ function EditarReclamo({ route }) {
     return (
         <View style={styles.container}>
             <View style={styles.containerDatos}>
-                <Image style={styles.imagen} resizeMode="cover" source={require('../../assets/BuenosAiresCiudad.png')} />
-
-                <Text style={styles.enviarReclamo}>EditarReclamo Reclamo</Text>
+                <Text style={styles.titulo}>Editar Reclamo</Text>
 
                 <TextInput
                     style={[styles.input, styles.textInput]}
-                    onChangeText={setDocumentoVecino}
-                    value={documentoVecino}
+                    onChangeText={setDocumento}
+                    value={documento}
                     inputMode='numeric'
                     placeholder="Documento"
                 />
-                <TextInput
-                    style={[styles.input, styles.textInput]}
-                    onChangeText={setLegajoPersonal}
-                    value={legajoPersonal}
-                    inputMode='numeric'
-                    placeholder="Legajo"
-                />
+
                 <TextInput
                     style={[styles.input, styles.textInput]}
                     onChangeText={setCalleSitio}
@@ -115,12 +134,30 @@ function EditarReclamo({ route }) {
                     multiline={true}
                     numberOfLines={4}
                 />
-
-                <TouchableOpacity
-                    style={[styles.crearReclamoChild2]}
-                    onPress={() => console.log('Insertar imagen')}>
-                    <Text style={styles.archivo}>Insertar imagen</Text>
-                </TouchableOpacity>
+        <FlatList
+        data={imagenes}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0}
+        scrollEventThrottle={16}
+        keyExtractor={(item) => item}
+        renderItem={({ item, index }) => {
+          return (
+            <View>
+              <TouchableOpacity onPress={abrirGaleria2}>
+                <Image
+                  key={index}
+                  source={{ uri: item }}
+                  style={styles.imagen}
+                />
+              </TouchableOpacity>
+            </View>
+          )
+        }} />
+        
+        <TouchableOpacity style={styles.containerAddImage} onPress={abrirGaleria}>
+          <Image style={styles.addImagen} resizeMode="contain" source={require('../../assets/addImage.jpg')}></Image>
+        </TouchableOpacity>
 
                 <TouchableOpacity
                     style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
@@ -160,11 +197,22 @@ const styles = StyleSheet.create({
         padding: 20,
         marginTop: 50
     },
-    imagen: {
-        width: 140,
-        height: 45,
-        marginBottom: 20,
-    },
+    titulo:{
+        fontSize: 25,
+        marginBottom: 25,
+        fontFamily: "Gotham Rounded",
+        },
+    containerAddImage:{
+        width:100,
+        height:100
+        },
+    addImagen:{
+        position:'absolute',
+        left:10,
+        bottom:45,
+        width:92,
+        height:92,
+          },
     enviarDenuncia: {
         fontSize: 18,
         marginBottom: 10,
@@ -189,10 +237,11 @@ const styles = StyleSheet.create({
     },
     textInput: {
         height: 40,
+        justifyContent:'center',
     },
     textArea: {
         height: 100,
-        textAlignVertical: 'top',
+        textAlign:'center'
     },
     archivo: {
         fontSize: 17,

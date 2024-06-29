@@ -129,12 +129,28 @@ create table servicios(
 );
 
 
-create table imagenes(
+create table imagenesServicios(
     idImagen BIGINT not null AUTO_INCREMENT,
     datosImagen blob not null,
     idServicio BIGINT not null,
     constraint pk_imagen primary key(idImagen),
     constraint fk_imagen_servicio foreign key (idServicio) references servicios(idServicio)
+)
+
+create table imagenesReclamos(
+    idImagen BIGINT not null AUTO_INCREMENT,
+    datosImagen blob not null,
+    idReclamo BIGINT not null,
+    constraint pk_imagen primary key(idImagen),
+    constraint fk_imagen_reclamo foreign key (idReclamo) references reclamos(idReclamo)
+)
+
+create table imagenesDenuncias(
+    idImagen BIGINT not null AUTO_INCREMENT,
+    datosImagen blob not null,
+    idDenuncia BIGINT not null,
+    constraint pk_imagen primary key(idImagen),
+    constraint fk_imagen_denuncia foreign key (idDenuncia) references denuncias(idDenuncia)
 )
 
 INSERT personal (nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES (N'RAMIRO', N'RODRIGUEZ', N'DNI30012288', N'Areas Verdes', 3, CAST(N'2018-08-19T00:00:00.000' AS DateTime));
@@ -168,7 +184,8 @@ drop table imagenes
 insert into usuarios(identificador, contrasenia, mail, clave_acceso, tipoUsuario)
 values ("2", "$2a$12$7IfyW0OGtJo7O2WQnBNi7.euDsXAc.Ng207kkAwMwLgZHDRjKtvD2", "valenquiroga67@gmail.com", "-", "Inspector")
 
-delete from servicios where idServicio = 9
+delete from servicios where idServicio = 3
+delete from imagenes where idServicio = 3
 
 use municipios
 

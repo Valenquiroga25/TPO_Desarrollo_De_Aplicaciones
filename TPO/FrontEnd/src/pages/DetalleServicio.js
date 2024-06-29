@@ -1,54 +1,70 @@
-import React from 'react'
-import { Text, View, StyleSheet,Image,FlatList,Dimensions, ScrollView} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Text, View, StyleSheet,Image,FlatList,Dimensions} from 'react-native'
+import { ipLocal } from '../global/ipLocal';
+
 const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
-const espacio = 10;
 
 function DetalleServicio({ route }) {
-    const { titulo, direccion, telefono, rubro, descripcion, imagenes } = route.params;
-
-    const imageness = ['assets/ImagenDenunciaDefinitivo2.jpg','assets/ImagenServicioDefinitiva2.png']
+    const { idServicio, titulo, direccion, telefono, rubro, descripcion } = route.params;
+    const [listaImagenes, setListaImagenes] = useState([])
     
+    const imageness = [require('../../assets/menu1.png'), require('../../assets/menu2.png')]
+
+    useEffect(() => {
+      async function getImagenes() {
+        try {
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/${idServicio}`, {
+            method: 'GET',
+          });
+      
+          if (!response.ok) {
+            throw new Error(`Error al obtener las imágenes: ${response.status} ${response.statusText}`);
+          }
+      
+          const imagenes = await response.json();
+          setListaImagenes(imagenes);
+      
+        } catch (error) {
+          console.error('Error al obtener las imágenes:', error);
+          alert('Error al obtener las imágenes: ' + error.message);
+        }
+      }
+      
+
+      getImagenes()
+    }, [])
+
     return (
       <View style={styles.container}>
-        <ScrollView>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{titulo}</Text>
         <Text style={styles.detalle}>{`DIRECCION: ${direccion}`}</Text>
         <Text style={styles.detalle}>{`TELEFONO: ${telefono}`}</Text>
         <Text style={styles.detalle}>{`RUBRO: ${rubro}`}</Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
+        <View style={{borderWidth:2,borderColor:'black',height:160, padding:10}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
 
         <FlatList 
-        data={imageness}//cambiar parametro
+        data={listaImagenes}//cambiar parametro
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
         scrollEventThrottle={16}
-        keyExtractor={(item)=> item}
-        renderItem={({item,index})=> {
-          return(
-          <View style={{width:espacio_contendor}}>
-            <View style={{
-              marginHorizontal:espacio,
-              padding:espacio,
-              borderRadius:34,
-              backgroundColor: "#fff",
-              alignItems:'center',
-            }}>
-              <Image
-                source={{ uri: item }}
-                style={styles.posterImage}
-              />
-            </View>
-          
+        keyExtractor={(item, index)=> index.toString()}
+        renderItem={({ item }) => {
+          return (
+            <View style={{ width: espacio_contendor }}>
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
+                  style={styles.posterImage}
+                />
+              </View>
             </View>
     )}}/>
-        </ScrollView>
     </View>
   )
 }
@@ -97,7 +113,7 @@ function DetalleServicio({ route }) {
         position: 'absolute',
         width: 300,
         height: 300,
-        resizeMode: 'cover',
+        resizeMode: 'contain',
     },
     navbar:{
       position:'absolute',
@@ -106,11 +122,12 @@ function DetalleServicio({ route }) {
       right:0,
     },
     posterImage: {
-      width: width * 0.6, 
-      height: height * 0.4,
+      width:250,
+      height:250,
       resizeMode: "cover",
-      borderRadius: 10,
-      marginBottom:10,
+      borderRadius:20,
+      borderWidth:1,
+      borderColor:'black'
     },
   });
 export default DetalleServicio

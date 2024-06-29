@@ -50,7 +50,7 @@ function DetalleDenuncia({ route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('CrearDenuncia')}>
+            onPress={() => navigation.navigate('EditarDenuncia')}>
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>

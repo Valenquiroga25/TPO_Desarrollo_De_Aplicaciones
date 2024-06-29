@@ -33,7 +33,7 @@ public class SecurityConfig {
     }
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("tpo-desarrollo-mobile/usuarios/signUp", "auth/login", "tpo-desarrollo-mobile/usuarios/recuperarContrasenia/{identificador}", "/tpo-desarrollo-mobile/servicios/getAllServicios", "/tpo-desarrollo-mobile/comercios/getAllComercios", "/tpo-desarrollo-mobile/comercios/getAllProfesionales");
+        return (web) -> web.ignoring().requestMatchers("tpo-desarrollo-mobile/usuarios/signUp", "auth/login", "tpo-desarrollo-mobile/usuarios/recuperarContrasenia/{identificador}", "/tpo-desarrollo-mobile/servicios/getAllServicios", "/tpo-desarrollo-mobile/comercios/getAllComercios", "/tpo-desarrollo-mobile/comercios/getAllProfesionales", "/tpo-desarrollo-mobile/imagenes/{idServicio}");
     }
 
     @Bean

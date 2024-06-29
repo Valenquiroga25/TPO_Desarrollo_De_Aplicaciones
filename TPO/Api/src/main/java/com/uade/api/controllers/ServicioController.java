@@ -2,7 +2,6 @@ package com.uade.api.controllers;
 
 import com.uade.api.models.DTOs.ServicioDevueltoDTO;
 import com.uade.api.models.DTOs.ServicioModelDTO;
-import com.uade.api.models.ImagenModel;
 import com.uade.api.models.ServicioModel;
 import com.uade.api.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +35,9 @@ public class ServicioController {
     }
 
     @PutMapping(path = "/{idServicio}")
-    public ResponseEntity<?> updateServicio(@PathVariable Long idServicio,@RequestBody UpdateServicio servicioActualizado){
+    public ResponseEntity<?> updateServicio(@PathVariable Long idServicio,@RequestBody String descripcion){
         try{
-            return new ResponseEntity<>(this.servicioService.updateServicio(idServicio,servicioActualizado.getDescripcion(),servicioActualizado.getImagenes()),HttpStatus.OK);
+            return new ResponseEntity<>(this.servicioService.updateServicio(idServicio,descripcion),HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -107,6 +106,7 @@ public class ServicioController {
 
     private ServicioDevueltoDTO convertToDTO (ServicioModel servicio){
         ServicioDevueltoDTO servicioDevuelto = new ServicioDevueltoDTO(
+                servicio.getIdServicio(),
                 servicio.getTitulo(),
                 servicio.getDireccion(),
                 servicio.getTelefono(),

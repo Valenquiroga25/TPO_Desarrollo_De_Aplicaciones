@@ -1,12 +1,10 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
-import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaReclamosVecino from '../../components/ListaReclamosVecino';
 
-const MenuReclamos = () => {
-  const navigation = useNavigation();
+const MenuReclamos = ({navigation}) => {
 
   return (
     <View style={styles.container}>

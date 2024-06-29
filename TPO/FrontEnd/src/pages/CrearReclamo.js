@@ -77,7 +77,7 @@ const CrearReclamo = () => {
       <View style={styles.containerDatos}>
         <Image style={styles.imagen} resizeMode="cover" source={('../../assets/BuenosAiresCiudad.png')} />
         
-        <Text style={styles.enviarReclamo}>Crear Reclamo</Text>
+        <Text style={styles.titulo}>Crear Reclamo</Text>
         
         <TextInput
           style={[styles.input, styles.textInput]}
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     height: 45,
     marginBottom: 20,
   },
-  enviarReclamo: {
+  titulo: {
     fontSize: 25,
     marginBottom: 25,
     fontFamily: "Gotham Rounded",

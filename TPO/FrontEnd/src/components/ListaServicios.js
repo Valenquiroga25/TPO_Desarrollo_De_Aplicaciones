@@ -29,6 +29,7 @@ function ListaServicios({navigation}) {
     function redireccion(servicio){
 
         navigation.navigate('DetalleServicio', {
+            idServicio: servicio.idServicio,
             titulo: servicio.titulo,
             direccion: servicio.direccion,
             telefono: servicio.telefono,
