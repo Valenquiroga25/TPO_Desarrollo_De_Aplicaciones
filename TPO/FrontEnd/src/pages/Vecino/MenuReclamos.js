@@ -9,17 +9,17 @@ const MenuReclamos = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-        <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+      <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
-      <View style={styles.listaReclamos}>
-        <ListaReclamosVecino navigation = {navigation}/>
-      </View>
-      <View style={styles.floatingButton}>
-        <TouchableOpacity 
-          onPress={() => navigation.navigate('CrearReclamo')}>
-          <Text style={styles.plusSign}>+</Text>
-        </TouchableOpacity>
-      </View>
+      
+      <ListaReclamosVecino navigation = {navigation}/>
+
+      <TouchableOpacity 
+        style={styles.floatingButton} 
+        onPress={() => navigation.navigate('CrearReclamo')}>
+        <Text style={styles.plusSign}>+</Text>
+      </TouchableOpacity>
+
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino navigation={navigation}/>
       </HideWithKeyboard>    
@@ -38,14 +38,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
-    position:'absolute',
-    top:30,
     width: 140,
     height: 45,
-    marginBottom: 20,
-  },
-  listaReclamos:{
-    marginTop:60
+    marginTop: 20,
   },
   floatingButton: {
     position: 'absolute',

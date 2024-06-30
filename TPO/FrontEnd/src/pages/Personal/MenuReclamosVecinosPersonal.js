@@ -15,13 +15,6 @@ const MenuReclamosVecinosPersonal = () => {
       </View>
       
       <ListaReclamosAllVecinos navigation = {navigation}/>
-      <View>
-        <TouchableOpacity 
-          style={styles.floatingButton} 
-          onPress={() => navigation.navigate('CrearReclamo')}>
-          <Text style={styles.plusSign}>+</Text>
-        </TouchableOpacity>
-      </View>
       <HideWithKeyboard style={styles.navbar}>
         <NavbarPersonal navigation={navigation}/>
       </HideWithKeyboard>    
@@ -37,12 +30,12 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   containerDatos: {
-    padding: 20
+    padding: 20,
+    marginTop:15
   },
   image: {
     width: 140,
     height: 45,
-    marginBottom: 20,
   },
   floatingButton: {
     position: 'absolute',

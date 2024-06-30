@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import {React, useEffect, useState} from 'react'
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,TouchableOpacity} from 'react-native';
 import { ipLocal } from '../../global/ipLocal';
 
 const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
+
 function DetalleDenuncia({ route }) {
     const { idDenuncia,documento,calleSitio, numeroSitio, descripcion, estado} = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
@@ -34,15 +34,17 @@ function DetalleDenuncia({ route }) {
 
     return (
       <View style={styles.container}>
-        <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.detalle}>{`DOCUMENTO: ${documento}`}</Text>
-        <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
-        <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
-        <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',height:160}}>
-          <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
-        </View>
+        <Text style={styles.title}>Denuncia</Text>
+        <View style={styles.containerDatos}>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>SITIO:</Text><Text style={styles.datoText}>{` ${calleSitio} ${numeroSitio}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>ESTADO:</Text><Text style={styles.datoText}>{` ${estado}`}</Text></Text>
 
+          <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+          <View style={{borderWidth:2,borderColor:'black',height:160}}>
+            <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
+          </View>
+        </View>
         <FlatList 
         data={listaImagenes}//cambiar parametro
         horizontal={true}
@@ -71,7 +73,7 @@ function DetalleDenuncia({ route }) {
               numeroSitio: numeroSitio,
               descripcion: descripcion,
               estado: estado,})}>
-              <Text style={styles.plusSign}>✎</Text>
+              <Text style={styles.editSign}>✎</Text>
             </TouchableOpacity>
         </View>
       </View>
@@ -81,84 +83,84 @@ function DetalleDenuncia({ route }) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding:20,
-      backgroundColor: '#fff',
-    },
-    title: {
-      fontSize: 25,
-      fontWeight: 'bold',
-      marginBottom:20,
-    },
-    detalle: {
-      fontSize:18,
-      color: '#4D4D4D',
-      paddingTop:10,
-      paddingBottom:10, 
-    },
-    descripcion:{
-      fontSize:20,
-      color:'#4D4D4D',
-      marginTop:40,
-      marginBottom:20
-    },
-    textDescripcion:{
-      fontSize:16,
-      marginTop:10,
-      marginBottom:10,
-      marginLeft:5
-    },
-    imageLogo: {
-      width: 140,
-      height: 45,
-      marginBottom: 20,
-    },
-    imageContainer: {
-        flex: 1,
-        marginTop:25,
-        position: 'relative',
-    },
-    image: {
-        position: 'absolute',
-        width: 300,
-        height: 300,
-        resizeMode: 'cover',
-    },
-    navbar:{
-      position:'absolute',
-      bottom:0,
-      left:0,
-      right:0,
-    },
-    posterImage: {
-      width:200,
-      height:200,
-      resizeMode: "cover",
-      borderRadius:20,
-      borderWidth:1,
-      borderColor:'black'
-    },
-    floatingButton: {
-      position: 'absolute',
-      bottom: 70,
-      right: 10,
+      padding: 20,
       backgroundColor: '#FFFFFF',
+  },
+  title: {
+      position:'absolute',
+      top:60,
+      left:18,
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#343a40',
+      textAlign: 'center',
+  },
+  containerDatos:{
+    marginTop: 80
+  },
+  detalle: {
+    marginTop: 25,
+  },
+  detalle2:{
+    fontSize: 20,
+    color: '#343a40',
+    marginBottom: 10,
+    fontWeight: 'bold',
+  },
+  datoText:{
+    fontSize:18
+  },
+  descripcion: {
+      fontSize: 20,
+      color: '#343a40',
+      marginTop: 25,
+      marginBottom: 10,
+      fontWeight: 'bold',
+  },
+  descripcionContainer: {
+      borderWidth: 1,
+      borderColor: '#ced4da',
+      borderRadius: 10,
+      padding: 10,
+      height: 160,
+  },
+  textDescripcion: {
+      fontSize: 16,
+      color: '#495057',
+      padding:10
+  },
+  imageContainer: {
+    marginTop:20,
+    paddingRight: 10,
+    },
+  posterImage: {
+      width: 180,
+      height: 180,
+      resizeMode: 'cover',
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: '#ced4da',
+  },
+  floatingButton: {
+      position: 'absolute',
+      bottom: 40,
+      right: 10,
+      backgroundColor: '#FFE661',
       borderRadius: 50,
       width: 60,
       height: 60,
       alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      borderColor: '#000',
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.8,
       shadowRadius: 2,
       elevation: 5,
-    },
-    plusSign: {
+  },
+  editSign: {
       fontSize: 30,
-      color: '#000',
-    },
+      color: 'black',
+      marginTop:7
+  },
   });
 
 export default DetalleDenuncia

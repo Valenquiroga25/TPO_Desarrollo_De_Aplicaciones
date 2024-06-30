@@ -37,13 +37,13 @@ function DetalleServicio({ route }) {
       <View style={styles.container}>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{titulo}</Text>
-        <Text style={styles.detalle}>{`DIRECCION: ${direccion}`}</Text>
-        <Text style={styles.detalle}>{`TELEFONO: ${telefono}`}</Text>
-        <Text style={styles.detalle}>{`RUBRO: ${rubro}`}</Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>TELEFONO:</Text><Text style={styles.datoText}>{` ${telefono}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>RUBRO:</Text><Text style={styles.datoText}>{` ${rubro}`}</Text></Text>
         <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-        <View style={{borderWidth:2,borderColor:'black',height:160, padding:10}}>
-          <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
-        </View>
+          <View style={{borderWidth:2,borderColor:'black',height:160}}>
+            <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
+          </View>
 
         <FlatList 
         data={listaImagenes}//cambiar parametro
@@ -76,19 +76,25 @@ function DetalleServicio({ route }) {
     title: {
       fontSize: 25,
       fontWeight: 'bold',
-      marginBottom:20,
     },
     detalle: {
-      fontSize:18,
-      color: '#4D4D4D',
-      paddingTop:10,
-      paddingBottom:10, 
+      marginTop: 22,
+    },
+    detalle2:{
+      fontSize: 18,
+      color: '#343a40',
+      marginBottom: 10,
+      fontWeight: 'bold',
+    },
+    datoText:{
+      fontSize:19
     },
     descripcion:{
-      fontSize:20,
-      color:'#4D4D4D',
-      marginTop:40,
-      marginBottom:20
+      fontSize:18,
+      color:'#343a40',
+      marginTop:20,
+      marginBottom:10,
+      fontWeight: 'bold',
     },
     textDescripcion:{
       fontSize:16,
@@ -103,9 +109,6 @@ function DetalleServicio({ route }) {
     },
     imageContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
     },
     image: {
         position: 'absolute',
@@ -120,12 +123,14 @@ function DetalleServicio({ route }) {
       right:0,
     },
     posterImage: {
-      width:250,
-      height:250,
+      width:230,
+      height:230,
       resizeMode: "cover",
       borderRadius:20,
       borderWidth:1,
-      borderColor:'black'
+      borderColor:'black',
+      marginTop: 20,
+
     },
   });
 export default DetalleServicio

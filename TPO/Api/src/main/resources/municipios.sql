@@ -18,23 +18,23 @@ create table vecinos(
 );
 
 create table personal(
-     legajo varchar(20) not null,
-     nombre varchar(150) not null,
-     apellido varchar(150) not null,
-     documento varchar(20) not null,
-     sector varchar(200) not null,
-     categoria int,
-     fechaIngreso datetime,
-     constraint pk_personal primary key (legajo)
+    legajo varchar(20) not null,
+    nombre varchar(150) not null,
+    apellido varchar(150) not null,
+    documento varchar(20) not null,
+    sector varchar(200) not null,
+    categoria int,
+    fechaIngreso datetime,
+    constraint pk_personal primary key (legajo)
 );
 
 create table usuarios(
-     identificador varchar(20) not null,
-     contrasenia varchar(100) null,
-     mail varchar(50),
-     clave_acceso varchar(20),
-     tipoUsuario varchar(20),
-     constraint pk_usuario primary key (identificador)
+    identificador varchar(20) not null,
+    contrasenia varchar(100) null,
+    mail varchar(50),
+    clave_acceso varchar(20),
+    tipoUsuario varchar(20),
+    constraint pk_usuario primary key (identificador)
 )
 
 create table sitios(
@@ -54,9 +54,9 @@ create table sitios(
 );
 
 create table rubros(
-   idRubro BIGINT not null AUTO_INCREMENT,
-   descripcion varchar(200) not null,
-   constraint pk_rubros primary key (idRubro)
+    idRubro BIGINT not null AUTO_INCREMENT,
+    descripcion varchar(200) not null,
+    constraint pk_rubros primary key (idRubro)
 );
 
 create table desperfectos(
@@ -67,19 +67,19 @@ create table desperfectos(
 );
 
 create table reclamos(
-     idReclamo BIGINT not null AUTO_INCREMENT,
-     documentoVecino varchar(20),
-     legajo varchar(20),
-     idSitio BIGINT not null,
-     idDesperfecto BIGINT,
-     descripcion varchar(1000),
-     estado varchar(30),
-     IdReclamoUnificado int,
-     constraint pk_reclamos primary key (idReclamo),
-     constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
-     constraint fk_reclamos_personal foreign key (legajo) references personal(legajo),
-     constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
-     constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
+    idReclamo BIGINT not null AUTO_INCREMENT,
+    documentoVecino varchar(20),
+    legajo varchar(20),
+    idSitio BIGINT not null,
+    idDesperfecto BIGINT,
+    descripcion varchar(1000),
+    estado varchar(30),
+    IdReclamoUnificado int,
+    constraint pk_reclamos primary key (idReclamo),
+    constraint fk_reclamos_vecinos foreign key (documentoVecino) references vecinos(documento),
+    constraint fk_reclamos_personal foreign key (legajo) references personal(legajo),
+    constraint fk_reclamos_sitios foreign key (idSitio) references sitios(idSitio),
+    constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
 );
 
 create table movimientosReclamo(
@@ -128,7 +128,6 @@ create table servicios(
     constraint fk_servicio_rubro foreign key (rubro) references rubros(idRubro)
 );
 
-
 create table imagenesServicios(
     idImagen BIGINT not null AUTO_INCREMENT,
     datosImagen blob not null,
@@ -165,7 +164,17 @@ INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaI
 INSERT personal (legajo, nombre, apellido, documento , sector, categoria, fechaIngreso) VALUES ("8", N'JORGE GUSTAVO', N'OLAS', N'DNI30745281', N'Edificios Publicos y Oficinas', 4, CAST(N'2019-11-19T00:00:00.000' AS DateTime));
 INSERT personal (legajo, nombre, apellido, documento, sector, categoria, fechaIngreso) VALUES ("10", N'PEPE', N'SANZ', N'DNI30780522', N'Seguridad', 7, CAST(N'2020-05-19T00:00:00.000' AS DateTime));
 
-INSERT vecinos (documento, nombre, apellido, direccion, codigoBarrio) VALUES ('44367389', 'Valentin',  'Quiroga' , 'Las Heras 3744', 1);
+INSERT INTO rubros (descripcion) VALUES ('Agua'), ('Electricidad'), ('Alcantarillado'), ('Internet'), ('Semáforos'), ('Carreteras'), ('Calefacción'), ('Transformadores eléctricos'), ('Vidrios y ventanas'), ('Presión de agua'), ('Jardineria'), ('Plomeria'), ('Informatica'), ('Farmacia'), ('Consultorio medico'), ('Comercio indumentaria'), ('Joyeria'), ('Banco');
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Fuga de agua en la tubería principal', 1);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Corte de energía en la zona norte', 2);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Obstrucción en el sistema de alcantarillado', 3);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Pérdida de señal en el servicio de internet', 4);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Desperfecto en el semáforo de la avenida principal', 5);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Baches en la carretera', 6);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Mal funcionamiento del sistema de calefacción', 7);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Ruidos extraños provenientes del transformador eléctrico', 8);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Rotura de vidrios en la entrada del edificio', 9);
+INSERT INTO desperfectos (descripcion, idRubro) VALUES ('Problemas con la presión del agua', 10);
 
 select * from vecinos;
 select * from personal;
@@ -174,12 +183,13 @@ select * from reclamos
 select * from denuncias
 select * from servicios;
 select * from rubros
-select * from imagenes
+select * from imagenesServicios
+select * from imagenesReclamos
+select * from imagenesDenuncias
 select * from sitios
 select * from desperfectos
 
-truncate table servicios
-drop table imagenes
+drop table reclamos
 
 insert into usuarios(identificador, contrasenia, mail, clave_acceso, tipoUsuario)
 values ("2", "$2a$12$7IfyW0OGtJo7O2WQnBNi7.euDsXAc.Ng207kkAwMwLgZHDRjKtvD2", "valenquiroga67@gmail.com", "-", "Inspector")

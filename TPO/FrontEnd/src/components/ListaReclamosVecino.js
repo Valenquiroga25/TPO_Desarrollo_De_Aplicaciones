@@ -22,7 +22,7 @@ function ListaReclamosVecino({ navigation }) {
 
             if (!response.ok) {
               const errorText = await response.text();
-              throw new Error(`Error en la respuesta del servidor: ${errorText}`);
+              throw new Error(`Error en la respuesta del servidor: ${errorText} ${response.status}`);
             }
             const reclamos = await response.json();
               setListaReclamos(reclamos);

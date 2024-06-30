@@ -48,11 +48,6 @@ public class ReclamosService {
                 log.error("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
                 throw new Exception("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
             }
-
-            if(newReclamo.getImagenes().size() > 7){
-                log.error("El reclamo no puede tener más de 7 imágenes.");
-                throw new Exception("El reclamo no puede tener más de 7 imágenes.");
-            }
         }
 
         if(newReclamo.getPersonal() != null){

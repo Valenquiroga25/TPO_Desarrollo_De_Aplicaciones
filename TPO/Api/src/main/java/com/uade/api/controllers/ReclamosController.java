@@ -126,9 +126,7 @@ public class ReclamosController {
                     personalService.findPersonalByLegajo(reclamoDTO.getLegajoPersonal()),
                     sitiosService.findSitioByDireccion(reclamoDTO.getCalleSitio(),reclamoDTO.getNumeroSitio()),
                     desperfectosService.findDesperfectoById(reclamoDTO.getIdDesperfecto()),
-                    reclamoDTO.getDescripcion(),
-                    reclamoDTO.getImagenes(),
-                    reclamoDTO.getIdReclamoUnificado()
+                    reclamoDTO.getDescripcion()
             );
             return reclamo;
         }

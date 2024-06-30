@@ -47,18 +47,16 @@ public class ReclamoModel {
         this.sitio = sitio;
         this.desperfecto = desperfecto;
         this.descripcion = descripcion;
-        this.imagenes = imagenes;
         this.estado = Estado.EN_PROCESO;
         this.idReclamoUnificado = idReclamoUnificado;
     }
 
-    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenServicioModel> imagenes, Long idReclamoUnificado){
+    public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion){
         this.personal = personal;
         this.sitio = sitio;
         this.desperfecto = desperfecto;
         this.descripcion = descripcion;
-        this.imagenes = imagenes;
         this.estado = Estado.EN_PROCESO;
-        this.idReclamoUnificado = idReclamoUnificado;
+        this.idReclamoUnificado = null;
     }
 }

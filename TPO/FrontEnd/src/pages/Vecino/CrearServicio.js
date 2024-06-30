@@ -168,10 +168,15 @@ const CrearServicio = ({navigation}) => {
               style={styles.picker}
           >
           <Picker.Item label="Rubro" value="" />
-          <Picker.Item label="Jardinería" value="1" />
-          <Picker.Item label="Plomería" value="2" />
-          <Picker.Item label="Informática" value="3" />
-          <Picker.Item label="Encomienda" value="4" />
+          <Picker.Item label="Jardinería" value="11" />
+          <Picker.Item label="Plomería" value="12" />
+          <Picker.Item label="Informática" value="13" />
+          <Picker.Item label="Farmacia" value="14" />
+          <Picker.Item label="Consultorio médico" value="15" />
+          <Picker.Item label="Comercio indumentaria" value="16" />
+          <Picker.Item label="Joyería" value="17" />
+          <Picker.Item label="Banco" value="18" />
+
           </Picker>
         </View>
 
@@ -256,7 +261,7 @@ const styles = StyleSheet.create({
   imagenLogo: {
     position:'absolute',
     top:50,
-    left:15,
+    left:20,
     width: 100,
     height: 45,
   },
@@ -327,7 +332,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
   },
-
   crearReclamoChild: {
     top: 650,
     left: 180,

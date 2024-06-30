@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import React from 'react';
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaDenuncias from '../../components/ListaDenuncias';
 
 const MenuDenuncias = ({navigation}) => {
+
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-        <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+      <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
-      <View style={styles.listaDenuncias}>
-        <ListaDenuncias navigation = {navigation}/>
-      </View> 
-      <View style={styles.floatingButton}>
-        <TouchableOpacity 
-          onPress={() => navigation.navigate('CrearDenuncia')}>
-          <Text style={styles.plusSign}>+</Text>
-        </TouchableOpacity>
-      </View>
+      
+      <ListaDenuncias navigation = {navigation}/>
+
+      <TouchableOpacity 
+        style={styles.floatingButton} 
+        onPress={() => navigation.navigate('CrearDenuncia')}>
+        <Text style={styles.plusSign}>+</Text>
+      </TouchableOpacity>
+
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino navigation={navigation}/>
-      </HideWithKeyboard> 
+      </HideWithKeyboard>    
     </View>
   );
 };
@@ -37,14 +38,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
-    position:'absolute',
-    top:30,
     width: 140,
     height: 45,
-    marginBottom: 20,
-  },
-  listaDenuncias:{
-    marginTop:60
+    marginTop: 20,
   },
   floatingButton: {
     position: 'absolute',
