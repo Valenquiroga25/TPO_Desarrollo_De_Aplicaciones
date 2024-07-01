@@ -35,7 +35,7 @@ public class DenunciasController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateDenuncia(@PathVariable Long id, @RequestBody DenunciaModelDTO denunciaDTO){
         try {
-            return new ResponseEntity<>(denunciasService.updateDenuncia(id,denunciaDTO.getDescripcion()),HttpStatus.OK);
+            return new ResponseEntity<>(denunciasService.updateDenuncia(id,denunciaDTO.getDescripcion(),denunciaDTO.getCalleSitio(),denunciaDTO.getNumeroSitio()),HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
