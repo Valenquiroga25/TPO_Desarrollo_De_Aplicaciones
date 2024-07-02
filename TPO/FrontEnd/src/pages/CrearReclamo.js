@@ -6,6 +6,7 @@ import { ipLocal } from '../global/ipLocal';
 import {jwtDecode} from 'jwt-decode';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from "expo-file-system";
+import NetInfo from "@react-native-community/netinfo";
 
 const CrearReclamo = ({navigation}) => {
   const [documentoVecino, setDocumentoVecino] = useState('');
@@ -15,8 +16,8 @@ const CrearReclamo = ({navigation}) => {
   const [idDesperfecto, setIdDesperfecto] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [imagenes, setImagenes] = useState([]);
-  const [idReclamoUnificado, setIdReclamoUnificado] = useState('')
   const [isVisible, setIsVisible] = useState(false);
+	const [isConnected, setConnected] = useState(true);
 
   const isFormComplete = (documentoVecino || legajoPersonal) && calleSitio && numeroSitio && idDesperfecto && descripcion;
 
@@ -26,8 +27,17 @@ const CrearReclamo = ({navigation}) => {
       return;
     }
 
+    const unsuscribe = NetInfo.addEventListener((state) => { // Verificamos si estamos conectados a WIFI.
+      setConnected(state.isConnected)
+      console.log(isConnected)
+    })
+
+    if(!unsuscribe){
+      
+    }
+
     try {
-      const data = {documentoVecino, legajoPersonal, calleSitio, numeroSitio, idDesperfecto, descripcion, idReclamoUnificado};
+      const data = {documentoVecino, legajoPersonal, calleSitio, numeroSitio, idDesperfecto, descripcion};
 
       const token = await AsyncStorage.getItem('token');
       const decodeToken = jwtDecode(token);

@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     backgroundColor: '#FFFFFF',
+    fontFamily:'GothamBook'
   },
   botonServicio: {
     height: 70,

@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Font from 'expo-font'; // Importa expo-font
 import MenuInicio from './src/pages/MenuInicio';
 import MenuNR from './src/pages/MenuNR'
 import Login from './src/pages/Login';
@@ -32,9 +34,20 @@ import MenuReclamosVecinosPersonal from './src/pages/Personal/MenuReclamosVecino
 import RecuperarContrasenia from './src/pages/RecuperarContrasenia';
 import EditarReclamo from './src/pages/EditarReclamo';
 
+const loadFonts = async () => {
+  await Font.loadAsync({
+    'GothamBold': require('./assets/fonts/Gotham Rounded Bold.ttf'),
+    'GothamBook': require('./assets/fonts/Gotham Rounded Book.otf'),
+  });
+};
+
 function App() {
 
   const Stack = createNativeStackNavigator();
+
+  useEffect(() => {
+    loadFonts(); // Llama a la función de carga de fuentes al inicio
+  }, []);
 
   return (
       <NavigationContainer>

@@ -50,7 +50,7 @@ function MenuInicio({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ textAlign: 'center', marginTop: 70 }}>No tienes una cuenta?</Text>
+          <Text style={{ textAlign: 'center', marginTop: 70, fontFamily:'GothamBold'}}>No tienes una cuenta?</Text>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity
               style={{
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: '#000000',
+    fontFamily:'GothamBook'
   },
 });
 

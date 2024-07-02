@@ -7,7 +7,7 @@ const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
 
 function DetalleReclamoVecino({ navigation, route }) {
-    const { idReclamo, documentoVecino, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
+    const { idReclamo, documento, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function DetalleReclamoVecino({ navigation, route }) {
         <ScrollView> 
         <Text style={styles.title}>{'Reclamo'}</Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>ID RECLAMO:</Text><Text style={styles.datoText}>{` ${idReclamo}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documentoVecino}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>SITIO:</Text><Text style={styles.datoText}>{` ${calleSitio} ${numeroSitio}`}</Text></Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>ESTADO:</Text><Text style={styles.datoText}>{` ${estado}`}</Text></Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>DESPERFECTO:</Text><Text style={styles.datoText}>{` ${desperfecto}`}</Text></Text>

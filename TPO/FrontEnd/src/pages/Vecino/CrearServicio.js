@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as FileSystem from "expo-file-system";
 import { ipLocal } from '../../global/ipLocal';
+import NetInfo from "@react-native-community/netinfo";
 
 const CrearServicio = ({navigation}) => {
   const [titulo, setTitulo] = useState('');
@@ -16,6 +17,8 @@ const CrearServicio = ({navigation}) => {
   const [tipoServicio, setTipoServicio] = useState('');
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [isConnected, setConnected] = useState(true);
+
   const isFormComplete = titulo && direccion && telefono && descripcion && idRubro && tipoServicio;
 
   const handleSubmit = async (event) => {
@@ -23,6 +26,15 @@ const CrearServicio = ({navigation}) => {
     if (!isFormComplete) {
       alert('Todos los campos son obligatorios');
       return;
+    }
+
+    const unsuscribe = NetInfo.addEventListener((state) => { // Verificamos si estamos conectados a WIFI.
+      setConnected(state.isConnected)
+      console.log(isConnected)
+    })
+
+    if(!unsuscribe){
+      crearServicio(documentoVecino, titulo, direccion, telefono, descripcion, idRubro, tipoServicio)
     }
     
     try {

@@ -66,7 +66,7 @@ const RecuperarContrasenia = ({navigation}) => {
                         title='Botón ingresar'
                         type='submit'
                         style={styles.button}>
-                        <Text>Recuperar</Text>
+                        <Text style={{fontFamily:'GothamBook'}}>Recuperar</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -93,7 +93,7 @@ const RecuperarContrasenia = ({navigation}) => {
                           borderWidth:1,
                           borderRadius: 10,
                           marginTop:80}} onPress={() => navigation.goBack()}>
-                          <Text>Continuar</Text>
+                          <Text style={{fontFamily:'GothamBook'}}>Continuar</Text>
                   </TouchableOpacity>
                 </View>
             </View>
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
     },
     titulo: {
         marginTop: 35,
-        fontSize: 30,
-        fontWeight: 'bold'
+        fontSize: 27,
+        fontFamily:'GothamBold'
     },
     descripcion:{
         marginTop:20,
@@ -125,13 +125,15 @@ const styles = StyleSheet.create({
         color: '#666',
         textAlign: 'left', // Using left align as a fallback
         paddingHorizontal: 10,
+        fontFamily:'GothamBook'
     },
     input: {
         padding: 10,
         margin: 7,
         height: 40,
         borderColor: "#FFFFFF",
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        fontFamily:'GothamBook'
     },
     containerBoton: {
         marginTop: 55

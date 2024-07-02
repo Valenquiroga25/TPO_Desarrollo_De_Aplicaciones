@@ -109,7 +109,7 @@ function Registro({navigation}) {
                           borderWidth:1,
                           borderRadius: 10,
                           marginTop:80}} onPress={() => navigation.goBack()}>
-                          <Text>Continuar</Text>
+                          <Text style={{fontFamily:'GothamBook'}}>Continuar</Text>
                   </TouchableOpacity>
                 </View>
             </View>
@@ -128,7 +128,7 @@ function Registro({navigation}) {
                 borderRadius: 10,
                   marginTop:130
               }}>
-              <Text>Registrarse</Text>
+              <Text style={{fontFamily:'GothamBook'}}>Registrarse</Text>
             </View>
         </TouchableOpacity>
       </View>
@@ -161,7 +161,8 @@ const styles = StyleSheet.create({
     marginBottom:7,
     height: 40,
     borderColor: "#FFFFFF",
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    fontFamily:'GothamBook'
   },
   containerBoton:{
     marginTop:55,
@@ -182,11 +183,13 @@ modalContent:{
 },
 modalTitle:{
     fontSize:20,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'GothamBook'
 },
 text:{
     fontSize:17,
-    marginTop:25
+    marginTop:25,
+    fontFamily:'GothamBook'
 },
 navbar:{
   position:'absolute',

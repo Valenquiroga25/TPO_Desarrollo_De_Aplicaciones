@@ -103,7 +103,7 @@ function Login({navigation}) {
             borderRadius: 10,
               marginTop:50
             }}>
-            <Text>Ingresar</Text>
+            <Text style={{fontFamily:'GothamBook'}}>Ingresar</Text>
           </View>
         </TouchableOpacity>
 
@@ -120,13 +120,13 @@ function Login({navigation}) {
             borderWidth:1,
             borderRadius: 10,
             marginLeft:25,
-            marginRight:27
+            marginRight:27,
             }}>
-            <Text>Registrarse</Text>
+            <Text style={{fontFamily:'GothamBook'}}>Registrarse</Text>
           </View>
         </TouchableOpacity>
 
-        <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:15}} onPress={() => navigation.navigate('RecuperarContrasenia','')}>¿Olvidaste tu contraseña?</Text>
+        <Text style={{textAlign:'center', marginTop:70,textDecorationLine:'underline',fontSize:14.5, fontFamily:'GothamBold'}} onPress={() => navigation.navigate('RecuperarContrasenia','')}>¿Olvidaste tu contraseña?</Text>
                
       </View>
     </View>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   imagen:{
   position:'absolute',
-  top:50,
+  top:65,
   right:107,
   width:150,
   height:65,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   titulo:{
     marginTop:35,
     fontSize:30,
-    fontWeight:'bold'
+    fontFamily:'Gotham',
   },
   input:{
     padding:10,
@@ -166,7 +166,8 @@ const styles = StyleSheet.create({
     marginBottom:7,
     height: 40,
     borderColor: "#FFFFFF",
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
+    fontFamily:'Gotham2',
   },
   containerBoton:{
     marginTop:30,
