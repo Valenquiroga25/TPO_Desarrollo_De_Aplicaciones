@@ -34,6 +34,9 @@ import ListaReclamosAllVecinos from './src/components/ListaReclamosAllVecinos';
 import MenuReclamosVecinosPersonal from './src/pages/Personal/MenuReclamosVecinosPersonal';
 import RecuperarContrasenia from './src/pages/RecuperarContrasenia';
 import EditarReclamo from './src/pages/EditarReclamo';
+import EditarDenuncia from './src/pages/Vecino/EditarDenuncia';
+import DetalleVecino from './src/pages/Vecino/DetalleVecino';
+import DetallePersonal from './src/pages/Personal/DetallePersonal';
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -68,7 +71,9 @@ function App() {
         <Stack.Navigator initialRouteName='MenuInicio' screenOptions={{headerShown:false}}>
         <Stack.Screen name='MenuInicio' component={MenuInicio} />
         <Stack.Screen name='NavbarVecino' component={NavbarVecino}/>
+        <Stack.Screen name='DetalleVecino' component={DetalleVecino}/>
         <Stack.Screen name='NavbarPersonal' component={NavbarPersonal}/>
+        <Stack.Screen name='DetallePersonal' component={DetallePersonal}/>
         <Stack.Screen name='MenuNR' component={MenuNR} />
         <Stack.Screen name='Login' component={Login}/>
         <Stack.Screen name='Registro' component={Registro}/>
@@ -95,6 +100,7 @@ function App() {
 
         <Stack.Screen name='ListaDenuncias' component={ListaDenuncias}/>
         <Stack.Screen name='DetalleDenuncia' component={DetalleDenuncia}/>
+        <Stack.Screen name='EditarDenuncia' component={EditarDenuncia}/>
 
         <Stack.Screen name='MenuReclamosVecinosPersonal' component={MenuReclamosVecinosPersonal}/>
         <Stack.Screen name='MenuServiciosVecino' component={MenuServiciosVecino}/>

@@ -1,25 +1,33 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaReclamosVecino from '../../components/ListaReclamosVecino';
+import { useIsFocused } from '@react-navigation/native';
 
 const MenuReclamos = ({navigation}) => {
+  const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
 
+  useEffect(() => {
+    if (isFocused) {
+      setRefresh(prev => !prev);
+    }
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
-      <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
+        <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
-      
-      <ListaReclamosVecino navigation = {navigation}/>
-
-      <TouchableOpacity 
-        style={styles.floatingButton} 
-        onPress={() => navigation.navigate('CrearReclamo')}>
-        <Text style={styles.plusSign}>+</Text>
-      </TouchableOpacity>
-
+      <View style={styles.listaReclamos}>
+        <ListaReclamosVecino key={refresh} navigation = {navigation}/>
+      </View>
+      <View style={styles.floatingButton}>
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('CrearReclamo')}>
+          <Text style={styles.plusSign}>+</Text>
+        </TouchableOpacity>
+      </View>
       <HideWithKeyboard style={styles.navbar}>
         <NavbarVecino navigation={navigation}/>
       </HideWithKeyboard>    
@@ -38,9 +46,14 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
+    position:'absolute',
+    top:30,
     width: 140,
     height: 45,
-    marginTop: 20,
+    marginBottom: 20,
+  },
+  listaReclamos:{
+    marginTop:60
   },
   floatingButton: {
     position: 'absolute',

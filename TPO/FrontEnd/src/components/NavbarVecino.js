@@ -53,7 +53,7 @@ function NavbarVecino({ navigation }) {
                                 borderRadius: 10,
                                 marginTop:30
                                 }} onPress={closeModal}>
-                                <Text>Volver</Text>
+                                <Text style={{fontFamily:'GothamBook'}}>Volver</Text>
                             </TouchableOpacity>
                 </View>
             </Modal>
@@ -108,14 +108,16 @@ const styles = StyleSheet.create({
         maxHeight: '80%',
     },
     modalTitle:{
-        fontSize:20,
+        fontSize:17.5,
         textAlign:'center',
-        marginTop:20
+        marginTop:20,
+        fontFamily:'GothamBold'
     },
     text:{
-        fontSize:17,
+        fontSize:16,
         marginTop:40,
-        marginLeft:5
+        marginLeft:5,
+        fontFamily:'GothamBook'
     },
 });
 

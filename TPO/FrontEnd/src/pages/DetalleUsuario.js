@@ -12,13 +12,13 @@ function DetalleUsuario ({route}) {
     return (
       <View style={styles.container}>
         <ScrollView> 
-        <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-        <Text style={styles.title}>{'Datos del usuario'}</Text>
-        <Text style={styles.detalle}>{'NOMBRE: '+nombre}</Text>
-        <Text style={styles.detalle}>{'APELLIDO: '+apellido}</Text>
-        <Text style={styles.detalle}>{'DOCUMENTO: '+documento}</Text>
-        <Text style={styles.detalle}>{'DIRECCION: '+direccion}</Text>
-        <Text style={styles.detalle}>{'CODIGO DE BARRIO:'+codigoDeBarrio}</Text>
+          <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
+          <Text style={styles.title}>{'Datos del usuario'}</Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>NOMBRE:</Text><Text style={styles.datoText}>{` ${nombre}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>APELLIDO:</Text><Text style={styles.datoText}>{` ${apellido}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
+          <Text style={styles.detalle}><Text style={styles.detalle2}>CODIGO DE BARRIO:</Text><Text style={styles.datoText}>{` ${codigoDeBarrio}`}</Text></Text>
         </ScrollView>
         
         <View>
@@ -44,19 +44,21 @@ function DetalleUsuario ({route}) {
     },
     title: {
       fontSize: 25,
-      fontWeight: 'bold',
-      marginBottom:20,
+      marginTop:40,
+      fontFamily:'GothamBold'
     },
     detalle: {
-      fontSize:18,
-      color: '#4D4D4D',
-      paddingTop:10,
-      paddingBottom:10, 
+      marginTop: 22,
+      fontFamily:'GothamBook',
     },
-    imageLogo: {
-      width: 140,
-      height: 45,
-      marginBottom: 20,
+    detalle2:{
+      fontSize: 18,
+      color: '#343a40',
+      marginBottom: 10,
+      fontFamily:'GothamBold'
+    },
+    datoText:{
+      fontSize:17,
     },
     navbar:{
       position:'absolute',

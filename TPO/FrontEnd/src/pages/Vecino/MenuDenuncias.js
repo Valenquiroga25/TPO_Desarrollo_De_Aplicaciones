@@ -1,10 +1,19 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarVecino from '../../components/NavbarVecino';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaDenuncias from '../../components/ListaDenuncias';
+import { useIsFocused } from '@react-navigation/native';
 
 const MenuDenuncias = ({navigation}) => {
+  const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    if (isFocused) {
+      setRefresh(prev => !prev);
+    }
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>

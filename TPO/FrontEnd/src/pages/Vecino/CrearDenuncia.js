@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   titulo:{
     fontSize: 22,
     marginBottom: 10,
+    fontFamily:'GothamBold'
   },
   containerDatos:{
     flex:1,
@@ -283,7 +284,7 @@ const styles = StyleSheet.create({
   enviarDenuncia: {
     fontSize: 18,
     marginBottom: 10,
-    fontFamily: "Gotham Rounded",
+    fontFamily:'GothamBook'
   },
   input: {
     height: 40,
@@ -304,30 +305,13 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
+    fontFamily:'GothamBook'
   },
   textArea: {
     height: 100,
     justifyContent:'center',
-    textAlign:'center'
-  },
-  archivo: {
-    fontSize: 17,
-    textAlign: "center",
-    color: "#000",
-    fontFamily: "Gotham Rounded"
-  },
-  crearReclamoChild2: {
-    top: 630,
-    borderRadius: 50,
-    width: 148,
-    left: 20,
-    height: 37,
-    borderWidth: 1,
-    borderColor: "#000",
-    backgroundColor: "rgba(255, 214, 0, 0.6)",
-    position: "absolute",
-    justifyContent: 'center',
-    alignItems: 'center'
+    textAlign:'center',
+    fontFamily:'GothamBook'
   },
   crearReclamoChild: {
     top: 676,
@@ -353,7 +337,7 @@ const styles = StyleSheet.create({
   enviarDenunciaButtonText: {
     fontSize: 18,
     color: "#000",
-    fontFamily: "Gotham Rounded"
+    fontFamily:'GothamBook'
   },
   modalContainer: {
     flex:1,
@@ -371,11 +355,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize:20,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'GothamBold'
   },
   text: {
     fontSize:17,
-    marginTop:25
+    marginTop:25,
+    fontFamily:'GothamBook'
   },
   modalButton: {
     width:300,
@@ -403,15 +389,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 14,
-    fontFamily: "Gotham Rounded",
+    fontFamily:'GothamBook'
   },
-  pdfLink: {
-    color: 'blue',
-    fontSize: 14,
-    fontFamily: "Gotham Rounded",
-    textDecorationLine: 'underline',
-    marginTop: 10,
-  }
+
 });
 
 export default CrearDenuncia;

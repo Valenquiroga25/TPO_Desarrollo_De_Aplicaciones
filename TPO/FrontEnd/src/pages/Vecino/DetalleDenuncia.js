@@ -5,7 +5,7 @@ import { ipLocal } from '../../global/ipLocal';
 const width = Dimensions.get("window").width;
 const espacio_contendor = width * 0.7;
 
-function DetalleDenuncia({ route }) {
+function DetalleDenuncia({ navigation,route }) {
     const { idDenuncia,documento,calleSitio, numeroSitio, descripcion, estado} = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
 
@@ -31,7 +31,15 @@ function DetalleDenuncia({ route }) {
 
       getImagenes()
     }, [])
-
+    function editarDenuncia(){
+      navigation.navigate('EditarDenuncia',
+        {idDenuncia,
+        documento: documento,
+        calleSitioDenuncia: calleSitio,
+        numeroSitioDenuncia: numeroSitio,
+        descripcionDenuncia: descripcion,
+        estado,})
+}
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Denuncia</Text>
@@ -67,12 +75,7 @@ function DetalleDenuncia({ route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('CrearDenuncia',{ idDenuncia: idDenuncia,
-              documento: documentoVecino,
-              calleSitio: calleSitio,
-              numeroSitio: numeroSitio,
-              descripcion: descripcion,
-              estado: estado,})}>
+            onPress={editarDenuncia}>
               <Text style={styles.editSign}>✎</Text>
             </TouchableOpacity>
         </View>
@@ -87,35 +90,36 @@ function DetalleDenuncia({ route }) {
       backgroundColor: '#FFFFFF',
   },
   title: {
-      position:'absolute',
-      top:60,
-      left:18,
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: '#343a40',
-      textAlign: 'center',
-  },
-  containerDatos:{
-    marginTop: 80
+    fontSize: 25,
+    marginTop:40,
+    fontFamily:'GothamBold'
   },
   detalle: {
-    marginTop: 25,
+    marginTop: 22,
+    fontFamily:'GothamBook',
   },
   detalle2:{
-    fontSize: 20,
+    fontSize: 18,
     color: '#343a40',
     marginBottom: 10,
-    fontWeight: 'bold',
+    fontFamily:'GothamBold'
   },
   datoText:{
-    fontSize:18
+    fontSize:17,
   },
-  descripcion: {
-      fontSize: 20,
-      color: '#343a40',
-      marginTop: 25,
-      marginBottom: 10,
-      fontWeight: 'bold',
+  descripcion:{
+    fontSize:18,
+    color:'#343a40',
+    marginTop:25,
+    marginBottom:15,
+    fontFamily: 'GothamBold',
+  },
+  textDescripcion:{
+    fontSize:16,
+    marginTop:10,
+    marginBottom:10,
+    marginLeft:5,
+    fontFamily:'GothamBook'
   },
   descripcionContainer: {
       borderWidth: 1,

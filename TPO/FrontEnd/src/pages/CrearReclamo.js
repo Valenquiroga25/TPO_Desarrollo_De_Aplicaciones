@@ -314,6 +314,7 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     marginBottom: 10,
+    fontFamily:'GothamBold'
   },
   input: {
     height: 40,
@@ -351,17 +352,12 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
+    fontFamily:'GothamBook'
   },
   textArea: {
     height: 100,
     textAlign: 'center',
   },
-  archivo: {
-    fontSize: 17,
-    textAlign: "center",
-    color: "#000",
-  },
-
   crearReclamoChild: {
     top: 666,
     left: 180,
@@ -381,11 +377,12 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4
     },
-    shadowColor: "rgba(0, 0, 0, 0.25)"
+    shadowColor: "rgba(0, 0, 0, 0.25)",
   },
   enviarReclamoButtonText: {
     fontSize: 18,
     color: "#000",
+    fontFamily:'GothamBook'
   },
   picker: {
     height: 50,
@@ -410,12 +407,14 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize:20,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'GothamBold'
   },
   text: {
     fontSize:17,
     marginTop:50,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'GothamBook'
   },
   modalButton: {
     width:300,

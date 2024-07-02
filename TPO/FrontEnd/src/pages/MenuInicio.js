@@ -8,7 +8,6 @@ function MenuInicio({ navigation }) {
     { id: 1, source: require('../../assets/menu1.png') },
     { id: 2, source: require('../../assets/menu2.png') },
     { id: 3, source: require('../../assets/menu3.png') },
-    // Agrega más imágenes según sea necesario
   ];
 
   return (

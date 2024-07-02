@@ -60,9 +60,7 @@ function EditarDenuncia({ navigation,route }) {
     return (
         <View style={styles.container}>
             <View style={styles.containerDatos}>
-                <Image style={styles.imagen} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
-
-                <Text style={styles.enviarDenuncia}>Editar Denuncia</Text>
+                <Text style={styles.titulo}>Editar Denuncia</Text>
                 <TextInput
                     style={[styles.input, styles.textInput]}
                     onChangeText={setCalleSitio}
@@ -84,10 +82,10 @@ function EditarDenuncia({ navigation,route }) {
                     numberOfLines={4}
                 />
                 <TouchableOpacity
-                    style={[styles.crearReclamoChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
+                    style={[styles.crearDenunciaChild, { backgroundColor: isFormComplete ? '#ffd600' : 'lightgrey' }]}
                     onPress={handleSubmit}
                     disabled={!isFormComplete}>
-                    <Text style={styles.enviarReclamoButtonText}>Editar Denuncia</Text>
+                    <Text style={styles.enviarDenunciaButtonText}>Editar Denuncia</Text>
                 </TouchableOpacity>
 
                 <Modal
@@ -102,7 +100,7 @@ function EditarDenuncia({ navigation,route }) {
                             <Text style={styles.text}>Te mantendremos al tanto ante cualquier noticia.</Text>
                         </View>
                         <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
-                            <Text>Continuar</Text>
+                            <Text style={{fontFamily: "GothamBook"}}>Continuar</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>
@@ -126,10 +124,10 @@ const styles = StyleSheet.create({
         height: 45,
         marginBottom: 20,
     },
-    enviarDenuncia: {
-        fontSize: 18,
-        marginBottom: 10,
-        fontFamily: "Gotham Rounded",
+    titulo: {
+        fontSize: 25,
+        marginBottom: 25,
+        fontFamily: "GothamBold",
     },
     input: {
         height: 40,
@@ -146,35 +144,19 @@ const styles = StyleSheet.create({
             width: 0,
             height: 4
         },
-        shadowColor: "rgba(0, 0, 0, 0.25)"
+        shadowColor: "rgba(0, 0, 0, 0.25)",
+        fontFamily: "GothamBook",
+
     },
     textInput: {
         height: 40,
     },
     textArea: {
         height: 100,
-        textAlignVertical: 'top',
+        fontFamily: "GothamBook",
+        textAlign:'center'
     },
-    archivo: {
-        fontSize: 17,
-        textAlign: "center",
-        color: "#000",
-        fontFamily: "Gotham Rounded"
-    },
-    crearReclamoChild2: {
-        top: 630,
-        borderRadius: 50,
-        width: 148,
-        left: 20,
-        height: 37,
-        borderWidth: 1,
-        borderColor: "#000",
-        backgroundColor: "rgba(255, 214, 0, 0.6)",
-        position: "absolute",
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    crearReclamoChild: {
+    crearDenunciaChild: {
         top: 675,
         left: 167,
         borderRadius: 5,
@@ -195,10 +177,10 @@ const styles = StyleSheet.create({
         },
         shadowColor: "rgba(0, 0, 0, 0.25)"
     },
-    enviarReclamoButtonText: {
+    enviarDenunciaButtonText: {
         fontSize: 18,
         color: "#000",
-        fontFamily: "Gotham Rounded"
+        fontFamily: "GothamBook"
     },
     modalContainer: {
         flex: 1,
@@ -215,12 +197,14 @@ const styles = StyleSheet.create({
         padding: 15
     },
     modalTitle: {
-        fontSize: 20,
-        textAlign: 'center'
+        fontSize: 18,
+        textAlign: 'center',
+        fontFamily: "GothamBold",
     },
     text: {
         fontSize: 17,
-        marginTop: 25
+        marginTop: 25,
+        fontFamily: "GothamBook",
     },
     modalButton: {
         width: 300,
@@ -233,30 +217,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 20
     },
-    declaracionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    checkboxFalse: {
-        alignSelf: 'center',
-    },
-    checkboxTrue: {
-        backgroundColor: '#FFD600',
-    },
-    declaracionText: {
-        flex: 1,
-        marginLeft: 10,
-        fontSize: 14,
-        fontFamily: "Gotham Rounded",
-    },
-    pdfLink: {
-        color: 'blue',
-        fontSize: 14,
-        fontFamily: "Gotham Rounded",
-        textDecorationLine: 'underline',
-        marginTop: 10,
-    }
 });
 
 export default EditarDenuncia;

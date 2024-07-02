@@ -53,14 +53,13 @@ function DetallePersonal({navigation}) {
     return (
         <View style={styles.container}>
             <ScrollView>
-                <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
-                <Text style={styles.title}>{'Sus datos'}</Text>
-                <Text style={styles.detalle}>{'LEGAJO: '+legajo}</Text>
-                <Text style={styles.detalle}>{'NOMBRE: ' + nombre}</Text>
-                <Text style={styles.detalle}>{'APELLIDO: ' + apellido}</Text>
-                <Text style={styles.detalle}>{'DOCUMENTO: ' + documento}</Text>
-                <Text style={styles.detalle}>{'SECTOR: '+ sector}</Text>
-                <Text style={styles.detalle}>{'CATEGORIA: '+categoria}</Text>
+                <Text style={styles.title}>{'Mi perfil'}</Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>LEGAJO:</Text><Text style={styles.datoText}>{` ${legajo}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>NOMBRE:</Text><Text style={styles.datoText}>{` ${nombre}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>APELLIDO:</Text><Text style={styles.datoText}>{` ${apellido}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>SECTOR:</Text><Text style={styles.datoText}>{` ${sector}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>CATEGORIA:</Text><Text style={styles.datoText}>{` ${categoria}`}</Text></Text>
             </ScrollView>
 
             <HideWithKeyboard style={styles.navbar}>
@@ -78,15 +77,23 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 25,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
-    detalle: {
+        marginTop:40,
+        fontFamily:'GothamBold'
+      },
+      detalle: {
+        marginTop: 22,
+        fontFamily:'GothamBook',
+        marginTop:40
+      },
+      detalle2:{
         fontSize: 18,
-        color: '#4D4D4D',
-        paddingTop: 10,
-        paddingBottom: 10,
-    },
+        color: '#343a40',
+        marginBottom: 10,
+        fontFamily:'GothamBold'
+      },
+      datoText:{
+        fontSize:17,
+      },
     imageLogo: {
         width: 140,
         height: 45,

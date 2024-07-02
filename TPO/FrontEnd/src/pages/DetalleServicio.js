@@ -35,7 +35,6 @@ function DetalleServicio({ route }) {
 
     return (
       <View style={styles.container}>
-        <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
         <Text style={styles.title}>{titulo}</Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>TELEFONO:</Text><Text style={styles.datoText}>{` ${telefono}`}</Text></Text>
@@ -75,37 +74,35 @@ function DetalleServicio({ route }) {
     },
     title: {
       fontSize: 25,
-      fontWeight: 'bold',
+      marginTop:40,
+      fontFamily:'GothamBold'
     },
     detalle: {
       marginTop: 22,
+      fontFamily:'GothamBook',
     },
     detalle2:{
       fontSize: 18,
       color: '#343a40',
       marginBottom: 10,
-      fontWeight: 'bold',
+      fontFamily:'GothamBold'
     },
     datoText:{
-      fontSize:19
+      fontSize:17,
     },
     descripcion:{
       fontSize:18,
       color:'#343a40',
-      marginTop:20,
-      marginBottom:10,
-      fontWeight: 'bold',
+      marginTop:25,
+      marginBottom:15,
+      fontFamily: 'GothamBold',
     },
     textDescripcion:{
       fontSize:16,
       marginTop:10,
       marginBottom:10,
-      marginLeft:5
-    },
-    imageLogo: {
-      width: 140,
-      height: 45,
-      marginBottom: 20,
+      marginLeft:5,
+      fontFamily:'GothamBook'
     },
     imageContainer: {
         flex: 1,

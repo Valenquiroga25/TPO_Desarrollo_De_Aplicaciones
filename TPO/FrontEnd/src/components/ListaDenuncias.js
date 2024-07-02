@@ -52,8 +52,8 @@ function ListaDenuncias({ navigation }) {
         <ScrollView style={styles.containerDenuncias}>
             {listaDenuncias.map((denuncia, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonDenuncia} onPress={() => redireccion(denuncia)}>
-                    <Text>{denuncia.descripcion}</Text>
-                    <Text>Estado: {denuncia.estado}</Text>
+                    <Text style={{fontFamily:'GothamBook'}}>{denuncia.descripcion}</Text>
+                    <Text style={{fontFamily:'GothamBook'}}>Estado: {denuncia.estado}</Text>
                 </TouchableOpacity>
             ))}
         </ScrollView>

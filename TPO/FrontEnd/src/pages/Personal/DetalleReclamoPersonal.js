@@ -93,33 +93,35 @@ function DetalleReclamoVecino({ navigation, route }) {
     },
     title: {
       fontSize: 25,
-      fontWeight: 'bold',
-      marginTop:40
+      marginTop:40,
+      fontFamily:'GothamBold'
     },
     detalle: {
       marginTop: 22,
+      fontFamily:'GothamBook',
     },
     detalle2:{
       fontSize: 18,
       color: '#343a40',
       marginBottom: 10,
-      fontWeight: 'bold',
+      fontFamily:'GothamBold'
     },
     datoText:{
-      fontSize:19
+      fontSize:17,
     },
     descripcion:{
       fontSize:18,
       color:'#343a40',
       marginTop:25,
       marginBottom:15,
-      fontWeight: 'bold',
+      fontFamily: 'GothamBold',
     },
     textDescripcion:{
       fontSize:16,
       marginTop:10,
       marginBottom:10,
-      marginLeft:5
+      marginLeft:5,
+      fontFamily:'GothamBook'
     },
     imageLogo: {
       width: 140,

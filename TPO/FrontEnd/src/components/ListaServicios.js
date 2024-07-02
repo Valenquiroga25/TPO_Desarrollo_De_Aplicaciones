@@ -43,8 +43,8 @@ function ListaServicios({navigation}) {
     <ScrollView style={styles.containerServicios}>
         {listaServicios.map((servicio, indice) => (
             <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
-                <Text>{servicio.titulo}</Text>
-                <Text>Contacto: {servicio.telefono}</Text>
+                <Text style={{fontFamily:'GothamBook'}}>{servicio.titulo}</Text>
+                <Text style={{fontFamily:'GothamBook'}}>Contacto: {servicio.telefono}</Text>
             </TouchableOpacity>
         ))}
     </ScrollView>

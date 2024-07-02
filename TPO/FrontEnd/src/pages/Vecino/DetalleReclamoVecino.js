@@ -33,6 +33,20 @@ function DetalleReclamoVecino({ navigation, route }) {
       getImagenes()
     }, [])
 
+    function editarReclamo(){
+      console.log(descripcion);
+      console.log(idReclamo);
+      navigation.navigate('EditarReclamo', {
+        idReclamo,
+        documentoReclamo: documento,
+        calleSitioReclamo: calleSitio,
+        numeroSitioReclamo: numeroSitio,
+        estado,
+        desperfectoReclamo:desperfecto,
+        descripcionReclamo:descripcion
+      });
+    }
+
     return (
       <View style={styles.container}>
         <ScrollView> 
@@ -48,7 +62,7 @@ function DetalleReclamoVecino({ navigation, route }) {
           </View>
 
         <FlatList 
-        data={listaImagenes}//cambiar parametro
+        data={listaImagenes}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         decelerationRate={0}
@@ -70,14 +84,7 @@ function DetalleReclamoVecino({ navigation, route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('EditarReclamo', {
-              idReclamo: idReclamo,
-              documentoVecino: documentoVecino,
-              calleSitio: calleSitio,
-              numeroSitio: numeroSitio,
-              estado: estado,
-              desperfecto: desperfecto,
-              descripcion: descripcion})}>
+            onPress={editarReclamo}>
               <Text style={styles.editSign}>✎</Text>
             </TouchableOpacity>
         </View>
@@ -93,33 +100,35 @@ function DetalleReclamoVecino({ navigation, route }) {
     },
     title: {
       fontSize: 25,
-      fontWeight: 'bold',
-      marginTop:40
+      marginTop:40,
+      fontFamily:'GothamBold'
     },
     detalle: {
-      marginTop: 25,
+      marginTop: 22,
+      fontFamily:'GothamBook',
     },
     detalle2:{
       fontSize: 18,
       color: '#343a40',
       marginBottom: 10,
-      fontWeight: 'bold',
+      fontFamily:'GothamBold'
     },
     datoText:{
-      fontSize:19
+      fontSize:17,
     },
     descripcion:{
       fontSize:18,
       color:'#343a40',
       marginTop:25,
       marginBottom:15,
-      fontWeight: 'bold',
+      fontFamily: 'GothamBold',
     },
     textDescripcion:{
       fontSize:16,
       marginTop:10,
       marginBottom:10,
-      marginLeft:5
+      marginLeft:5,
+      fontFamily:'GothamBook'
     },
     imageLogo: {
       width: 140,

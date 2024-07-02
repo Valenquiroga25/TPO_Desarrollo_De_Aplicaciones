@@ -56,8 +56,8 @@ function ListaReclamosPersonal({ navigation }) {
             <ScrollView style={styles.containerReclamos}>
                 {listaReclamosPersonal.map((reclamo, indice) => (
                     <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccionPersonal(reclamo)}>
-                        <Text>{reclamo.descripcion}</Text>
-                        <Text>Estado: {reclamo.estado}</Text>
+                        <Text style={{fontFamily:'GothamBook'}}>{reclamo.descripcion}</Text>
+                        <Text style={{fontFamily:'GothamBook'}}>Estado: {reclamo.estado}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
