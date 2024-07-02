@@ -40,7 +40,7 @@ public class DenunciasService {
         return this.denunciasRepository.save(newDenuncia);
     }
 
-    public DenunciaModel updateDenuncia(Long id, String descripcion) throws Exception{
+    public DenunciaModel updateDenuncia(Long id, String descripcion,String calle, Long numero ) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
@@ -52,8 +52,13 @@ public class DenunciasService {
             log.error("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
             throw new Exception("La denuncia con el Id " + id + " no se encuentra registrada en la base de datos.");
         }
-
+        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(calle, numero));
+        if (sitioOp.isEmpty()){
+            log.error("No hay ningún sitio en la dirección " + calle + " " + numero);
+            throw new Exception("No hay ningún sitio en la dirección " + calle+ " " + numero);
+        }
         DenunciaModel denunciaDb = denunciaOp.get();
+        denunciaDb.setSitio(sitioOp.get());
         denunciaDb.setDescripcion(descripcion);
 
         log.info("Descripción actualizada de la denuncia " + denunciaDb.getIdDenuncia());

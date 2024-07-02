@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal } from "react-native";
 import { ipLocal } from "../../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NativeSearchBar } from "react-native-screens";
 
-function EditarDenuncia({ route }) {
+function EditarDenuncia({ navigation,route }) {
     const {idDenuncia,documento,calleSitioDenuncia, numeroSitioDenuncia, descripcionDenuncia, estado} = route.params;
-
     const [documentoVecino, setDocumento] = useState(documento);
     const [calleSitio, setCalleSitio] = useState(calleSitioDenuncia);
     const [numeroSitio, setNumeroSitio] = useState(numeroSitioDenuncia);
@@ -13,7 +13,7 @@ function EditarDenuncia({ route }) {
     const [isVisible, setIsVisible] = useState(false);
     const [aceptoResponsabilidad, setAceptoResponsabilidad] = useState(1);
     const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion;
-    
+
     const handleSubmit = async () => {
         if (!isFormComplete) {
             alert('Todos los campos son obligatorios');
@@ -54,6 +54,7 @@ function EditarDenuncia({ route }) {
 
     function closeModal() {
         setIsVisible(false);
+        navigation.navigate('MenuDenuncias');
     }
 
     return (
@@ -62,14 +63,6 @@ function EditarDenuncia({ route }) {
                 <Image style={styles.imagen} resizeMode="cover" source={require('../../../assets/BuenosAiresCiudad.png')} />
 
                 <Text style={styles.enviarDenuncia}>Editar Denuncia</Text>
-
-                <TextInput
-                    style={[styles.input, styles.textInput]}
-                    onChangeText={setDocumento}
-                    inputMode='numeric'
-                    value={documentoVecino}
-                    placeholder="Documento"
-                />
                 <TextInput
                     style={[styles.input, styles.textInput]}
                     onChangeText={setCalleSitio}
@@ -79,7 +72,7 @@ function EditarDenuncia({ route }) {
                 <TextInput
                     style={[styles.input, styles.textInput]}
                     onChangeText={setNumeroSitio}
-                    value={numeroSitio}
+                    value={numeroSitio.toString()}
                     placeholder="Número del Sitio"
                 />
                 <TextInput
