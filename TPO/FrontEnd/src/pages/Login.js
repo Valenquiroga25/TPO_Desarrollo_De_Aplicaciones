@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   titulo:{
     marginTop:35,
     fontSize:30,
-    fontFamily:'Gotham',
+    fontFamily:'GothamBold',
   },
   input:{
     padding:10,
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: "#FFFFFF",
     backgroundColor: '#FFFFFF',
-    fontFamily:'Gotham2',
+    fontFamily:'GothamBook',
   },
   containerBoton:{
     marginTop:30,

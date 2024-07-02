@@ -108,8 +108,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonText: {
-    fontSize: 16,
-    color: '#000000',
+    fontSize: 15,
     fontFamily:'GothamBook'
   },
 });
