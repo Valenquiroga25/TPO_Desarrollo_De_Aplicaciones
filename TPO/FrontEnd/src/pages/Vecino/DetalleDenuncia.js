@@ -5,7 +5,7 @@ import { ipLocal } from '../../global/ipLocal';
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 const espacio_contendor = width * 0.7;
-function DetalleDenuncia({ route }) {
+function DetalleDenuncia({ navigation,route }) {
     const { idDenuncia,documento,calleSitio, numeroSitio, descripcion, estado} = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
 
@@ -31,7 +31,14 @@ function DetalleDenuncia({ route }) {
 
       getImagenes()
     }, [])
-
+    function editarDenuncia(){
+      navigation.navigate('EditarDenuncia',{idDenuncia,
+        documento: documento,
+        calleSitioDenuncia: calleSitio,
+        numeroSitioDenuncia: numeroSitio,
+        descripcionDenuncia: descripcion,
+        estado,})
+}
     return (
       <View style={styles.container}>
         <Image style={styles.imageLogo} resizeMode="cover" source={('../../../assets/BuenosAiresCiudad.png')} />
@@ -65,12 +72,7 @@ function DetalleDenuncia({ route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('CrearDenuncia',{ idDenuncia: idDenuncia,
-              documento: documentoVecino,
-              calleSitio: calleSitio,
-              numeroSitio: numeroSitio,
-              descripcion: descripcion,
-              estado: estado,})}>
+            onPress={editarDenuncia}>
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>

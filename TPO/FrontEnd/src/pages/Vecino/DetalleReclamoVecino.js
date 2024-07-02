@@ -5,6 +5,20 @@ const height = Dimensions.get("window").height;
 
 function DetalleReclamoVecino({ navigation, route }) {
     const { idReclamo, documentoVecino, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
+    function editarReclamo(){
+      console.log(descripcion);
+      console.log(idReclamo);
+      navigation.navigate('EditarReclamo', {
+        idReclamo,
+        documentoReclamo: documentoVecino,
+        calleSitioReclamo: calleSitio,
+        numeroSitioReclamo: numeroSitio,
+        estado,
+        desperfectoReclamo:desperfecto,
+        descripcionReclamo:descripcion
+      });
+    }
+
     return (
       <View style={styles.container}>
         <ScrollView> 
@@ -15,7 +29,7 @@ function DetalleReclamoVecino({ navigation, route }) {
         <Text style={styles.detalle}>{`SITIO: ${calleSitio} ${numeroSitio}`}</Text>
         <Text style={styles.detalle}>{`ESTADO: ${estado}`}</Text>
         <Text style={styles.detalle}>{`DESPERFECTO: ${desperfecto}`}</Text>
-        <Text style={styles.detalle}>{`DESCRIPCIÓN ${descripcion}`}</Text>
+        <Text style={styles.detalle}>{'DESCRIPCIÓN'}</Text>
         <View style={{borderWidth:2,borderColor:'black',marginBottom:20,height:160}}>
           <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
         </View>
@@ -52,14 +66,7 @@ function DetalleReclamoVecino({ navigation, route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('EditarReclamo', {
-              idReclamo: idReclamo,
-              documentoVecino: documentoVecino,
-              calleSitio: calleSitio,
-              numeroSitio: numeroSitio,
-              estado: estado,
-              desperfecto: desperfecto,
-              descripcion: descripcion})}>
+            onPress={editarReclamo}>
               <Text style={styles.plusSign}>✎</Text>
             </TouchableOpacity>
         </View>
