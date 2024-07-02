@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, View } from 'react-native'; 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as Font from 'expo-font'; // Importa expo-font
+import * as Font from 'expo-font'; 
 import MenuInicio from './src/pages/MenuInicio';
 import MenuNR from './src/pages/MenuNR'
 import Login from './src/pages/Login';
@@ -45,9 +46,21 @@ function App() {
 
   const Stack = createNativeStackNavigator();
 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
   useEffect(() => {
-    loadFonts(); // Llama a la función de carga de fuentes al inicio
+    loadFonts().then(() => setFontsLoaded(true));   // Se indica que se ejecuta por completo 'loadFonts', 
+                                                   //luego (then) se setea el fontLoaded a true y se renderiza la página. 
+                                                   //Si está en false hay una pantalla de carga 'ActivityIndicator' 
   }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
       <NavigationContainer>
