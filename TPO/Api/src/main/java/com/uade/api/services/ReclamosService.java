@@ -96,7 +96,7 @@ public class ReclamosService {
             reclamoDb.getDesperfecto().setIdDesperfecto(idDesperfecto);
         if(descripcion != null)
             reclamoDb.setDescripcion(descripcion);
-        if(imagenes != null)
+        if(!imagenes.isEmpty())
             reclamoDb.setImagenes(imagenes);
 
         this.reclamosRepository.save(reclamoDb);

@@ -5,6 +5,8 @@ import com.uade.api.models.DTOs.ReclamoVecinoDevueltoDTO;
 import com.uade.api.models.DTOs.ReclamoModelDTO;
 import com.uade.api.models.*;
 import com.uade.api.services.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
