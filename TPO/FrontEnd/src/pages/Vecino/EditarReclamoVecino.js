@@ -1,27 +1,17 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Modal,
-  FlatList,
-} from "react-native";
-import { ipLocal } from "../global/ipLocal";
+import {StyleSheet,View,Text,TextInput,TouchableOpacity,Image,Modal,FlatList,} from "react-native";
+import { ipLocal } from "../../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function EditarReclamo({ navigation, route }) {
+function EditarReclamoVecino({ navigation, route }) {
   const {idReclamo, documentoReclamo, calleSitioReclamo, numeroSitioReclamo, estado, desperfectoReclamo, descripcionReclamo} = route.params;
-  const [documento, setDocumento] = useState(documentoReclamo);
-  const [legajoPersonal, setLegajoPersonal] = useState(null);
+  
+  const [documentoVecino, setdocumentoVecino] = useState(documentoReclamo);
   const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
   const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
-  const [idDesperfecto, setIdDesperfecto] = useState(null);
+  const [idDesperfecto, setIdDesperfecto] = useState(desperfectoReclamo);
   const [descripcion, setDescripcion] = useState(descripcionReclamo);
   const [imagenes, setImagenes] = useState([]);
-  const [idReclamoUnificado, setIdReclamoUnificado] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const isFormComplete = calleSitio && numeroSitio && descripcion;
@@ -35,24 +25,21 @@ function EditarReclamo({ navigation, route }) {
       const token = await AsyncStorage.getItem("token"); // Guardar el token en AsyncStorage como una cadena de texto
 
       const data = {
-        documento,
-        legajoPersonal,
+        documentoVecino,
         calleSitio,
         numeroSitio,
         idDesperfecto,
         descripcion,
-        imagenes,
-        idReclamoUnificado,
+        imagenes
       };
 
-
+      console.log(data)
       const response = await fetch(
-        `http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/${idReclamo}`,
-        {
+        `http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/${idReclamo}`,{
           method: 'PUT',
           headers: {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-          },body: JSON.stringify(data),
+                    'Authorization': `Bearer ${token}`,},
+          body: JSON.stringify(data)
         }
       );
 
@@ -109,7 +96,7 @@ function EditarReclamo({ navigation, route }) {
 
   function closeModal() {
     setIsVisible(false);
-    navigation.navigate("MenuReclamos");
+    navigation.navigate("MenuVecino");
   }
 
   return (
@@ -127,7 +114,7 @@ function EditarReclamo({ navigation, route }) {
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setNumeroSitio}
-          value={numeroSitio.toString()}
+          value={numeroSitio}
           inputMode="numeric"
           placeholder="Numeración sitio"
         />
@@ -282,4 +269,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditarReclamo;
+export default EditarReclamoVecino;

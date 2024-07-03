@@ -66,7 +66,7 @@ function ListaReclamosPersonal({ navigation }) {
 }
 const styles = StyleSheet.create({
     containerReclamos: {
-        padding: 10,
+        paddingBottom: 80, // Ajusta este valor según la altura de tu navbar
     },
     botonReclamo: {
         height: 70,
@@ -74,10 +74,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#FFD600',
+        borderColor: "#FFD600",
         borderRadius: 10,
-        marginTop: 20,
-    },
+        marginTop: 10,
+    }
 });
 
 export default ListaReclamosPersonal;

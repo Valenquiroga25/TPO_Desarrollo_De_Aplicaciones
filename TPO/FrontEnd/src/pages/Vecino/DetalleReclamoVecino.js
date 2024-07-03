@@ -1,6 +1,8 @@
 import {React, useEffect, useState} from 'react'
 import { Text, View, StyleSheet,Image,FlatList,Dimensions,ScrollView, TouchableOpacity} from 'react-native'
 import { ipLocal } from '../../global/ipLocal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {jwtDecode} from 'jwt-decode';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -9,6 +11,21 @@ const espacio_contendor = width * 0.7;
 function DetalleReclamoVecino({ navigation, route }) {
     const { idReclamo, documento, calleSitio, numeroSitio, estado, desperfecto, descripcion } = route.params;
     const [listaImagenes, setListaImagenes] = useState([])
+    const [esVecino, setEsVecino] = useState(true);
+
+  useEffect(() => {
+    async function checkEsVecino(){
+      const token = await AsyncStorage.getItem('token'); 
+      const decodeToken = jwtDecode(token); 
+      console.log(token);
+      const tipoUsuario = decodeToken.rol;
+
+      if(tipoUsuario === 'Inspector')
+        setEsVecino(false)
+    }
+
+    checkEsVecino()
+  }, [])
 
     useEffect(() => {
       async function getImagenes() {
@@ -33,61 +50,88 @@ function DetalleReclamoVecino({ navigation, route }) {
       getImagenes()
     }, [])
 
-    function editarReclamo(){
-      console.log(descripcion);
-      console.log(idReclamo);
-      navigation.navigate('EditarReclamo', {
-        idReclamo,
-        documentoReclamo: documento,
-        calleSitioReclamo: calleSitio,
-        numeroSitioReclamo: numeroSitio,
-        estado,
-        desperfectoReclamo:desperfecto,
-        descripcionReclamo:descripcion
-      });
-    }
-
     return (
       <View style={styles.container}>
-        <ScrollView> 
-        <Text style={styles.title}>{'Reclamo'}</Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>ID RECLAMO:</Text><Text style={styles.datoText}>{` ${idReclamo}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>SITIO:</Text><Text style={styles.datoText}>{` ${calleSitio} ${numeroSitio}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>ESTADO:</Text><Text style={styles.datoText}>{` ${estado}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>DESPERFECTO:</Text><Text style={styles.datoText}>{` ${desperfecto}`}</Text></Text>
-        <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
-          <View style={{borderWidth:2,borderColor:'black',height:160}}>
-            <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
-          </View>
+        {esVecino ? 
+                <View> 
+                  <Text style={styles.title}>{'Reclamo'}</Text>
+                  <Text style={styles.detalle}><Text style={styles.detalle2}>ID RECLAMO:</Text><Text style={styles.datoText}>{` ${idReclamo}`}</Text></Text>
+                  <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+                  <Text style={styles.detalle}><Text style={styles.detalle2}>SITIO:</Text><Text style={styles.datoText}>{` ${calleSitio} ${numeroSitio}`}</Text></Text>
+                  <Text style={styles.detalle}><Text style={styles.detalle2}>ESTADO:</Text><Text style={styles.datoText}>{` ${estado}`}</Text></Text>
+                  <Text style={styles.detalle}><Text style={styles.detalle2}>DESPERFECTO:</Text><Text style={styles.datoText}>{` ${desperfecto}`}</Text></Text>
+                  <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+                    <View style={{borderWidth:2,borderColor:'black',height:160}}>
+                      <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
+                    </View>
+          
+                  <FlatList 
+                  data={listaImagenes}
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  decelerationRate={0}
+                  scrollEventThrottle={16}
+                  keyExtractor={(item, index)=> index.toString()}
+                  renderItem={({ item }) => {
+                    return (
+                      <View style={{ width: espacio_contendor }}>
+                        <View style={styles.imageContainer}>
+                          <Image
+                            source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
+                            style={styles.posterImage}
+                          />
+                        </View>
+                      </View>
+                  )}}/>
+                  <View>
+                    <TouchableOpacity 
+                      style={styles.floatingButton} 
+                      onPress={() => navigation.navigate('EditarReclamoVecino', {
+                        idReclamo: idReclamo,
+                        documento: documento,
+                        calleSitio: calleSitio,
+                        numeroSitio: numeroSitio,
+                        estado: estado,
+                        desperfecto: desperfecto,
+                        descripcion: descripcion})}>
+                        <Text style={styles.editSign}>✎</Text>
+                      </TouchableOpacity>
+                  </View> 
+              </View> 
 
-        <FlatList 
-        data={listaImagenes}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        decelerationRate={0}
-        scrollEventThrottle={16}
-        keyExtractor={(item, index)=> index.toString()}
-        renderItem={({ item }) => {
-          return (
-            <View style={{ width: espacio_contendor }}>
-              <View style={styles.imageContainer}>
-                <Image
-                  source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
-                  style={styles.posterImage}
-                />
-              </View>
-            </View>
-        )}}/>
-        </ScrollView>
+                : 
+                <View> 
+                <Text style={styles.title}>{'Reclamo'}</Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>ID RECLAMO:</Text><Text style={styles.datoText}>{` ${idReclamo}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>SITIO:</Text><Text style={styles.datoText}>{` ${calleSitio} ${numeroSitio}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>ESTADO:</Text><Text style={styles.datoText}>{` ${estado}`}</Text></Text>
+                <Text style={styles.detalle}><Text style={styles.detalle2}>DESPERFECTO:</Text><Text style={styles.datoText}>{` ${desperfecto}`}</Text></Text>
+                <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+                  <View style={{borderWidth:2,borderColor:'black',height:160}}>
+                    <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
+                  </View>
         
-        <View>
-          <TouchableOpacity 
-            style={styles.floatingButton} 
-            onPress={editarReclamo}>
-              <Text style={styles.editSign}>✎</Text>
-            </TouchableOpacity>
-        </View>
+                <FlatList 
+                data={listaImagenes}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                decelerationRate={0}
+                scrollEventThrottle={16}
+                keyExtractor={(item, index)=> index.toString()}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={{ width: espacio_contendor }}>
+                      <View style={styles.imageContainer}>
+                        <Image
+                          source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
+                          style={styles.posterImage}
+                        />
+                      </View>
+                    </View>
+                )}}/>
+            </View> 
+            }
       </View> 
     );
   }
@@ -152,7 +196,7 @@ function DetalleReclamoVecino({ navigation, route }) {
     },
     floatingButton: {
       position: 'absolute',
-      bottom: 10,
+      bottom: -75,
       right: 15,
       backgroundColor: '#FFE661',
       borderRadius: 50,

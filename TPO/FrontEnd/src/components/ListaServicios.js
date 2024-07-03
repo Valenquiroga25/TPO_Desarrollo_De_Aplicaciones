@@ -1,33 +1,33 @@
-import {React, useState, useEffect} from 'react'
-import { Text, StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
+import { React, useState, useEffect } from 'react';
+import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { ipLocal } from '../global/ipLocal';
 
-function ListaServicios({navigation}) {
-    const [listaServicios, setListaServicios] = useState([])
+function ListaServicios({ navigation }) {
+    const [listaServicios, setListaServicios] = useState([]);
 
-    useEffect(() => { // Se utiliza el useEffect con la lista de dependencias vacía ([]) para asegurar que la función se ejecuta cuando se monta el componente.
-    
-        async function showServicios(){
+    useEffect(() => {
+        async function showServicios() {
+            try {
+                const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/servicios/getAllServicios`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
 
-            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/servicios/getAllServicios`,{
-                method: 'GET',
-                headers: {'Content-Type' : 'application/json'}
-                })
+                if (!response.ok) {
+                    throw new Error(await response.text());
+                }
 
-            if(!response.ok){
-            throw new Error(await response.text())
+                const servicios = await response.json();
+                setListaServicios(servicios);
+            } catch (error) {
+                console.error(error);
             }
-        
-            const servicios = await response.json();
-            setListaServicios(servicios)
         }
 
-        showServicios(); // Se llama a la función dentro del useEffect para que se ejecute al iniciar la página.
-    }, []) 
+        showServicios();
+    }, []);
 
-
-    function redireccion(servicio){
-
+    function redireccion(servicio) {
         navigation.navigate('DetalleServicio', {
             idServicio: servicio.idServicio,
             titulo: servicio.titulo,
@@ -36,34 +36,36 @@ function ListaServicios({navigation}) {
             tipoServicio: servicio.tipoServicio,
             rubro: servicio.rubro,
             descripcion: servicio.descripcion,
-        });   
-     }
+        });
+    }
 
-     return (
-    <ScrollView style={styles.containerServicios}>
-        {listaServicios.map((servicio, indice) => (
-            <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
-                <Text style={{fontFamily:'GothamBook'}}>{servicio.titulo}</Text>
-                <Text style={{fontFamily:'GothamBook'}}>Contacto: {servicio.telefono}</Text>
-            </TouchableOpacity>
-        ))}
-    </ScrollView>
-  )
+    return (
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+            {listaServicios.map((servicio, indice) => (
+                <TouchableOpacity key={indice} style={styles.botonServicio} onPress={() => redireccion(servicio)}>
+                    <Text style={{ fontFamily: 'GothamBook' }}>{servicio.titulo}</Text>
+                    <Text style={{ fontFamily: 'GothamBook' }}>Contacto: {servicio.telefono}</Text>
+                </TouchableOpacity>
+            ))}
+        </ScrollView>
+    );
 }
 
-const styles = StyleSheet.create(
-{
-    botonServicio:{
-        height:70,
+const styles = StyleSheet.create({
+    scrollContent: {
+        paddingBottom: 80, // Ajusta este valor según la altura de tu navbar
+    },
+    botonServicio: {
+        width: '100%', // Ocupa todo el ancho disponible
+        height: 70,
         backgroundColor: '#E6E6E6',
         alignItems: 'center',
-        justifyContent:'center',
-        borderWidth:1,
-        borderColor:"#FFD600",
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: "#FFD600",
         borderRadius: 10,
-        marginTop:10
+        marginTop: 10,
     }
-}
-)
+});
 
-export default ListaServicios
+export default ListaServicios;

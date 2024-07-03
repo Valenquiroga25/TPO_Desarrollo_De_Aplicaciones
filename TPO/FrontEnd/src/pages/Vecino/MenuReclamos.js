@@ -19,9 +19,9 @@ const MenuReclamos = ({navigation}) => {
       <View style={styles.containerDatos}>
         <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
-      <View style={styles.listaReclamos}>
-        <ListaReclamosVecino key={refresh} navigation = {navigation}/>
-      </View>
+
+      <ListaReclamosVecino key={refresh} navigation = {navigation}/>
+      
       <View style={styles.floatingButton}>
         <TouchableOpacity 
           onPress={() => navigation.navigate('CrearReclamo')}>
@@ -46,14 +46,9 @@ const styles = StyleSheet.create({
     padding: 20
   },
   image: {
-    position:'absolute',
-    top:30,
     width: 140,
     height: 45,
-    marginBottom: 20,
-  },
-  listaReclamos:{
-    marginTop:60
+    marginTop:20
   },
   floatingButton: {
     position: 'absolute',
@@ -73,15 +68,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  input:{
-    padding:10,
-    marginTop:7,
-    marginBottom:7,
-    height: 40,
-    borderWidth:1,
-    borderColor: "black",
-    backgroundColor: '#FFFFFF'
-  },
   plusSign: {
     fontSize: 30,
     color: '#000',
@@ -96,19 +82,8 @@ const styles = StyleSheet.create({
     fontSize:17,
     marginTop:25
   },  
-  containerServicios: {
-    padding: 10,
-    maxHeight:470
-  },
-  botonServicio: {
-    height: 70,
-    backgroundColor: '#E6E6E6',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: "#FFD600",
-    borderRadius: 10,
-    marginTop: 20
+  listaReclamos:{
+    paddingBottom:60
   }
 });
 

@@ -66,7 +66,6 @@ const CrearReclamo = ({navigation}) => {
       if (!response.ok) {
         throw new Error(await response.text());
       }
-
       const result = await response.json();
       const idReclamo = result.idReclamo 
 
@@ -92,6 +91,11 @@ const CrearReclamo = ({navigation}) => {
         
         if (!imageResponse.ok) {
           const message = await imageResponse.text()
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/${idReclamo}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json',
+                       "Authorization": `Bearer ${token}`},
+          });
           throw new Error(message)
         }
       }

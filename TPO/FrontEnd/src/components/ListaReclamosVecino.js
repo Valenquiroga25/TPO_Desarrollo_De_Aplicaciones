@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
-import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ScrollView, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { ipLocal } from '../global/ipLocal';
 
 function ListaReclamosVecino({ navigation }) {
@@ -9,52 +9,51 @@ function ListaReclamosVecino({ navigation }) {
 
     useEffect(() => {
         async function fetchReclamos() {
-          try {        
-            const token = await AsyncStorage.getItem('token'); 
-            const decodeToken = jwtDecode(token); 
+            try {
+                const token = await AsyncStorage.getItem('token');
+                const decodeToken = jwtDecode(token);
 
-            const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromVecino/${decodeToken.id}`, {
-              method: 'GET',
-              headers: 
-              {'Content-Type' : 'application/json',
-              "Authorization": `Bearer ${token}`},
-            });
+                const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/allFromVecino/${decodeToken.id}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${token}`
+                    },
+                });
 
-            if (!response.ok) {
-              const errorText = await response.text();
-              throw new Error(`Error en la respuesta del servidor: ${errorText} ${response.status}`);
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error en la respuesta del servidor: ${errorText} ${response.status}`);
+                }
+                const reclamos = await response.json();
+                setListaReclamos(reclamos);
+
+            } catch (error) {
+                console.error(error);
             }
-            const reclamos = await response.json();
-              setListaReclamos(reclamos);
-              
-          } catch (error) {
-            console.error(error);
-          }
         }
-    
-        fetchReclamos();
-      }, []);
-    
-    
 
-      function redireccion(reclamo) {
+        fetchReclamos();
+    }, []);
+
+    function redireccion(reclamo) {
         navigation.navigate('DetalleReclamoVecino', {
-          idReclamo:reclamo.idReclamo,
-          documento: reclamo.documentoVecino,
-          calleSitio: reclamo.calleSitio,
-          numeroSitio: reclamo.numeroSitio,
-          estado: reclamo.estado,
-          desperfecto: reclamo.desperfecto,
-          descripcion: reclamo.descripcion,
+            idReclamo: reclamo.idReclamo,
+            documento: reclamo.documentoVecino,
+            calleSitio: reclamo.calleSitio,
+            numeroSitio: reclamo.numeroSitio,
+            estado: reclamo.estado,
+            desperfecto: reclamo.desperfecto,
+            descripcion: reclamo.descripcion,
         });
-      }
+    }
 
     return (
-        <ScrollView style={styles.containerReclamos}>
+        <ScrollView contentContainerStyle={styles.containerReclamos}>
             {listaReclamos.map((reclamo, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
-                    <Text style={{fontFamily:'GothamBook'}}>{reclamo.descripcion}</Text>
-                    <Text style={{fontFamily:'GothamBook'}}>Estado: {reclamo.estado}</Text>
+                    <Text style={{ fontFamily: 'GothamBook' }}>{reclamo.descripcion}</Text>
+                    <Text style={{ fontFamily: 'GothamBook' }}>Estado: {reclamo.estado}</Text>
                 </TouchableOpacity>
             ))}
         </ScrollView>
@@ -63,7 +62,7 @@ function ListaReclamosVecino({ navigation }) {
 
 const styles = StyleSheet.create({
     containerReclamos: {
-        padding: 10,
+        paddingBottom: 80, // Ajusta este valor según la altura de tu navbar
     },
     botonReclamo: {
         height: 70,
@@ -71,10 +70,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 1,
-        borderColor: '#FFD600',
+        borderColor: "#FFD600",
         borderRadius: 10,
-        marginTop: 20,
-    },
+        marginTop: 10,
+    }
 });
 
 export default ListaReclamosVecino;

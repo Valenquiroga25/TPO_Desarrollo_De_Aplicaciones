@@ -18,7 +18,7 @@ const MenuServiciosVecino = () => {
 
       <TouchableOpacity 
         style={styles.floatingButton} 
-        onPress={() => navigation.navigate('CrearReclamo')}>
+        onPress={() => navigation.navigate('CrearServicio')}>
         <Text style={styles.plusSign}>+</Text>
       </TouchableOpacity>
 
@@ -81,24 +81,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0
   },
-  text:{
-    fontSize:17,
-    marginTop:25
-  },  
-  containerServicios: {
-    padding: 10,
-    maxHeight:470
-  },
-  botonServicio: {
-    height: 70,
-    backgroundColor: '#E6E6E6',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
-    borderColor: "#FFD600",
-    borderRadius: 10,
-    marginTop: 20
-  }
 });
 
 export default MenuServiciosVecino;

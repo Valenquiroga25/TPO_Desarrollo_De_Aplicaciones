@@ -81,6 +81,11 @@ const CrearServicio = ({navigation}) => {
         
         if (!imageResponse.ok) {
           const message = await imageResponse.text()
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/servicios/${idServicio}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json',
+                       "Authorization": `Bearer ${token}`},
+          });
           throw new Error(message)
         }
       }
@@ -246,7 +251,7 @@ const CrearServicio = ({navigation}) => {
             <Text style={styles.text}>Gracias por enviar su servicio. Lo publicaremos en el menu de Servicios! </Text>
           </View>
           <TouchableOpacity style={styles.modalButton} onPress={() => navigation.navigate('MenuVecino')}>
-            <Text>Continuar</Text>
+            <Text style={{fontFamily:'GothamBook'}}>Continuar</Text>
           </TouchableOpacity>
         </View>
       </Modal>
@@ -297,6 +302,7 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 22,
     marginBottom: 10,
+    fontFamily:'GothamBold'
   },
   input: {
     height: 40,
@@ -313,7 +319,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4
     },
-    shadowColor: "rgba(0, 0, 0, 0.25)"
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    fontFamily:'GothamBook'
   },
   inputDescripcion:{
     height: 40,
@@ -334,15 +341,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
+    fontFamily:'GothamBook'
   },
   textArea: {
     height: 100,
     textAlign: 'center',
-  },
-  archivo: {
-    fontSize: 17,
-    textAlign: "center",
-    color: "#000",
   },
   crearReclamoChild: {
     top: 650,
@@ -368,10 +371,12 @@ const styles = StyleSheet.create({
   enviarServicioButtonText: {
     fontSize: 18,
     color: "#000",
+    fontFamily:'GothamBook'
   },
   picker: {
     height: 50,
     width: 340,
+    fontFamily:'GothamBook'
   },
   pickerContainer:{
     justifyContent:'center',
@@ -392,11 +397,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize:20,
-    textAlign:'center'
+    textAlign:'center',
+    fontFamily:'GothamBold'
   },
   text: {
     fontSize:17,
-    marginTop:25
+    marginTop:25,
+    fontFamily:'GothamBook'
   },
   modalButton: {
     width:300,

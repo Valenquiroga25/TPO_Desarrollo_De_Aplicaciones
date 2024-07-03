@@ -70,9 +70,9 @@ function DetalleReclamoVecino({ navigation, route }) {
         <View>
           <TouchableOpacity 
             style={styles.floatingButton} 
-            onPress={() => navigation.navigate('EditarReclamo', {
+            onPress={() => navigation.navigate('EditarReclamoPersonal', {
               idReclamo: idReclamo,
-              documentoVecino: documentoVecino,
+              legajo: legajo,
               calleSitio: calleSitio,
               numeroSitio: numeroSitio,
               estado: estado,

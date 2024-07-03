@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from "expo-file-system";
 
-function CrearDenuncia(){
+function CrearDenuncia({navigation}){
   const [documentoVecino, setDocumento] = useState('');
   const [calleSitio, setCalleSitio] = useState('');
   const [numeroSitio, setNumeroSitio] = useState('');
@@ -66,6 +66,11 @@ function CrearDenuncia(){
         
         if (!imageResponse.ok) {
           const message = await imageResponse.text()
+          const response = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/denuncias/${idDenuncia}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json',
+                       "Authorization": `Bearer ${token}`},
+          });
           throw new Error(message)
         }
       }
@@ -232,7 +237,7 @@ function CrearDenuncia(){
               <Text style={styles.modalTitle}>Denuncia creada con éxito!</Text>
               <Text style={styles.text}>Te mantendremos al tanto ante cualquier noticia.</Text>
             </View>
-            <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+            <TouchableOpacity style={styles.modalButton} onPress={() => navigation.navigate('MenuVecino')} >
               <Text>Continuar</Text>
             </TouchableOpacity>
           </View>

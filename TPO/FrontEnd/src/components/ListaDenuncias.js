@@ -49,7 +49,7 @@ function ListaDenuncias({ navigation }) {
       }
 
     return (
-        <ScrollView style={styles.containerDenuncias}>
+        <ScrollView contentContainerStyle={styles.containerDenuncias}>
             {listaDenuncias.map((denuncia, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonDenuncia} onPress={() => redireccion(denuncia)}>
                     <Text style={{fontFamily:'GothamBook'}}>{denuncia.descripcion}</Text>
@@ -62,18 +62,19 @@ function ListaDenuncias({ navigation }) {
 
 const styles = StyleSheet.create({
     containerDenuncias: {
-        padding: 10,
-    },
-    botonDenuncia: {
-        height: 70,
-        backgroundColor: '#E6E6E6',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#FFD600',
-        borderRadius: 10,
-        marginTop: 20,
-    },
+      paddingBottom: 80, // Ajusta este valor según la altura de tu navbar
+  },
+  botonDenuncia: {
+      width: '100%', // Ocupa todo el ancho disponible
+      height: 70,
+      backgroundColor: '#E6E6E6',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderColor: "#FFD600",
+      borderRadius: 10,
+      marginTop: 10,
+  }
 });
 
 export default ListaDenuncias;
