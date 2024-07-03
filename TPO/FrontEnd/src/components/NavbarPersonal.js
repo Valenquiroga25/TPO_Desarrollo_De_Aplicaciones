@@ -37,7 +37,8 @@ function NavbarPersonal({navigation}){
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                             <Text style={styles.modalTitle}>Centro de Ayuda para el Personal</Text>
                             <Text style={styles.text}>En esta sección, puedes encontrar la asistencia que necesitas:</Text>
-                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Reclamos:</Text> En esta session puedes generar reclamos relacionados a tu especialidad .</Text>
+                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Mis Reclamos:</Text> En esta seccion puedes generar y visualizar reclamos relacionados a tu especialidad .</Text>
+                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Reclamos:</Text> En esta seccion puedes visualizar todos los reclamos existentes.</Text>
                             <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Boton de Servicios:</Text> ¿Necesitas información sobre los servicios disponibles? Pulsalo para acceder al menú de servicios.</Text>
                             <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
                         </ScrollView>
