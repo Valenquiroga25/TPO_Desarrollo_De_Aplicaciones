@@ -201,16 +201,15 @@ const CrearReclamo = ({navigation}) => {
               style={styles.picker}
           >
           <Picker.Item label="Desperfecto" value="" />
-          <Picker.Item label="Fuga de agua en la tuberia principal" value="1" />
-          <Picker.Item label="Corte de energia en zona norte" value="2" />
-          <Picker.Item label="Obstrucción en el sistema de alcantarillado" value="3" />
-          <Picker.Item label="Pérdida de señal en el servicio de internet" value="4" />
-          <Picker.Item label="Desperfecto en el semáforo de la avenida principal" value="5" />
-          <Picker.Item label="Baches en la carretera" value="6" />
-          <Picker.Item label="Mal funcionamiento del sistema de calefacción" value="7" />
-          <Picker.Item label="Ruidos extraños provenientes del transformador eléctrico" value="8" />
-          <Picker.Item label="Rotura de vidrios en la entrada del edificio" value="9" />
-          <Picker.Item label="Problemas con la presión del agua en el piso superior" value="10" />
+          <Picker.Item label="Agua" value="1" />
+          <Picker.Item label="Energía" value="2" />
+          <Picker.Item label="Alcantarillado" value="3" />
+          <Picker.Item label="Internet" value="4" />
+          <Picker.Item label="Semáforos/Tráfico" value="5" />
+          <Picker.Item label="Carreteras" value="6" />
+          <Picker.Item label="Calefacción" value="7" />
+          <Picker.Item label="Electricidad" value="8" />
+          <Picker.Item label="Edificios/Infraestructura" value="9" />
           </Picker>
         </View>
 

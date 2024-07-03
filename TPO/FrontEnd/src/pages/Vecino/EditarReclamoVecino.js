@@ -7,6 +7,7 @@ function EditarReclamoVecino({ navigation, route }) {
   const {idReclamo, documentoReclamo, calleSitioReclamo, numeroSitioReclamo, estado, desperfectoReclamo, descripcionReclamo} = route.params;
   
   const [documentoVecino, setdocumentoVecino] = useState(documentoReclamo);
+  const legajoPersonal = null
   const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
   const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
   const [idDesperfecto, setIdDesperfecto] = useState(null);
@@ -26,11 +27,11 @@ function EditarReclamoVecino({ navigation, route }) {
 
       const data = {
         documentoVecino,
+        legajoPersonal,
         calleSitio,
         numeroSitio,
         idDesperfecto,
-        descripcion,
-        imagenes
+        descripcion
       };
 
       console.log(data)
@@ -49,40 +50,7 @@ function EditarReclamoVecino({ navigation, route }) {
       if (!response.ok) {
         throw new Error(responseText);
       }
-/*
-      for (const imagen of imagenes) {
-        const formData = new FormData();
-
-        const fileInfo = await FileSystem.getInfoAsync(imagen);
-        const fileUri = fileInfo.uri;
-        const fileName = fileUri.substring(fileUri.lastIndexOf("/") + 1);
-        const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1);
-
-        formData.append("archivo", {
-          uri: fileUri,
-          name: fileName,
-          type: `image/${fileType}`,
-        });
-        formData.append("idServicio", idServicio.toString());
-
-        console.log("FormData content:", JSON.stringify(formData._parts));
-
-        //fetch de las imagenes
-        const imageResponse = await fetch(
-          `http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/${idReclamo}`,
-          {
-            "method": "DELETE",
-            "headers": {"Authorization": `Bearer ${token}` },
-            "body": formData,
-          }
-        );
-
-        if (!imageResponse.ok) {
-          const message = await imageResponse.text();
-          throw new Error(message);
-        }
-      }
-*/
+      
       openModal();
     } catch (error) {
       console.error(error);
