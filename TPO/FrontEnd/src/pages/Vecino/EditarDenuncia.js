@@ -54,7 +54,7 @@ function EditarDenuncia({ navigation,route }) {
 
     function closeModal() {
         setIsVisible(false);
-        navigation.navigate('MenuDenuncias');
+        navigation.navigate('MenuVecino');
     }
 
     return (

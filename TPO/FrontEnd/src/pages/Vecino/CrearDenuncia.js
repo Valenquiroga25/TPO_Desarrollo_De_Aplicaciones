@@ -16,7 +16,7 @@ function CrearDenuncia({navigation}){
   const [aceptoResponsabilidad, setAceptoResponsabilidad] = useState(0);
   const [checked, setChecked] = useState(false);
 
-  const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion && !aceptoResponsabilidad;
+  const isFormComplete = documentoVecino && calleSitio && numeroSitio && descripcion && aceptoResponsabilidad;
 
   const handleSubmit = async () => {
     if (!isFormComplete) {
@@ -179,13 +179,13 @@ function CrearDenuncia({navigation}){
           (<CheckBox
             value={aceptoResponsabilidad}
             onClick={handleResponsabilidad}
-            style={styles.checkboxFalse}
+            style={styles.checkboxTrue}
           />)
         :
           (<CheckBox
           value={aceptoResponsabilidad}
           onClick={handleResponsabilidad}
-          style={styles.checkboxTrue}
+          style={styles.checkboxFalse}
         />)}
 
           <Text style={styles.declaracionText}>
