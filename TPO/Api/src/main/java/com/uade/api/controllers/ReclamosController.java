@@ -45,7 +45,7 @@ public class ReclamosController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateReclamo(@PathVariable Long id,@RequestBody ReclamoModelDTO reclamoDTO){
         try{
-            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getIdDesperfecto(), reclamoDTO.getDescripcion(), reclamoDTO.getImagenes()), HttpStatus.OK);
+            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getCalleSitio(), reclamoDTO.getNumeroSitio(), reclamoDTO.getDescripcion()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
@@ -117,9 +117,7 @@ public class ReclamosController {
                     vecinosService.findVecinoByDocumento(reclamoDTO.getDocumentoVecino()),
                     sitiosService.findSitioByDireccion(reclamoDTO.getCalleSitio(),reclamoDTO.getNumeroSitio()),
                     desperfectosService.findDesperfectoById(reclamoDTO.getIdDesperfecto()),
-                    reclamoDTO.getDescripcion(),
-                    reclamoDTO.getImagenes(),
-                    reclamoDTO.getIdReclamoUnificado()
+                    reclamoDTO.getDescripcion()
             );
             return reclamo;
 

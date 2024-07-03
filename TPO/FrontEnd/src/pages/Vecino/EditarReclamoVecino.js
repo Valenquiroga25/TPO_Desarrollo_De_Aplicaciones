@@ -9,7 +9,7 @@ function EditarReclamoVecino({ navigation, route }) {
   const [documentoVecino, setdocumentoVecino] = useState(documentoReclamo);
   const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
   const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
-  const [idDesperfecto, setIdDesperfecto] = useState(desperfectoReclamo);
+  const [idDesperfecto, setIdDesperfecto] = useState(null);
   const [descripcion, setDescripcion] = useState(descripcionReclamo);
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -114,7 +114,7 @@ function EditarReclamoVecino({ navigation, route }) {
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setNumeroSitio}
-          value={numeroSitio}
+          value={numeroSitio.toString()}
           inputMode="numeric"
           placeholder="Numeración sitio"
         />

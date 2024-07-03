@@ -73,7 +73,7 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public String updateReclamo(Long id, Long idDesperfecto, String descripcion, List<ImagenServicioModel> imagenes) throws Exception{
+    public String updateReclamo(Long id,  String calleSitio, Long numeroSitio, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
@@ -87,12 +87,16 @@ public class ReclamosService {
         }
 
         ReclamoModel reclamoDb = reclamoOp.get();
-        if(idDesperfecto != null)
-            reclamoDb.getDesperfecto().setIdDesperfecto(idDesperfecto);
+
+        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(calleSitio, numeroSitio));
+        if (sitioOp.isEmpty()){
+            log.error("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+            throw new Exception("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+        }
+
+        reclamoDb.setSitio(sitioOp.get());
         if(descripcion != null)
             reclamoDb.setDescripcion(descripcion);
-        if(!imagenes.isEmpty())
-            reclamoDb.setImagenes(imagenes);
 
         this.reclamosRepository.save(reclamoDb);
         log.info("Reclamo " + reclamoDb.getIdReclamo() + " actualizado correctamente!");

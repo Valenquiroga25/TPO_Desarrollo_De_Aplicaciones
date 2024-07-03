@@ -34,21 +34,18 @@ public class ReclamoModel {
     @JoinColumn(name="idDesperfecto")
     private DesperfectoModel desperfecto; // Consultar si un reclamo puede tener más de un desperfecto.
     private String descripcion;
-    @OneToMany
-    @JoinColumn(name="idImagen")
-    private List<ImagenServicioModel> imagenes;
 
     @Enumerated(EnumType.STRING)
     private Estado estado;
     private Long idReclamoUnificado;
 
-    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion, List<ImagenServicioModel> imagenes, Long idReclamoUnificado){
+    public ReclamoModel(VecinoModel vecino, SitioModel sitio, DesperfectoModel desperfecto, String descripcion){
         this.vecino = vecino;
         this.sitio = sitio;
         this.desperfecto = desperfecto;
         this.descripcion = descripcion;
         this.estado = Estado.EN_PROCESO;
-        this.idReclamoUnificado = idReclamoUnificado;
+        this.idReclamoUnificado = null;
     }
 
     public ReclamoModel(PersonalModel personal, SitioModel sitio, DesperfectoModel desperfecto, String descripcion){
