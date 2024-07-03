@@ -267,6 +267,7 @@ posterImage: {
 },
 floatingButton: {
     position: 'absolute',
+    bottom: -200,
     right: 10,
     backgroundColor: '#FFE661',
     borderRadius: 50,

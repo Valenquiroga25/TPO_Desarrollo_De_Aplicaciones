@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Image, Modal, FlatList } from "react-native";
 import {Picker} from '@react-native-picker/picker'
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,8 +18,20 @@ const CrearReclamo = ({navigation}) => {
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
 	const [isConnected, setConnected] = useState(true);
+  const [rol, setRol] = useState('Vecino')
 
   const isFormComplete = (documentoVecino || legajoPersonal) && calleSitio && numeroSitio && idDesperfecto && descripcion;
+
+  useEffect(() => {
+    async function adquirirRol(){
+      const token = await AsyncStorage.getItem('token');
+      const decodeToken = jwtDecode(token); 
+      if(decodeToken.rol === 'Inspector')
+        setRol('Inspector')
+    }
+
+    adquirirRol()
+  }, [])
 
   const handleSubmit = async () => {
     if (!isFormComplete) {
@@ -164,20 +176,28 @@ const CrearReclamo = ({navigation}) => {
       <View style={styles.containerDatos}>
         <Text style={styles.titulo}>Crear Reclamo</Text>
         
-        <TextInput
+        {rol === 'Vecino' ? 
+        (<>
+          <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setDocumentoVecino}
           value={documentoVecino}
           inputMode='numeric'
           placeholder="Documento"
         />
-        <TextInput
-          style={[styles.input, styles.textInput]}
-          onChangeText={setLegajoPersonal}
-          value={legajoPersonal}
-          inputMode='numeric'
-          placeholder="Legajo"
-        />
+        </>)
+         :
+         (<>
+          <TextInput
+            style={[styles.input, styles.textInput]}
+            onChangeText={setLegajoPersonal}
+            value={legajoPersonal}
+            inputMode='numeric'
+            placeholder="Legajo"
+          />
+        </>)
+        }
+
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setCalleSitio}
@@ -298,8 +318,8 @@ const styles = StyleSheet.create({
     height: 45,
   },
   imagen:{
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     borderRadius: 5,
     marginLeft: 10
   },
