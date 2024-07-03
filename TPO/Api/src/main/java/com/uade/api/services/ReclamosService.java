@@ -73,7 +73,7 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public String updateReclamo(Long id,  String calleSitio, Long numeroSitio, String descripcion) throws Exception{
+    public String updateReclamo(Long id, String calleSitio, Long numeroSitio, String descripcion) throws Exception{
         if(id < 0){
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
