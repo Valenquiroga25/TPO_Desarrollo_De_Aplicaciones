@@ -190,7 +190,7 @@ function DetalleReclamoVecino({ navigation, route }) {
               documentoReclamo: documento,
               calleSitioReclamo: calleSitio,
               numeroSitioReclamo: numeroSitio,
-              estado: estado,
+              estadoReclamo: estado,
               desperfectoReclamo: desperfecto,
               descripcionReclamo: descripcion,
             })
