@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="movimientosReclamo")
 @Getter
@@ -21,9 +23,17 @@ MovimientoReclamoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMovimiento;
     @ManyToOne
-    @JoinColumn(name="Reclamo")
-    private ReclamoModel reclamo;
-    private String responsable;
-    private String causa;
+    @JoinColumn(name="idReclamo")
+    private ReclamoModel idReclamo;
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+    private String descripcion;
+    private LocalDateTime fecha;
 
+    public MovimientoReclamoModel(ReclamoModel reclamo, Estado estado, String descripcion) {
+        this.idReclamo = reclamo;
+        this.estado = estado;
+        this.descripcion = descripcion;
+        this.fecha = LocalDateTime.now();
+    }
 }
