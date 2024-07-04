@@ -36,6 +36,10 @@ public class ReclamosController {
     public ResponseEntity<?> createReclamo(@RequestBody ReclamoModelDTO reclamoDTO){ // RequestBody -> Se utiliza para vincular el cuerpo de un objeto con el dato que se pasa como parámetro (para actualizar o crear un objeto).
         try{
             ReclamoModel reclamo = convertToEntity(reclamoDTO);
+            Long idReclamoUnificado = reclamosService.chequearReclamoUnificado(reclamo);
+            if(idReclamoUnificado != null)
+                reclamo.setIdReclamoUnificado(idReclamoUnificado);
+
             return new ResponseEntity<>(reclamosService.createReclamo(reclamo), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
@@ -45,7 +49,7 @@ public class ReclamosController {
     @PutMapping(path = "/{id}")
     public ResponseEntity<?> updateReclamo(@PathVariable Long id,@RequestBody ReclamoModelDTO reclamoDTO){
         try{
-            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getCalleSitio(), reclamoDTO.getNumeroSitio(), reclamoDTO.getDescripcion()), HttpStatus.OK);
+            return new ResponseEntity<>(this.reclamosService.updateReclamo(id,reclamoDTO.getCalleSitio(), reclamoDTO.getNumeroSitio(), reclamoDTO.getDescripcion(), reclamoDTO.getIdReclamoUnificado()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
@@ -71,6 +75,19 @@ public class ReclamosController {
     public ResponseEntity<?> getReclamoById(@PathVariable Long id){
         try{
             return new ResponseEntity<>(this.reclamosService.findReclamoById(id),HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+
+    @GetMapping(path = "/unificados/")
+    public ResponseEntity<?> getAllReclamosUnificados(){
+        try{
+            List<ReclamoUnificadoModel> allReclamos = this.reclamosService.findAllReclamoUnificados();
+            List<ReclamoVecinoDevueltoDTO> allReclamosDevueltos = new ArrayList<>();
+            for(ReclamoUnificadoModel reclamo : allReclamos)
+                allReclamosDevueltos.add(convertUnificadoToVecinoDTO(reclamo));
+            return new ResponseEntity<>(allReclamosDevueltos,HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
@@ -147,7 +164,17 @@ public class ReclamosController {
                 reclamo.getSitio().getNumero(),
                 reclamo.getEstado(),
                 reclamo.getDesperfecto().getDescripcion(),
-                reclamo.getDescripcion());
+                reclamo.getDescripcion(),
+                reclamo.getIdReclamoUnificado());
+        return reclamoDTO;
+    }
+
+    public ReclamoVecinoDevueltoDTO convertUnificadoToVecinoDTO(ReclamoUnificadoModel reclamo){
+        ReclamoVecinoDevueltoDTO reclamoDTO = new ReclamoVecinoDevueltoDTO(
+                reclamo.getSitio().getCalle(),
+                reclamo.getSitio().getNumero(),
+                reclamo.getDesperfecto().getDescripcion(),
+                reclamo.getIdReclamoUnificado());
         return reclamoDTO;
     }
 
@@ -159,7 +186,17 @@ public class ReclamosController {
                 reclamo.getSitio().getNumero(),
                 reclamo.getEstado(),
                 reclamo.getDesperfecto().getDescripcion(),
-                reclamo.getDescripcion());
+                reclamo.getDescripcion(),
+                reclamo.getIdReclamoUnificado());
         return reclamoDTO;
     }
+    public ReclamoPersonalDevueltoDTO convertUnificadoToPersonalDTO(ReclamoModel reclamo){
+        ReclamoPersonalDevueltoDTO reclamoDTO = new ReclamoPersonalDevueltoDTO(
+                reclamo.getSitio().getCalle(),
+                reclamo.getSitio().getNumero(),
+                reclamo.getDesperfecto().getDescripcion(),
+                reclamo.getIdReclamoUnificado());
+        return reclamoDTO;
+    }
+
 }

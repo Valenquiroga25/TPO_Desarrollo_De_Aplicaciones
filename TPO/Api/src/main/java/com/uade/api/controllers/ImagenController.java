@@ -99,6 +99,20 @@ public class ImagenController {
         }
     }
 
+    @GetMapping("/reclamo/unificado/{idReclamoUnificado}")
+    public ResponseEntity<?> downloadAllReclamosByIdUnificado(@PathVariable Long idReclamoUnificado) {
+        try{
+            List<ImagenReclamoModel> imagenes = this.imagenService.findImagenesByIdReclamosUnificados(idReclamoUnificado);
+            List<ImagenDevueltaDTO> imagenesDevuetas = new ArrayList<>();
+            for(ImagenReclamoModel imagen : imagenes)
+                imagenesDevuetas.add(convertReclamoToDTO(imagen));
+
+            return new ResponseEntity<>(imagenesDevuetas, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+    }
+
     @DeleteMapping("/reclamo/{idReclamo}")
     public ResponseEntity<?> deleteAllReclamos(@PathVariable Long idReclamo) {
         try{

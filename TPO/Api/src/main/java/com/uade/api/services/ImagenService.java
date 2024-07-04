@@ -67,6 +67,17 @@ public class ImagenService{
         return imagenesBuscadas;
     }
 
+    public List<ImagenReclamoModel> findImagenesByIdReclamosUnificados(Long idReclamoUnificado) {
+        List<ImagenReclamoModel> imagenes = this.imagenReclamoRepository.findAll();
+        List<ImagenReclamoModel> imagenesBuscadas = new ArrayList<>();
+
+        for(ImagenReclamoModel imagen : imagenes){
+            if(Objects.equals(imagen.getReclamo().getIdReclamoUnificado(), idReclamoUnificado))
+                imagenesBuscadas.add(imagen);
+        }
+        return imagenesBuscadas;
+    }
+
     public void deleteImagenReclamo(Long id){
         ImagenReclamoModel imagen = this.findImagenReclamoById(id);
         this.imagenReclamoRepository.delete(imagen);

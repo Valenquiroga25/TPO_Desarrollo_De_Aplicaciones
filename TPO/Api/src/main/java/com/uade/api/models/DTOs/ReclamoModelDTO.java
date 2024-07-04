@@ -15,4 +15,5 @@ public class ReclamoModelDTO {
     private Long numeroSitio;
     private Long idDesperfecto;
     private String descripcion;
+    private Long idReclamoUnificado;
 }

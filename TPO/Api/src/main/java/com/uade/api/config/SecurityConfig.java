@@ -42,7 +42,7 @@ public class SecurityConfig {
                 "/tpo-desarrollo-mobile/comercios/getAllProfesionales",
                 "/tpo-desarrollo-mobile/imagenes/servicio/{idServicio}",
                 "/tpo-desarrollo-mobile/imagenes/reclamo/{idReclamo}",
-                "/tpo-desarrollo-mobile/imagenes/denuncia/{idDenuncia}"
+                "/tpo-desarrollo-mobile/imagenes/reclamo/unificado/{idReclamoUnificado}"
                 );
     }
 

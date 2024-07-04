@@ -18,4 +18,13 @@ public class ReclamoPersonalDevueltoDTO {
     private Estado estado;
     private String desperfecto;
     private String descripcion;
+    private Long idReclamoUnificado;
+
+    public ReclamoPersonalDevueltoDTO(String calle, Long numero, String descripcion, Long idReclamoUnificado) {
+        this.calleSitio = calle;
+        this.numeroSitio = numero;
+        this.estado = Estado.EN_PROCESO;
+        this.desperfecto = desperfecto;
+        this.idReclamoUnificado = idReclamoUnificado;
+    }
 }

@@ -18,6 +18,8 @@ public class ReclamosService {
     @Autowired
     private ReclamosRepository reclamosRepository;
     @Autowired
+    private ReclamoUnificadoRepository reclamoUnificadoRepository;
+    @Autowired
     private VecinosService vecinosService;
     @Autowired
     private PersonalService personalService;
@@ -28,44 +30,44 @@ public class ReclamosService {
     @Autowired
     private ImagenService imagenService;
 
-    public ReclamoModel createReclamo(ReclamoModel newReclamo) throws Exception{
+    public ReclamoModel createReclamo(ReclamoModel newReclamo) throws Exception {
 
         // Verificamos que no estén ambos campos vacíos.
-        if(newReclamo.getVecino() == null && newReclamo.getPersonal() == null){
+        if (newReclamo.getVecino() == null && newReclamo.getPersonal() == null) {
             log.info("El reclamo debe tener un vecino o un personal asociado");
             throw new Exception("El reclamo debe tener un vecino o un personal asociado");
         }
 
         // Verificamos que no estén ambos campos llenos.
-        if(newReclamo.getVecino() != null && newReclamo.getPersonal() != null){
+        if (newReclamo.getVecino() != null && newReclamo.getPersonal() != null) {
             log.info("El reclamo debe tener un solo tipo de usuario asociado");
             throw new Exception("El reclamo debe tener un solo tipo de usuario asociado");
         }
 
-        if(newReclamo.getVecino() != null){
+        if (newReclamo.getVecino() != null) {
             Optional<VecinoModel> vecinoOp = Optional.ofNullable(vecinosService.findVecinoByDocumento(newReclamo.getVecino().getDocumento()));
-            if (vecinoOp.isEmpty()){
+            if (vecinoOp.isEmpty()) {
                 log.error("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
                 throw new Exception("El vecino con el documento " + newReclamo.getVecino().getDocumento() + " no se encuentra registrado en la base de datos!");
             }
         }
 
-        if(newReclamo.getPersonal() != null){
+        if (newReclamo.getPersonal() != null) {
             Optional<PersonalModel> personalOp = Optional.ofNullable(personalService.findPersonalByLegajo(newReclamo.getPersonal().getLegajo()));
-            if (personalOp.isEmpty()){
+            if (personalOp.isEmpty()) {
                 log.error("El personal con el legajo " + newReclamo.getPersonal().getLegajo() + " no se encuentra registrado en la base de datos!");
                 throw new Exception("El personal con el legajo " + newReclamo.getPersonal().getLegajo() + " no se encuentra registrado en la base de datos!");
             }
         }
 
         Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(newReclamo.getSitio().getCalle(), newReclamo.getSitio().getNumero()));
-        if (sitioOp.isEmpty()){
+        if (sitioOp.isEmpty()) {
             log.error("No hay ningún sitio en la dirección " + newReclamo.getSitio().getCalle() + " " + newReclamo.getSitio().getNumero());
             throw new Exception("No hay ningún sitio en la dirección " + newReclamo.getSitio().getCalle() + " " + newReclamo.getSitio().getNumero());
         }
 
         Optional<DesperfectoModel> desperfectoOp = Optional.ofNullable(desperfectosService.findDesperfectoById(newReclamo.getDesperfecto().getIdDesperfecto()));
-        if (desperfectoOp.isEmpty()){
+        if (desperfectoOp.isEmpty()) {
             log.error("El desperfecto con el id " + newReclamo.getDesperfecto().getIdDesperfecto() + " no se encuentra registrado en la base de datos!");
             throw new Exception("El desperfecto con el id " + newReclamo.getDesperfecto().getIdDesperfecto() + " no se encuentra registrado en la base de datos!");
         }
@@ -73,40 +75,45 @@ public class ReclamosService {
         return reclamosRepository.save(newReclamo);
     }
 
-    public String updateReclamo(Long id, String calleSitio, Long numeroSitio, String descripcion) throws Exception{
-        if(id < 0){
+    public String updateReclamo(Long id, String calleSitio, Long numeroSitio, String descripcion, Long idReclamoUnificado) throws Exception {
+        if (id < 0) {
             log.error("El Id no es válido. El Id debe ser positivo!");
             throw new Exception("El Id no es válido. El Id debe ser positivo!");
         }
 
         Optional<ReclamoModel> reclamoOp = reclamosRepository.findById(id);
 
-        if(reclamoOp.isEmpty()){
+        if (reclamoOp.isEmpty()) {
             log.error("El reclamo con el Id " + id + " no se encuentra registrado en la base de datos.");
             throw new Exception("El reclamo con el Id " + id + " no se encuentra registrado en la base de datos.");
         }
 
         ReclamoModel reclamoDb = reclamoOp.get();
 
-        Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(calleSitio, numeroSitio));
-        if (sitioOp.isEmpty()){
-            log.error("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
-            throw new Exception("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+        if(calleSitio != null && numeroSitio!=null) {
+            Optional<SitioModel> sitioOp = Optional.ofNullable(sitiosService.findSitioByDireccion(calleSitio, numeroSitio));
+            if (sitioOp.isEmpty()) {
+                log.error("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+                throw new Exception("No hay ningún sitio en la dirección " + calleSitio + " " + numeroSitio);
+            }
+            reclamoDb.setSitio(sitioOp.get());
         }
 
-        reclamoDb.setSitio(sitioOp.get());
-        if(descripcion != null)
+        if (descripcion != null)
             reclamoDb.setDescripcion(descripcion);
+
+        if(idReclamoUnificado != null)
+            reclamoDb.setIdReclamoUnificado(idReclamoUnificado);
 
         this.reclamosRepository.save(reclamoDb);
         log.info("Reclamo " + reclamoDb.getIdReclamo() + " actualizado correctamente!");
         return "Reclamo actualizado con éxito!";
     }
 
-    public String deleteReclamo(Long id) throws Exception{
+    public String deleteReclamo(Long id) throws Exception {
         Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findById(id);
 
-        if (reclamoOp.isEmpty()){
+        if (reclamoOp.isEmpty()) {
             log.error("El reclamo con el id " + id + " no está registrado en la base de datos.");
             throw new Exception("El reclamo con el id " + id + " no está registrado en la base de datos.");
         }
@@ -117,9 +124,9 @@ public class ReclamosService {
         return "Reclamo eliminado con éxito!";
     }
 
-    public ReclamoModel findReclamoById (Long id) throws Exception{
+    public ReclamoModel findReclamoById(Long id) throws Exception {
         Optional<ReclamoModel> reclamoOp = this.reclamosRepository.findById(id);
-        if(reclamoOp.isEmpty()){
+        if (reclamoOp.isEmpty()) {
             log.error("El reclamo con el id " + id + " no está registrado en la base de datos.");
             throw new Exception("El reclamo con el id " + id + " no está registrado en la base de datos.");
         }
@@ -127,12 +134,18 @@ public class ReclamosService {
         return reclamoOp.get();
     }
 
-    public List<ReclamoModel> findAllReclamosFromVecino(String documento){
+    public List<ReclamoUnificadoModel> findAllReclamoUnificados() {
+        List<ReclamoUnificadoModel> reclamosUnificados = this.reclamoUnificadoRepository.findAll();
+
+        return reclamosUnificados;
+    }
+
+    public List<ReclamoModel> findAllReclamosFromVecino(String documento) {
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromVecinos = new ArrayList<>();
 
-        for(ReclamoModel reclamo : allReclamos){
-            if(reclamo.getVecino() != null) {
+        for (ReclamoModel reclamo : allReclamos) {
+            if (reclamo.getVecino() != null) {
                 if (Objects.equals(reclamo.getVecino().getDocumento(), documento))
                     allReclamosFromVecinos.add(reclamo);
             }
@@ -140,12 +153,12 @@ public class ReclamosService {
         return allReclamosFromVecinos;
     }
 
-    public List<ReclamoModel> findAllReclamosFromPersonal(String legajo){
+    public List<ReclamoModel> findAllReclamosFromPersonal(String legajo) {
         List<ReclamoModel> allReclamos = this.reclamosRepository.findAll();
         List<ReclamoModel> allReclamosFromPersonal = new ArrayList<>();
 
-        for(ReclamoModel reclamo : allReclamos){
-            if(reclamo.getPersonal() != null) {
+        for (ReclamoModel reclamo : allReclamos) {
+            if (reclamo.getPersonal() != null) {
                 if (Objects.equals(reclamo.getPersonal().getLegajo(), legajo))
                     allReclamosFromPersonal.add(reclamo);
             }
@@ -169,6 +182,30 @@ public class ReclamosService {
         ReclamoModel reclamo = findReclamoById(id);
         reclamo.setEstado(estado);
         this.reclamosRepository.save(reclamo);
-        return "Se ha actualizado al estado "+ estado;
+        return "Se ha actualizado al estado " + estado;
+    }
+
+    public Long chequearReclamoUnificado(ReclamoModel reclamo) throws Exception {
+        List<ReclamoModel> reclamos = this.reclamosRepository.findAll();
+        List<ReclamoModel> reclamosAquiridos = new ArrayList<>();
+        int contador = 0;
+        for (ReclamoModel rec : reclamos) {
+            if (Objects.equals(rec.getSitio().getIdSitio(), reclamo.getSitio().getIdSitio())) {
+                contador++;
+                reclamosAquiridos.add(rec);
+            }
+        }
+
+        if (contador > 3) {
+            ReclamoUnificadoModel reclamoUnificado = new ReclamoUnificadoModel(reclamo.getSitio(), reclamo.getDesperfecto());
+            this.reclamoUnificadoRepository.save(reclamoUnificado);
+
+            for (ReclamoModel rec1 : reclamosAquiridos){
+                if(rec1.getIdReclamoUnificado() == null)
+                    updateReclamo(rec1.getIdReclamo(), null, null, null, reclamoUnificado.getIdReclamoUnificado());
+            }
+            return reclamoUnificado.getIdReclamoUnificado();
+        }
+        return null;
     }
 }

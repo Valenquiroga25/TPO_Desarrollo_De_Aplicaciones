@@ -82,6 +82,16 @@ create table reclamos(
     constraint fk_reclamos_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
 );
 
+create table reclamosUnificados(
+	idReclamoUnificado BIGINT not null AUTO_INCREMENT,
+    idSitio BIGINT not null,
+    idDesperfecto BIGINT not null,
+	estado varchar(30),
+	constraint pk_reclamosUnificados primary key (idReclamoUnificado),
+    constraint fk_reclamosUnificados_sitios foreign key (idSitio) references sitios(idSitio),
+    constraint fk_reclamosUnificados_desperfectos foreign key (idDesperfecto) references desperfectos(idDesperfecto)
+)
+
 create table movimientosReclamo(
     idMovimiento BIGINT not null AUTO_INCREMENT,
     idReclamo BIGINT not null,
@@ -143,7 +153,8 @@ create table imagenesReclamos(
     constraint pk_imagen primary key(idImagen),
     constraint fk_imagen_reclamo foreign key (idReclamo) references reclamos(idReclamo)
 )
-
+drop table imagenesReclamos
+truncate table reclamos
 create table imagenesDenuncias(
     idImagen BIGINT not null AUTO_INCREMENT,
     datosImagen longblob not null,
@@ -308,6 +319,8 @@ select * from vecinos;
 select * from personal;
 select * from usuarios;
 select * from reclamos
+select * from reclamosUnificados
+
 select * from denuncias
 select * from servicios;
 select * from rubros
