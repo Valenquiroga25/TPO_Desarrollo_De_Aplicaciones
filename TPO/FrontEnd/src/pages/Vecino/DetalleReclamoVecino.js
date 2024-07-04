@@ -1,21 +1,9 @@
 import { React, useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  FlatList,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import {Text,View,StyleSheet,Image,FlatList,TouchableOpacity} from "react-native";
 import { ipLocal } from "../../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
 
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
-const espacio_contendor = width * 0.7;
 
 function DetalleReclamoVecino({ navigation, route }) {
   const {
@@ -26,6 +14,7 @@ function DetalleReclamoVecino({ navigation, route }) {
     estado,
     desperfecto,
     descripcion,
+    idReclamoUnificado
   } = route.params;
   const [listaImagenes, setListaImagenes] = useState([]);
   const [esVecino, setEsVecino] = useState(true);
@@ -96,6 +85,10 @@ function DetalleReclamoVecino({ navigation, route }) {
           <Text style={styles.detalle}>
             <Text style={styles.detalle2}>DESPERFECTO:</Text>
             <Text style={styles.datoText}>{` ${desperfecto}`}</Text>
+          </Text>
+          <Text style={styles.detalle}>
+            <Text style={styles.detalle2}>ID RECLAMO UNIFICADO:</Text>
+            <Text style={styles.datoText}>{` ${idReclamoUnificado}`}</Text>
           </Text>
           <Text style={styles.descripcion}>{"DESCRIPCION"}</Text>
           <View style={{ borderWidth: 2, borderColor: "black", height: 160 }}>
@@ -230,7 +223,7 @@ datoText:{
 descripcion:{
   fontSize:18,
   color:'#343a40',
-  marginTop:25,
+  marginTop:10,
   marginBottom:15,
   fontFamily: 'GothamBold',
 },
@@ -267,7 +260,7 @@ posterImage: {
 },
 floatingButton: {
   position: 'absolute',
-  bottom: -70,
+  bottom: -45,
   right: 10,
   backgroundColor: '#FFE661',
   borderRadius: 50,

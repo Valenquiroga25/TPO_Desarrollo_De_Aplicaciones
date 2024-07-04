@@ -1,12 +1,14 @@
-import { React, useState, useEffect } from 'react';
-import { Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { jwtDecode } from 'jwt-decode';
-import { ipLocal } from '../global/ipLocal';
+import { React, useEffect, useState } from "react";
+import {View,Text,ScrollView,StyleSheet,TouchableOpacity,ActivityIndicator} from "react-native";
+import { ipLocal } from "../global/ipLocal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { jwtDecode } from "jwt-decode";
 
 function ListaReclamosAllVecinos({ navigation }) {
     const [listaReclamos, setListaReclamos] = useState([]);
-
+    const [listaUnificados, setListaUnificados] = useState([]);
+    const [loading, setLoading] = useState(true); // Estado para indicar carga
+    
     useEffect(() => {
         async function fetchReclamosVecinos() {
             try {
@@ -27,9 +29,36 @@ function ListaReclamosAllVecinos({ navigation }) {
                 }
                 const reclamos = await response.json();
                 setListaReclamos(reclamos);
+                const responseUnificado = await fetch(`http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/unificados/`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
 
+                if (!responseUnificado.ok) {
+                    const errorText = await responseUnificado.text();
+                    throw new Error(`Error en la respuesta del servidor: ${errorText} ${responseUnificado.status}`);
+                }
+
+                const unificados = await responseUnificado.json();
+                setListaUnificados(unificados);
+
+                let reclamosFinales = reclamos;
+
+                if (unificados.length > 0) {
+                    reclamosFinales = reclamos.filter(
+                        reclamo => !unificados.some(unificado => reclamo.idReclamoUnificado === unificado.idReclamoUnificado)
+                    );
+                    reclamosFinales = [...reclamosFinales, ...unificados];
+                }
+
+                setListaReclamos(reclamosFinales);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false); // Cambia el estado de carga a false cuando termina
             }
         }
 
@@ -37,15 +66,35 @@ function ListaReclamosAllVecinos({ navigation }) {
     }, []);
 
     function redireccion(reclamo) {
-        navigation.navigate('DetalleReclamoVecino', {
-            idReclamo: reclamo.idReclamo,
-            documento: reclamo.documentoVecino,
-            calleSitio: reclamo.calleSitio,
-            numeroSitio: reclamo.numeroSitio,
-            estado: reclamo.estado,
-            desperfecto: reclamo.desperfecto,
-            descripcion: reclamo.descripcion,
-        });
+        if (reclamo.idReclamoUnificado === null) {
+            navigation.navigate('DetalleReclamoVecino', {
+                idReclamo: reclamo.idReclamo,
+                documento: reclamo.documentoVecino,
+                calleSitio: reclamo.calleSitio,
+                numeroSitio: reclamo.numeroSitio,
+                estado: reclamo.estado,
+                desperfecto: reclamo.desperfecto,
+                descripcion: reclamo.descripcion,
+                idReclamoUnificado: reclamo.idReclamoUnificado
+            });
+        } else {
+            navigation.navigate('DetalleReclamoUnificadoVecino', {
+                idReclamoUnificado: reclamo.idReclamoUnificado,
+                calleSitio: reclamo.calleSitio,
+                numeroSitio: reclamo.numeroSitio,
+                estado: reclamo.estado,
+                desperfecto: reclamo.desperfecto,
+            });
+        }
+    }
+
+    // Si está cargando, muestra un indicador de carga
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#0000ff" style={{position:'absolute', top:250, left:'50%'}}/>
+            </View>
+        );
     }
 
     return (

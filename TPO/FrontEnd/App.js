@@ -38,6 +38,7 @@ import EditarReclamoVecino from './src/pages/Vecino/EditarReclamoVecino';
 import EditarDenuncia from './src/pages/Vecino/EditarDenuncia';
 import DetalleVecino from './src/pages/Vecino/DetalleVecino';
 import DetallePersonal from './src/pages/Personal/DetallePersonal';
+import DetalleReclamoUnificadoVecino from './src/pages/Vecino/DetalleReclamoUnificadoVecino';
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -94,6 +95,7 @@ function App() {
         <Stack.Screen name='ListaReclamosVecino' component={ListaReclamosVecino}/>
         <Stack.Screen name='DetalleReclamoVecino' component={DetalleReclamoVecino}/>
         <Stack.Screen name='EditarReclamoVecino' component={EditarReclamoVecino}/>
+        <Stack.Screen name='DetalleReclamoUnificadoVecino' component={DetalleReclamoUnificadoVecino}/>
 
         <Stack.Screen name='ListaReclamosPersonal' component={ListaReclamosPersonal}/>
         <Stack.Screen name='ListaReclamosAllVecinos' component={ListaReclamosAllVecinos}/>
