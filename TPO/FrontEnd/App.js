@@ -38,7 +38,7 @@ import EditarReclamoVecino from './src/pages/Vecino/EditarReclamoVecino';
 import EditarDenuncia from './src/pages/Vecino/EditarDenuncia';
 import DetalleVecino from './src/pages/Vecino/DetalleVecino';
 import DetallePersonal from './src/pages/Personal/DetallePersonal';
-
+import MovimientosReclamos from './src/pages/Vecino/MovimientosReclamos';
 const loadFonts = async () => {
   await Font.loadAsync({
     'GothamBold': require('./assets/fonts/Gotham Rounded Bold.ttf'),
@@ -99,7 +99,7 @@ function App() {
         <Stack.Screen name='ListaReclamosAllVecinos' component={ListaReclamosAllVecinos}/>
         <Stack.Screen name='DetalleReclamoPersonal' component={DetalleReclamoPersonal}/>
         <Stack.Screen name='EditarReclamoPersonal' component={EditarReclamoPersonal}/>
-
+        <Stack.Screen name='MovimientosReclamos' component={MovimientosReclamos}/>
         <Stack.Screen name='ListaDenuncias' component={ListaDenuncias}/>
         <Stack.Screen name='DetalleDenuncia' component={DetalleDenuncia}/>
         <Stack.Screen name='EditarDenuncia' component={EditarDenuncia}/>

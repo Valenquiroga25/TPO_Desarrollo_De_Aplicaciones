@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -11,8 +11,8 @@ import {
 } from "react-native";
 import { ipLocal } from "../../global/ipLocal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Picker} from '@react-native-picker/picker'
-import {jwtDecode} from 'jwt-decode';
+import { Picker } from "@react-native-picker/picker";
+import { jwtDecode } from "jwt-decode";
 function EditarReclamoVecino({ navigation, route }) {
   const {
     idReclamo,
@@ -29,8 +29,9 @@ function EditarReclamoVecino({ navigation, route }) {
   const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
   const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
   const [idDesperfecto, setIdDesperfecto] = useState(null);
-  const [estado,setEstado] = useState(estadoReclamo)
+  const [estado, setEstado] = useState(estadoReclamo);
   const [descripcion, setDescripcion] = useState(descripcionReclamo);
+  const [descripcionMovimiento, setDescripcionMovimiento] = useState("");
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [rol, setRol] = useState("Vecino");
@@ -40,15 +41,15 @@ function EditarReclamoVecino({ navigation, route }) {
     async function adquirirRol() {
       const token = await AsyncStorage.getItem("token");
       const decodeToken = jwtDecode(token);
-      if (decodeToken.rol === "Inspector"){
+      if (decodeToken.rol === "Inspector") {
         setRol("Inspector");
-        console.log("Usted es un usuario admin")
-      } 
+        console.log("Usted es un usuario admin");
+      }
     }
 
     adquirirRol();
   }, []);
-  
+
   const handleSubmit = async () => {
     if (!isFormComplete) {
       alert("Todos los campos son obligatorios");
@@ -85,17 +86,22 @@ function EditarReclamoVecino({ navigation, route }) {
       if (!response.ok) {
         throw new Error(responseText);
       }
+
+      const dataEstado = { estado, descripcionMovimiento };
       const estadoResponse = await fetch(
-        `http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/cambiarEstado/${idReclamo}`,{
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,},
-          body:JSON.stringify(estado)
+        `http://${ipLocal}:8080/tpo-desarrollo-mobile/reclamos/cambiarEstado/${idReclamo}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(dataEstado),
         }
       );
       const estadoResponseText = await estadoResponse.text();
       console.log(estadoResponseText);
-      
+
       openModal();
     } catch (error) {
       console.error(error);
@@ -109,12 +115,11 @@ function EditarReclamoVecino({ navigation, route }) {
 
   function closeModal() {
     setIsVisible(false);
-    if(rol==="Vecino"){
+    if (rol === "Vecino") {
       navigation.navigate("MenuVecino");
-    }else{
+    } else {
       navigation.navigate("MenuPersonal");
     }
-    
   }
 
   return (
@@ -122,44 +127,58 @@ function EditarReclamoVecino({ navigation, route }) {
       <View style={styles.containerDatos}>
         <Text style={styles.titulo}>Editar Reclamo</Text>
 
-        {  rol === 'Inspector' ?
-          <View style={[styles.input, styles.pickerContainer]}>
-          <Picker
-            selectedValue={estado}
-            onValueChange={(itemValue) => setEstado(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="ACEPTADO" value="ACEPTADO" />
-            <Picker.Item label="RECHAZADO" value="RECHAZADO" />
-            <Picker.Item label="EN_PROCESO" value="EN_PROCESO" />
-          </Picker>
-        </View> :
-        
-        <>
-        <TextInput
-          style={[styles.input, styles.textInput]}
-          onChangeText={setCalleSitio}
-          value={calleSitio}
-          placeholder="Calle sitio"
-        />
+        {rol === "Inspector" ? (
+          <View>
+            <View style={[styles.input,styles.pickerContainer]}>
+            <Picker
+              selectedValue={estado}
+              onValueChange={(itemValue) => setEstado(itemValue)}
+              style={styles.picker}
+            >
+              <Picker.Item label="ACEPTADO" value="ACEPTADO" />
+              <Picker.Item label="RECHAZADO" value="RECHAZADO" />
+              <Picker.Item label="EN_PROCESO" value="EN_PROCESO" />
+            </Picker>
+            <View>
+              <TextInput
+                style={[styles.input, styles.textInput,{height:100, marginLeft:0,marginTop:20}]}
+                placeholder="Descripción Movimiento "
+                onChangeText={setDescripcionMovimiento}
+                value={descripcionMovimiento}
+                multiline={true}
+                numberOfLines={4}
+              />
+            </View>
+            </View>
+          </View>
 
-        <TextInput
-          style={[styles.input, styles.textInput]}
-          onChangeText={setNumeroSitio}
-          value={numeroSitio.toString()}
-          inputMode="numeric"
-          placeholder="Numeración sitio"
-        />
-        <TextInput
-          style={[styles.input, styles.textInput, styles.textArea]}
-          placeholder="Descripción"
-          onChangeText={setDescripcion}
-          value={descripcion}
-          multiline={true}
-          numberOfLines={4}
-        />
-        </>        
-        }
+          
+        ) : (
+          <>
+            <TextInput
+              style={[styles.input, styles.textInput]}
+              onChangeText={setCalleSitio}
+              value={calleSitio}
+              placeholder="Calle sitio"
+            />
+
+            <TextInput
+              style={[styles.input, styles.textInput]}
+              onChangeText={setNumeroSitio}
+              value={numeroSitio.toString()}
+              inputMode="numeric"
+              placeholder="Numeración sitio"
+            />
+            <TextInput
+              style={[styles.input, styles.textInput]}
+              placeholder="Descripción"
+              onChangeText={setDescripcion}
+              value={descripcion}
+              multiline={true}
+              numberOfLines={4}
+            />
+          </>
+        )}
 
         <TouchableOpacity
           style={[
@@ -303,10 +322,10 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: 340,
-    fontFamily:'GothamBook'
+    fontFamily: "GothamBook",
+    justifyContent: "center",
   },
-  pickerContainer:{
-    justifyContent:'center',
+  pickerContainer: {
   },
 });
 
