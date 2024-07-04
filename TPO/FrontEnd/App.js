@@ -38,8 +38,12 @@ import EditarReclamoVecino from './src/pages/Vecino/EditarReclamoVecino';
 import EditarDenuncia from './src/pages/Vecino/EditarDenuncia';
 import DetalleVecino from './src/pages/Vecino/DetalleVecino';
 import DetallePersonal from './src/pages/Personal/DetallePersonal';
+<<<<<<< HEAD
 import DetalleReclamoUnificadoVecino from './src/pages/Vecino/DetalleReclamoUnificadoVecino';
 
+=======
+import MovimientosReclamos from './src/pages/Vecino/MovimientosReclamos';
+>>>>>>> ff2b6e68d3d49aaf029d144141ac04ec8e230153
 const loadFonts = async () => {
   await Font.loadAsync({
     'GothamBold': require('./assets/fonts/Gotham Rounded Bold.ttf'),
@@ -101,7 +105,7 @@ function App() {
         <Stack.Screen name='ListaReclamosAllVecinos' component={ListaReclamosAllVecinos}/>
         <Stack.Screen name='DetalleReclamoPersonal' component={DetalleReclamoPersonal}/>
         <Stack.Screen name='EditarReclamoPersonal' component={EditarReclamoPersonal}/>
-
+        <Stack.Screen name='MovimientosReclamos' component={MovimientosReclamos}/>
         <Stack.Screen name='ListaDenuncias' component={ListaDenuncias}/>
         <Stack.Screen name='DetalleDenuncia' component={DetalleDenuncia}/>
         <Stack.Screen name='EditarDenuncia' component={EditarDenuncia}/>

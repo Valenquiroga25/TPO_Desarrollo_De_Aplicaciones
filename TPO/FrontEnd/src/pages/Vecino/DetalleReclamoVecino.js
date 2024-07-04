@@ -58,7 +58,9 @@ function DetalleReclamoVecino({ navigation, route }) {
 
     getImagenes();
   }, []);
-
+  function verMovimientos(){
+    navigation.navigate("MovimientosReclamos",{idReclamo: idReclamo})
+  }
   return (
     <View style={styles.container}>
       {esVecino ? (
@@ -94,7 +96,9 @@ function DetalleReclamoVecino({ navigation, route }) {
           <View style={{ borderWidth: 2, borderColor: "black", height: 160 }}>
             <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
           </View>
-
+          <View style={{borderWidth: 2, borderColor: "black",padding:10,margin:50,}} onPress={verMovimientos}>
+            <Text onPress={verMovimientos}style={[styles.detalle2,{textAlign:"center"}]}>{"MOVIMIENTOS"}</Text>
+          </View> 
           <FlatList
             data={listaImagenes}
             horizontal={true}
@@ -148,6 +152,7 @@ function DetalleReclamoVecino({ navigation, route }) {
             <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
           </View>
 
+          
           <FlatList
             data={listaImagenes}
             horizontal={true}
