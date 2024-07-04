@@ -12,6 +12,12 @@ function Login({navigation}) {
   const handleSubmit =  async() => {
     try{
       
+      if(identificador === '' || contrasenia === ''){
+        console.log('Debe llenar todos los campos!')
+        alert('Debe llenar todos los campos!')
+        return
+      }
+      
       const data = {identificador, contrasenia}
       console.log(data);
 
