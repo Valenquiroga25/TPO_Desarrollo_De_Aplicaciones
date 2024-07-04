@@ -165,7 +165,10 @@ public class ReclamosService {
         return allReclamosFromVecinos;
     }
 
-    private void CambiarEstadoReclamo(ReclamoModel reclamo, Estado estado){
+    public String CambiarEstadoReclamo(Long id, Estado estado) throws Exception {
+        ReclamoModel reclamo = findReclamoById(id);
         reclamo.setEstado(estado);
+        this.reclamosRepository.save(reclamo);
+        return "Se ha actualizado al estado "+ estado;
     }
 }

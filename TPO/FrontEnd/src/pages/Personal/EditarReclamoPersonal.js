@@ -9,7 +9,7 @@ function EditarReclamoPersonal({ navigation, route }) {
   const [legajoPersonal, setLegajoPersonal] = useState(legajoReclamo);
   const [calleSitio, setCalleSitio] = useState(calleSitioReclamo);
   const [numeroSitio, setNumeroSitio] = useState(numeroSitioReclamo);
-  const [idDesperfecto, setIdDesperfecto] = useState(desperfectoReclamo);
+  const [idDesperfecto, setIdDesperfecto] = useState(null);
   const [descripcion, setDescripcion] = useState(descripcionReclamo);
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);

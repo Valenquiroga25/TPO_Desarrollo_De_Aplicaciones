@@ -59,7 +59,14 @@ public class ReclamosController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
-
+    @PutMapping(path = "/cambiarEstado/{id}")
+    public ResponseEntity<?> cambiarEstado(@PathVariable Long id,@RequestBody Estado estado){
+        try{
+            return new ResponseEntity<>(this.reclamosService.CambiarEstadoReclamo(id, estado), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
+    }
     @GetMapping(path = "/{id}")
     public ResponseEntity<?> getReclamoById(@PathVariable Long id){
         try{

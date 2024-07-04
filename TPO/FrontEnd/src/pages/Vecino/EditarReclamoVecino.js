@@ -33,7 +33,7 @@ function EditarReclamoVecino({ navigation, route }) {
   const [descripcion, setDescripcion] = useState(descripcionReclamo);
   const [imagenes, setImagenes] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-  const [rol, setRol] = useState(false);
+  const [rol, setRol] = useState("Vecino");
 
   const isFormComplete = calleSitio && numeroSitio && descripcion;
   useEffect(() => {
@@ -109,7 +109,12 @@ function EditarReclamoVecino({ navigation, route }) {
 
   function closeModal() {
     setIsVisible(false);
-    navigation.navigate("MenuVecino");
+    if(rol==="Vecino"){
+      navigation.navigate("MenuVecino");
+    }else{
+      navigation.navigate("MenuPersonal");
+    }
+    
   }
 
   return (

@@ -1,20 +1,28 @@
-import React from 'react';
+import {React, useState, useEffect} from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import NavbarPersonal from '../../components/NavbarPersonal';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaReclamosPersonal from '../../components/ListaReclamosPersonal';
+import { useIsFocused } from '@react-navigation/native';
 
 const MenuReclamosPersonal = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  const [refresh, setRefresh] = useState(false);
 
+  useEffect(() => {
+    if (isFocused) {
+      setRefresh(prev => !prev);
+    }
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <View style={styles.containerDatos}>
       <Image style={styles.image} resizeMode="contain" source={require('../../../assets/BuenosAiresCiudad.png')} />
       </View>
       
-      <ListaReclamosPersonal navigation = {navigation}/>
+      <ListaReclamosPersonal key={refresh} navigation = {navigation}/>
 
       <TouchableOpacity 
         style={styles.floatingButton} 
