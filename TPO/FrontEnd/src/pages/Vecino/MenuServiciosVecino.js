@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import NavbarPersonal from '../../components/NavbarPersonal';
+import NavbarVecino from '../../components/NavbarVecino';
 import { useNavigation } from '@react-navigation/native';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
 import ListaServicios from '../../components/ListaServicios';
@@ -23,7 +23,7 @@ const MenuServiciosVecino = () => {
       </TouchableOpacity>
 
       <HideWithKeyboard style={styles.navbar}>
-        <NavbarPersonal navigation={navigation}/>
+        <NavbarVecino navigation={navigation}/>
       </HideWithKeyboard>    
     </View>
   );

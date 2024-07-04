@@ -181,23 +181,24 @@ function DetalleReclamoVecino({ navigation, route }) {
         </View>
         
       )}
-
-      <TouchableOpacity
-      style={[styles.floatingButton, {position:'absolute', right:25, bottom:18}]}
-      onPress={() =>
-        navigation.navigate("EditarReclamoVecino", {
-          idReclamo: idReclamo,
-          documentoReclamo: documento,
-          calleSitioReclamo: calleSitio,
-          numeroSitioReclamo: numeroSitio,
-          estado: estado,
-          desperfectoReclamo: desperfecto,
-          descripcionReclamo: descripcion,
-        })
-      }
-    >
-      <Text style={styles.editSign}>✎</Text>
-    </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          style={styles.floatingButton}
+          onPress={() =>
+            navigation.navigate("EditarReclamoVecino", {
+              idReclamo: idReclamo,
+              documentoReclamo: documento,
+              calleSitioReclamo: calleSitio,
+              numeroSitioReclamo: numeroSitio,
+              estadoReclamo: estado,
+              desperfectoReclamo: desperfecto,
+              descripcionReclamo: descripcion,
+            })
+          }
+        >
+          <Text style={styles.editSign}>✎</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -265,16 +266,19 @@ posterImage: {
     borderColor: '#ced4da',
 },
 floatingButton: {
-    backgroundColor: '#FFE661',
-    borderRadius: 50,
-    width: 60,
-    height: 60,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+  position: 'absolute',
+  bottom: -70,
+  right: 10,
+  backgroundColor: '#FFE661',
+  borderRadius: 50,
+  width: 60,
+  height: 60,
+  alignItems: 'center',
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.8,
+  shadowRadius: 2,
+  elevation: 5,
 },
 editSign: {
     fontSize: 30,

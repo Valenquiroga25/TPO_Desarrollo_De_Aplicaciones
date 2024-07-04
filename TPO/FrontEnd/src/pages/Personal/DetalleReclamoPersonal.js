@@ -72,12 +72,12 @@ function DetalleReclamoVecino({ navigation, route }) {
             style={styles.floatingButton} 
             onPress={() => navigation.navigate('EditarReclamoPersonal', {
               idReclamo: idReclamo,
-              legajo: legajo,
-              calleSitio: calleSitio,
-              numeroSitio: numeroSitio,
-              estado: estado,
-              desperfecto: desperfecto,
-              descripcion: descripcion})}>
+              legajoReclamo: legajo,
+              calleSitioReclamo: calleSitio,
+              numeroSitioReclamo: numeroSitio,
+              estadoReclamo: estado,
+              desperfectoReclamo: desperfecto,
+              descripcionReclamo: descripcion})}>
               <Text style={styles.editSign}>✎</Text>
             </TouchableOpacity>
         </View>

@@ -49,40 +49,7 @@ function EditarReclamoPersonal({ navigation, route }) {
       if (!response.ok) {
         throw new Error(responseText);
       }
-/*
-      for (const imagen of imagenes) {
-        const formData = new FormData();
 
-        const fileInfo = await FileSystem.getInfoAsync(imagen);
-        const fileUri = fileInfo.uri;
-        const fileName = fileUri.substring(fileUri.lastIndexOf("/") + 1);
-        const fileType = fileUri.substring(fileUri.lastIndexOf(".") + 1);
-
-        formData.append("archivo", {
-          uri: fileUri,
-          name: fileName,
-          type: `image/${fileType}`,
-        });
-        formData.append("idServicio", idServicio.toString());
-
-        console.log("FormData content:", JSON.stringify(formData._parts));
-
-        //fetch de las imagenes
-        const imageResponse = await fetch(
-          `http://${ipLocal}:8080/tpo-desarrollo-mobile/imagenes/${idReclamo}`,
-          {
-            "method": "DELETE",
-            "headers": {"Authorization": `Bearer ${token}` },
-            "body": formData,
-          }
-        );
-
-        if (!imageResponse.ok) {
-          const message = await imageResponse.text();
-          throw new Error(message);
-        }
-      }
-*/
       openModal();
     } catch (error) {
       console.error(error);
@@ -114,7 +81,7 @@ function EditarReclamoPersonal({ navigation, route }) {
         <TextInput
           style={[styles.input, styles.textInput]}
           onChangeText={setNumeroSitio}
-          value={numeroSitio}
+          value={numeroSitio.toString()}
           inputMode="numeric"
           placeholder="Numeración sitio"
         />
