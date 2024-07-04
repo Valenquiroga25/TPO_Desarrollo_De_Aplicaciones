@@ -35,27 +35,27 @@ function NavbarVecino({ navigation }) {
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
-                            <Text style={styles.modalTitle}>Centro de Ayuda para el Personal</Text>
-                            <Text style={styles.text}>En esta sección, puedes encontrar la asistencia que necesitas:</Text>
-                            <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Botón de Reclamos:</Text> En esta seccion puedes generar reclamos relacionados a tu especialidad .</Text>
-                            <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Boton de Servicios:</Text> ¿Necesitas información sobre los servicios disponibles? Pulsalo para acceder al menú de servicios.</Text>
-                            <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Boton de Denuncia:</Text> Presionando en este boton puedes denunciar disconformidades, que luego seran chequeadas por un inspector</Text>
-                            <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
-                        </ScrollView>
-                    </View>
+                    <Text style={styles.modalTitle}>Centro de Ayuda para el Vecino</Text>
+                    <Text style={styles.text}>En esta sección, puedes encontrar la asistencia que necesitas:</Text>
+                    <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Botón de Reclamos:</Text> En esta seccion puedes generar reclamos relacionados a tu especialidad .</Text>
+                    <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Boton de Servicios:</Text> ¿Necesitas información sobre los servicios disponibles? Pulsalo para acceder al menú de servicios.</Text>
+                    <Text style={styles.text}><Text style={{ fontWeight: 'bold' }}>Boton de Denuncia:</Text> Presionando en este boton puedes denunciar disconformidades, que luego seran chequeadas por un inspector</Text>
+                    <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
+                </ScrollView>
+                </View>
                     <TouchableOpacity style={{
-                                width:300,
-                                height:60,
-                                margin:10,
-                                backgroundColor: '#FFD600',
-                                alignItems: 'center',
-                                justifyContent:'center',
-                                borderWidth:1,
-                                borderRadius: 10,
-                                marginTop:30
-                                }} onPress={closeModal}>
-                                <Text style={{fontFamily:'GothamBook'}}>Volver</Text>
-                            </TouchableOpacity>
+                        width:300,
+                        height:60,
+                        margin:10,
+                        backgroundColor: '#FFD600',
+                        alignItems: 'center',
+                        justifyContent:'center',
+                        borderWidth:1,
+                        borderRadius: 10,
+                        marginTop:30
+                        }} onPress={closeModal}>
+                        <Text style={{fontFamily:'GothamBook'}}>Volver</Text>
+                    </TouchableOpacity>
                 </View>
             </Modal>
 
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         maxHeight: '80%',
     },
     modalTitle:{
-        fontSize:17.5,
+        fontSize:18,
         textAlign:'center',
         marginTop:20,
         fontFamily:'GothamBold'

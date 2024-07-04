@@ -52,7 +52,7 @@ function ListaReclamosVecino({ navigation }) {
         <ScrollView contentContainerStyle={styles.containerReclamos}>
             {listaReclamos.map((reclamo, indice) => (
                 <TouchableOpacity key={indice} style={styles.botonReclamo} onPress={() => redireccion(reclamo)}>
-                    <Text style={{ fontFamily: 'GothamBook' }}>{reclamo.descripcion}</Text>
+                    <Text style={{ fontFamily: 'GothamBook' }}>{reclamo.desperfecto}</Text>
                     <Text style={{ fontFamily: 'GothamBook' }}>Estado: {reclamo.estado}</Text>
                 </TouchableOpacity>
             ))}

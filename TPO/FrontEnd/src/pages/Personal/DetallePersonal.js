@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import NavbarPersonal from '../../components/NavbarPersonal';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet, Image, Dimensions, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ipLocal } from '../../global/ipLocal';
 import { jwtDecode } from 'jwt-decode';
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
-const espacio_contendor = width * 0.7;
-const espacio = 10;
+import { TouchableOpacity } from 'react-native';
 
 function DetallePersonal({navigation}) {
     const [legajo, setLegajo] = useState('');
@@ -50,6 +47,10 @@ function DetallePersonal({navigation}) {
         fetchUsuario();
     })
 
+    function cerrarSesion(){
+        navigation.navigate('MenuInicio')
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView>
@@ -62,9 +63,9 @@ function DetallePersonal({navigation}) {
                 <Text style={styles.detalle}><Text style={styles.detalle2}>CATEGORIA:</Text><Text style={styles.datoText}>{` ${categoria}`}</Text></Text>
             </ScrollView>
 
-            <HideWithKeyboard style={styles.navbar}>
-                <NavbarPersonal navigation={navigation}/>
-            </HideWithKeyboard>
+            <TouchableOpacity style={styles.cerrarSesion} onPress={cerrarSesion}>
+                    <Text style={styles.textCerrarSesion}>CERRAR SESIÓN</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -94,17 +95,17 @@ const styles = StyleSheet.create({
       datoText:{
         fontSize:17,
       },
-    imageLogo: {
-        width: 140,
-        height: 45,
-        marginBottom: 20,
+      cerrarSesion:{
+        position:'absolute',
+        bottom:70,
+        left:113.4
     },
-    navbar: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-    },
+      textCerrarSesion:{
+        fontSize:18,
+        fontFamily:'GothamBold',
+        color: '#900040',
+        textAlign:'center'
+      },
 });
 
 export default DetallePersonal;

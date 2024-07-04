@@ -185,7 +185,8 @@ const CrearServicio = ({navigation}) => {
               style={styles.picker}
           >
           <Picker.Item label="Rubro" value="" />
-          <Picker.Item label="Jardinería" value="11" />
+          <Picker.Item label="Alimentos" value="19" />
+          <Picker.Item label="Tecnologia" value="20" />
           <Picker.Item label="Plomería" value="12" />
           <Picker.Item label="Informática" value="13" />
           <Picker.Item label="Farmacia" value="14" />
@@ -193,7 +194,7 @@ const CrearServicio = ({navigation}) => {
           <Picker.Item label="Comercio indumentaria" value="16" />
           <Picker.Item label="Joyería" value="17" />
           <Picker.Item label="Banco" value="18" />
-
+          <Picker.Item label="Jardinería" value="11" />
           </Picker>
         </View>
 

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import NavbarVecino from '../../components/NavbarVecino';
+import NavbarPersonal from '../../components/NavbarPersonal';
 import HideWithKeyboard from 'react-native-hide-with-keyboard';
-import { Text, View, StyleSheet, Image, Dimensions, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, ScrollView } from 'react-native'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ipLocal } from '../../global/ipLocal';
 import { jwtDecode } from 'jwt-decode';
-
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
-const espacio_contendor = width * 0.7;
-const espacio = 10;
+import { TouchableOpacity } from 'react-native';
 
 function DetalleVecino({navigation}) {
   const [nombre, setNombre] = useState('');
@@ -49,19 +45,24 @@ function DetalleVecino({navigation}) {
     fetchUsuario();
   })
 
+  function cerrarSesion(){
+    navigation.navigate('MenuInicio')
+  }   
+
   return (
     <View style={styles.container}>
-        <ScrollView> 
-          <Text style={styles.title}>{'Mi perfil'}</Text>
-          <Text style={styles.detalle}><Text style={styles.detalle2}>NOMBRE:</Text><Text style={styles.datoText}>{` ${nombre}`}</Text></Text>
-          <Text style={styles.detalle}><Text style={styles.detalle2}>APELLIDO:</Text><Text style={styles.datoText}>{` ${apellido}`}</Text></Text>
-          <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
-          <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
-        </ScrollView>
-      <HideWithKeyboard style={styles.navbar}>
-        <NavbarVecino navigation={navigation} />
-      </HideWithKeyboard>
-    </View>
+    <ScrollView>
+        <Text style={styles.title}>{'Mi perfil'}</Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>NOMBRE:</Text><Text style={styles.datoText}>{` ${nombre}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>APELLIDO:</Text><Text style={styles.datoText}>{` ${apellido}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>DOCUMENTO:</Text><Text style={styles.datoText}>{` ${documento}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
+    </ScrollView>
+    
+    <TouchableOpacity style={styles.cerrarSesion} onPress={cerrarSesion}>
+      <Text style={styles.textCerrarSesion}>CERRAR SESIÓN</Text>
+    </TouchableOpacity>
+</View>
   );
 }
 
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
-  },
-  title: {
+},
+title: {
     fontSize: 25,
     marginTop:40,
     fontFamily:'GothamBold'
@@ -90,11 +91,16 @@ const styles = StyleSheet.create({
   datoText:{
     fontSize:17,
   },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+  cerrarSesion:{
+    position:'absolute',
+    bottom:70,
+    left:113.4
+  },
+  textCerrarSesion:{
+    fontSize:18,
+    fontFamily:'GothamBold',
+    color: '#900040',
+    textAlign:'center'
   },
 });
 

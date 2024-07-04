@@ -49,7 +49,7 @@ function MenuInicio({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <Text style={{ textAlign: 'center', marginTop: 70, fontFamily:'GothamBold'}}>No tienes una cuenta?</Text>
+          <Text style={{ textAlign: 'center', marginTop: 70, fontFamily:'GothamBold'}}>Tienes una cuenta?</Text>
           <View style={styles.buttonWrapper}>
             <TouchableOpacity
               style={{

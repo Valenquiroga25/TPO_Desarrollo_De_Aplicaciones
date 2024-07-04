@@ -19,6 +19,7 @@ const CrearReclamo = ({navigation}) => {
   const [isVisible, setIsVisible] = useState(false);
 	const [isConnected, setConnected] = useState(true);
   const [rol, setRol] = useState('Vecino')
+  //const db = SQLite.openDatabaseSync('local.db');
 
   const isFormComplete = (documentoVecino || legajoPersonal) && calleSitio && numeroSitio && idDesperfecto && descripcion;
 
@@ -37,6 +38,14 @@ const CrearReclamo = ({navigation}) => {
     if (!isFormComplete) {
       alert('Todos los campos son obligatorios');
       return;
+    }
+
+    if(rol === 'Vecino'){
+      if(imagenes.length > 6){
+        setImagenes([])
+        alert('No se pueden cargar más de 7 imagenes. Inténtelo de nuevo!');
+        return
+      }
     }
 
     const unsuscribe = NetInfo.addEventListener((state) => { // Verificamos si estamos conectados a WIFI.

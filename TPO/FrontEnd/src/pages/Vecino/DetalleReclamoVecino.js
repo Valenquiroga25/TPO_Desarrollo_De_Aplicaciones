@@ -111,7 +111,7 @@ function DetalleReclamoVecino({ navigation, route }) {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => {
               return (
-                <View style={{ width: espacio_contendor }}>
+                <View>
                   <View style={styles.imageContainer}>
                     <Image
                       source={{
@@ -164,7 +164,7 @@ function DetalleReclamoVecino({ navigation, route }) {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => {
               return (
-                <View style={{ width: espacio_contendor }}>
+                <View>
                   <View style={styles.imageContainer}>
                     <Image
                       source={{
@@ -181,24 +181,23 @@ function DetalleReclamoVecino({ navigation, route }) {
         </View>
         
       )}
-      <View>
-        <TouchableOpacity
-          style={styles.floatingButton}
-          onPress={() =>
-            navigation.navigate("EditarReclamoVecino", {
-              idReclamo: idReclamo,
-              documentoReclamo: documento,
-              calleSitioReclamo: calleSitio,
-              numeroSitioReclamo: numeroSitio,
-              estado: estado,
-              desperfectoReclamo: desperfecto,
-              descripcionReclamo: descripcion,
-            })
-          }
-        >
-          <Text style={styles.editSign}>✎</Text>
-        </TouchableOpacity>
-      </View>
+
+      <TouchableOpacity
+      style={[styles.floatingButton, {position:'absolute', right:25, bottom:18}]}
+      onPress={() =>
+        navigation.navigate("EditarReclamoVecino", {
+          idReclamo: idReclamo,
+          documentoReclamo: documento,
+          calleSitioReclamo: calleSitio,
+          numeroSitioReclamo: numeroSitio,
+          estado: estado,
+          desperfectoReclamo: desperfecto,
+          descripcionReclamo: descripcion,
+        })
+      }
+    >
+      <Text style={styles.editSign}>✎</Text>
+    </TouchableOpacity>
     </View>
   );
 }
@@ -258,17 +257,14 @@ imageContainer: {
   paddingRight: 10,
   },
 posterImage: {
-    width: 180,
-    height: 180,
+    width: 165,
+    height: 165,
     resizeMode: 'cover',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#ced4da',
 },
 floatingButton: {
-    position: 'absolute',
-    bottom: -200,
-    right: 10,
     backgroundColor: '#FFE661',
     borderRadius: 50,
     width: 60,

@@ -35,27 +35,27 @@ function NavbarPersonal({navigation}){
             <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
-                            <Text style={styles.modalTitle}>Centro de Ayuda para el Personal</Text>
-                            <Text style={styles.text}>En esta sección, puedes encontrar la asistencia que necesitas:</Text>
-                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Mis Reclamos:</Text> En esta seccion puedes generar y visualizar reclamos relacionados a tu especialidad .</Text>
-                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Reclamos:</Text> En esta seccion puedes visualizar todos los reclamos existentes.</Text>
-                            <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Boton de Servicios:</Text> ¿Necesitas información sobre los servicios disponibles? Pulsalo para acceder al menú de servicios.</Text>
-                            <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
-                        </ScrollView>
-                    </View>
+                    <Text style={styles.modalTitle}>Centro de Ayuda para el Personal</Text>
+                    <Text style={styles.text}>En esta sección, puedes encontrar la asistencia que necesitas:</Text>
+                    <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Mis Reclamos:</Text> En esta seccion puedes generar y visualizar reclamos relacionados a tu especialidad .</Text>
+                    <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Botón de Reclamos:</Text> En esta seccion puedes visualizar todos los reclamos existentes.</Text>
+                    <Text style={styles.text}><Text style={{fontFamily:'GothamBook'}}>Boton de Servicios:</Text> ¿Necesitas información sobre los servicios disponibles? Pulsalo para acceder al menú de servicios.</Text>
+                    <Text style={styles.text}>Ante cualquier inconveniente sobre la app, puede comunicarse al Whatsapp "+54 9 239260-4922"</Text>
+                </ScrollView>
+                </View>
                     <TouchableOpacity style={{
-                                width:300,
-                                height:60,
-                                margin:10,
-                                backgroundColor: '#FFD600',
-                                alignItems: 'center',
-                                justifyContent:'center',
-                                borderWidth:1,
-                                borderRadius: 10,
-                                marginTop:30
-                                }} onPress={closeModal}>
-                                <Text>Volver</Text>
-                            </TouchableOpacity>
+                        width:300,
+                        height:60,
+                        margin:10,
+                        backgroundColor: '#FFD600',
+                        alignItems: 'center',
+                        justifyContent:'center',
+                        borderWidth:1,
+                        borderRadius: 10,
+                        marginTop:30
+                        }} onPress={closeModal}>
+                        <Text>Volver</Text>
+                    </TouchableOpacity>
                 </View>
             </Modal>
 
@@ -111,10 +111,11 @@ const styles = StyleSheet.create({
     modalTitle:{
         fontSize:20,
         textAlign:'center',
-        marginTop:20
+        marginTop:20,
+        fontFamily:'GothamBold'
     },
     text:{
-        fontSize:17,
+        fontSize:17.5,
         marginTop:40,
         marginLeft:5,
         fontFamily:'GothamBook'

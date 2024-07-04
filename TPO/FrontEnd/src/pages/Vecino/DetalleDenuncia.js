@@ -62,7 +62,7 @@ function DetalleDenuncia({ navigation,route }) {
         keyExtractor={(item, index)=> index.toString()}
         renderItem={({ item }) => {
           return (
-            <View style={{ width: espacio_contendor }}>
+            <View>
               <View style={styles.imageContainer}>
                 <Image
                   source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
@@ -135,11 +135,12 @@ function DetalleDenuncia({ navigation,route }) {
   },
   imageContainer: {
     marginTop:20,
-    paddingRight: 10,
-    },
+    flex: 1,
+    marginRight:10
+      },
   posterImage: {
-      width: 180,
-      height: 180,
+      width: 200,
+      height: 200,
       resizeMode: 'cover',
       borderRadius: 10,
       borderWidth: 1,

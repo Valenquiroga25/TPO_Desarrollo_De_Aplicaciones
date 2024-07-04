@@ -36,10 +36,10 @@ function DetalleServicio({ route }) {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>{titulo}</Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCION:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
-        <Text style={styles.detalle}><Text style={styles.detalle2}>TELEFONO:</Text><Text style={styles.datoText}>{` ${telefono}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>DIRECCIÓN:</Text><Text style={styles.datoText}>{` ${direccion}`}</Text></Text>
+        <Text style={styles.detalle}><Text style={styles.detalle2}>TELÉFONO:</Text><Text style={styles.datoText}>{` ${telefono}`}</Text></Text>
         <Text style={styles.detalle}><Text style={styles.detalle2}>RUBRO:</Text><Text style={styles.datoText}>{` ${rubro}`}</Text></Text>
-        <Text style={styles.descripcion}>{'DESCRIPCION'}</Text>
+        <Text style={styles.descripcion}>{'DESCRIPCIÓN'}</Text>
           <View style={{borderWidth:2,borderColor:'black',height:160}}>
             <Text style={styles.textDescripcion}> {`${descripcion}`}</Text>
           </View>
@@ -53,7 +53,7 @@ function DetalleServicio({ route }) {
         keyExtractor={(item, index)=> index.toString()}
         renderItem={({ item }) => {
           return (
-            <View style={{ width: espacio_contendor }}>
+            <View>
               <View style={styles.imageContainer}>
                 <Image
                   source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
@@ -106,6 +106,7 @@ function DetalleServicio({ route }) {
     },
     imageContainer: {
         flex: 1,
+        marginRight:10
     },
     image: {
         position: 'absolute',

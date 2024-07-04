@@ -56,7 +56,7 @@ function DetalleReclamoVecino({ navigation, route }) {
         keyExtractor={(item, index)=> index.toString()}
         renderItem={({ item }) => {
           return (
-            <View style={{ width: espacio_contendor }}>
+            <View>
               <View style={styles.imageContainer}>
                 <Image
                   source={{uri: `data:image/jpeg;base64,${item.datosImagen}`}}
@@ -133,6 +133,10 @@ function DetalleReclamoVecino({ navigation, route }) {
       bottom:0,
       left:0,
       right:0,
+    },
+    imageContainer:{
+      flex: 1,
+      marginRight:10
     },
     posterImage: {
       width: 150,

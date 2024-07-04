@@ -33,7 +33,8 @@ function Login({navigation}) {
 
       if(!isExpired(token)){
         console.log(decodeToken);
-
+        setIdentificador('')
+        setContrasenia('')
         if(decodeToken.isPasswordNull){
           navigation.navigate('PaginaAcceso', {tipoDeUsuario: tipoUsuario})
         }else{
